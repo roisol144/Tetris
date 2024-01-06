@@ -182,7 +182,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameBoard.cpp" />
+    <ClCompile Include="GameController.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Tetrimino.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameBoard.h" />
+    <ClInclude Include="GameController.h" />
+    <ClInclude Include="Gotoxy.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Tetrimino.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
