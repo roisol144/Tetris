@@ -7,13 +7,8 @@ using namespace std;
 
 int main() 
 {
-	//GameBoard board;
-	//board.drawBoard();
-
-	gotoxy(20, 30);
-	cout << "x";
-	gotoxy(40, 50);
-	cout << "y";
+	GameBoard board;
+	board.drawBoard();
 	
 	return 0;
 }

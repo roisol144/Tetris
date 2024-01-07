@@ -28,6 +28,16 @@ void GameBoard::drawBoard()
 		cout << "- ";
 	}
 
+	for (int row = 0; row <= this->GAME_HEIGHT + 1; row++)
+	{
+
+		gotoxy(0, row);
+		cout << "| ";
+
+		gotoxy(this->GAME_WIDTH + 1,row);
+		cout << " |";
+	}
+
 }
 
 
