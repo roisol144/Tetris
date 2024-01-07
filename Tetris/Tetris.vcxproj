@@ -184,6 +184,7 @@
   <ItemGroup>
     <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="GameController.cpp" />
+    <ClCompile Include="general.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Tetrimino.cpp" />
@@ -191,7 +192,7 @@
   <ItemGroup>
     <ClInclude Include="GameBoard.h" />
     <ClInclude Include="GameController.h" />
-    <ClInclude Include="Gotoxy.h" />
+    <ClInclude Include="general.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Tetrimino.h" />
   </ItemGroup>

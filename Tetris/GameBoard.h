@@ -3,10 +3,10 @@
 class GameBoard 
 {
 public:
-    // Methods for manipulating the game board
-    // (e.g., clearLine, checkCollision, updateBoard, etc.)
+	static constexpr int GAME_WIDTH = 25;
+	static constexpr int GAME_HEIGHT = 80;
+	int getGameWidth();
+	int getGameHeight();
+	void drawBoard();
 
-private:
-    // Data members to represent the game board
-    // (e.g., a 2D array to store the grid of cells)
 };

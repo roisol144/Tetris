@@ -1,13 +1,10 @@
-#ifndef _GOTOXY_H_
-#define _GOTOXY_H_
-
+#include <windows.h> // for gotoxy
+#include <process.h> // for system
 #include <iostream>
+#include "general.h"
 using namespace std;
-#include <windows.h>
-#include <process.h>
 
-// function definition -- requires windows.h
-inline void gotoxy(int x, int y)
+void gotoxy(int x, int y)
 {
 	HANDLE hConsoleOutput;
 	COORD dwCursorPosition;
@@ -18,10 +15,7 @@ inline void gotoxy(int x, int y)
 	SetConsoleCursorPosition(hConsoleOutput, dwCursorPosition);
 }
 
-// function definition -- requires process.h
-inline void clrscr()
+void clrscr()
 {
 	system("cls");
 }
-
-#endif
