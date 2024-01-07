@@ -18,17 +18,18 @@ int GameBoard::getGameWidth()
 
 void GameBoard::drawBoard()
 {
-	for (int col = 0; col <= this->GAME_WIDTH + 1; col++)
+	
+	for (int col = 1; col <= this->GAME_WIDTH + 1; col++)
 	{
 		
 		gotoxy(col, 0);
 		cout << "- ";
 
-		gotoxy(col, this->GAME_HEIGHT + 1);
+		gotoxy(col, this->GAME_HEIGHT + 2);
 		cout << "- ";
 	}
 
-	for (int row = 0; row <= this->GAME_HEIGHT + 1; row++)
+	for (int row = 1; row <= this->GAME_HEIGHT +1; row++)
 	{
 
 		gotoxy(0, row);
@@ -37,6 +38,7 @@ void GameBoard::drawBoard()
 		gotoxy(this->GAME_WIDTH + 1,row);
 		cout << " |";
 	}
+	cout << endl;
 
 }
 
