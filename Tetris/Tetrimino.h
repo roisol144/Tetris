@@ -2,6 +2,7 @@
 
 class Tetrimino 
 {
+
 public:
     // Methods for manipulating the Tetrimino
     // (e.g., rotate, moveLeft, moveRight, moveDown, etc.)
@@ -9,4 +10,5 @@ public:
 private:
     // Data members to store information about the Tetrimino
     // (e.g., shape, rotation, position)
+    
 };

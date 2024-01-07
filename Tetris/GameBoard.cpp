@@ -16,10 +16,10 @@ int GameBoard::getGameWidth()
 }
 
 
-void GameBoard::drawBoard()
+void GameBoard::drawBoard(int boardsGap)
 {
 	
-	for (int col = 1; col <= this->GAME_WIDTH + 1; col++)
+	for (int col = 1 + boardsGap; col <= this->GAME_WIDTH + 1 + boardsGap; col++)
 	{
 		
 		gotoxy(col, 0);
@@ -32,10 +32,10 @@ void GameBoard::drawBoard()
 	for (int row = 1; row <= this->GAME_HEIGHT +1; row++)
 	{
 
-		gotoxy(0, row);
+		gotoxy(0 + boardsGap, row);
 		cout << "| ";
 
-		gotoxy(this->GAME_WIDTH + 1,row);
+		gotoxy(this->GAME_WIDTH + 1 + boardsGap,row);
 		cout << " |";
 	}
 	cout << endl;
