@@ -28,6 +28,7 @@ void GameBoard::drawBoard(int boardsGap)
 		gotoxy(col, this->GAME_HEIGHT + 2);
 		cout << "- ";
 	}
+	
 
 	for (int row = 1; row <= this->GAME_HEIGHT +1; row++)
 	{
