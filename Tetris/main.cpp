@@ -14,7 +14,7 @@ void main()
 	//board2.drawBoard(Board::SECOND_BOARD_START);
 	//gotoxy(10, 15);
 	//cout << "x";
-	Tetromino t;
+	Tetrimino t;
 	t.createTetromino();
 	Point* p = t.getTetromino();
 

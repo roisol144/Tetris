@@ -2,19 +2,21 @@
 
 #include <iostream>
 #include <vector>
+#include "Tetrimino.h"
 
 class Board 
 {
-private:
-	char gameBoard1[18][12];
 	
 public:
 	static constexpr int GAME_WIDTH = 12;
 	static constexpr int GAME_HEIGHT = 18;
 	static constexpr int FIRST_BOARD_START = 0;
 	static constexpr int SECOND_BOARD_START = 20;
-	
 
+private:
+	char gameBoard1[GAME_WIDTH][GAME_HEIGHT];
+	
+public:
 	Board() // Constructor to initialize the array
 	{
 		for (int i = 0; i < GAME_HEIGHT; ++i)
@@ -30,11 +32,13 @@ public:
 	int getGameWidth();
 	int getGameHeight();
 	*/
+	//TODO, maybe not needed
+	//char** getBoard();
 
-	char** getBoard();
+	void addToBoard(Tetrimino* shape);
 
 
 	void drawBoard(int boardsGap);
-	void initBoard();
+	//void initBoard();
 
 };

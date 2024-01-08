@@ -2,6 +2,16 @@
 #include <windows.h>
 using namespace std;
 
+// TODO- sleep 200 while working
+// LAROHAV PROGRAMMING. 
+// TODO - one shape moving down.
+// TODO - Solve when shape can't move anymore. LAROHAV 
+// TODO - implement move left (_kbhit).
+// TODO - Working on player only. 
+// TODO - all members must have m_ before them
+// TODO - adding defines - constants.
+
+
 
 
 void GameController::playGame()

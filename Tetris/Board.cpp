@@ -44,12 +44,22 @@ void Board::drawBoard(int boardsGap)
 	cout << endl;
 
 }
+
 /*
 char** Board::getBoard()
 {
 	return gameBoard1;
 }
 */
+
+void Board::addToBoard(Tetrimino* shape) {
+	Point* arr = shape->getTetromino();
+	for (int i = 0; i < 4; i++) {
+		this->gameBoard1[arr[i].getX()][arr[i].getY()] = shape->getChar();
+	}
+
+}
+
 
 
 #endif // !__GAMEBOARD_H
