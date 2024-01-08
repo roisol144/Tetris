@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "general.h"
-#include "GameBoard.h"
+#include "Board.h"
 
 
 

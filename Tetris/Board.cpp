@@ -2,9 +2,10 @@
 #define __GAMEBOARD_H
 #include <iostream>
 using namespace std;
-#include "GameBoard.h"
+#include "Board.h"
 #include "general.h"
 
+/*
 int GameBoard::getGameHeight() 
 {
 	return this->GAME_HEIGHT;
@@ -14,9 +15,10 @@ int GameBoard::getGameWidth()
 {
 	return this->GAME_WIDTH;
 }
+*/
 
 
-void GameBoard::drawBoard(int boardsGap)
+void Board::drawBoard(int boardsGap)
 {
 	
 	for (int col = 1 + boardsGap; col <= this->GAME_WIDTH + 1 + boardsGap; col++)
@@ -42,6 +44,12 @@ void GameBoard::drawBoard(int boardsGap)
 	cout << endl;
 
 }
+/*
+char** Board::getBoard()
+{
+	return gameBoard1;
+}
+*/
 
 
 #endif // !__GAMEBOARD_H
