@@ -60,6 +60,9 @@ void Board::addToBoard(Tetrimino* shape) {
 
 }
 
+char Board::getChar(int row, int col) {
+	return this->gameBoard1[row][col];
+}
 
 
 #endif // !__GAMEBOARD_H

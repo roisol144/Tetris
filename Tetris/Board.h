@@ -19,9 +19,9 @@ private:
 public:
 	Board() // Constructor to initialize the array
 	{
-		for (int i = 0; i < GAME_HEIGHT; ++i)
+		for (int i = 0; i < GAME_HEIGHT; i++)
 		{
-			for (int j = 0; j < GAME_WIDTH; ++j)
+			for (int j = 0; j < GAME_WIDTH; j++)
 			{
 				gameBoard1[i][j] = ' '; // Initialize with some default value
 			}
@@ -36,6 +36,8 @@ public:
 	//char** getBoard();
 
 	void addToBoard(Tetrimino* shape);
+
+	char getChar(int row,int col);
 
 
 	void drawBoard(int boardsGap);

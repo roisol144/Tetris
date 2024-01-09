@@ -78,6 +78,48 @@ void Tetrimino::createTetromino(char ch) {
 	}	
 }
 
+bool Tetrimino::moveDown(char* down) {
+	for (int i = 0; i < 4; i++) {
+		if (this->m_points[i].getY() + 1 == 18)
+			return false;
+	}
+
+	for (int i = 0; i < 4; i++) {
+		if (down[i] != ' ')
+			return false;
+	}
+
+	for (int i = 0; i < 4; i++) {
+		this->m_points[i].setY(this->m_points[i].getY() + 1);	
+	}
+
+	return true;
+
+}
+
+void Tetrimino::draw() {
+	for (int i = 0; i < 4; i++) {
+		gotoxy(this->m_points[i].getX(), this->m_points[i].getY());
+		cout << this->m_char;
+	}
+}
+
+void Tetrimino::erase() {
+	for (int i = 0; i < 4; i++) {
+		gotoxy(this->m_points[i].getX(), this->m_points[i].getY());
+		cout << ' ';
+	}
+}
+
+void Tetrimino::move() {
+	this->draw();
+	Sleep(500);
+	this->erase();
+	//this->moveDown();
+}
+
+
+
 void Tetrimino::moveRight()
 {
 	for (int i = 0; i < 4; i++)
