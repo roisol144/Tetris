@@ -12,6 +12,7 @@ using namespace std;
 // TODO - all members must have m_ before them
 // TODO - adding defines - constants.
 
+//TODO - change order of _kbhit before drawing
 
 void Controller::playGame()
 {

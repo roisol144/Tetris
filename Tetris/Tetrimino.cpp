@@ -56,14 +56,16 @@ void Tetrimino::createTetromino(char ch) {
 		this->m_points[3].setY(2);
 		break;
 	}
+		
 	case 6: { // S
+		this->m_points[0].setX(4);
 		this->m_points[0].setY(1);
 		this->m_points[1].setX(5);
 		this->m_points[1].setY(1);
 		this->m_points[2].setX(5);
 		this->m_points[2].setY(0);
+		this->m_points[3].setX(6);
 		this->m_points[3].setY(0);
-		this->m_points[3].setY(6);
 		break;
 	}
 	case 7: { // Z

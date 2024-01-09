@@ -4,8 +4,13 @@
 
 Tetrimino* Player::createNextTetrimino()
 {
+	//TODO - remove (only debug).
 	Tetrimino* t = new Tetrimino;
-	t->createTetromino(this->letters[this->currLettersIdx++]);
+	int idx = this->currLettersIdx++;
+	char letter = this->letters[idx];
+	t->createTetromino(letter);
+
+	//t->createTetromino(this->letters[this->currLettersIdx++]);
 	return t;
 }
 
