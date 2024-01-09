@@ -16,3 +16,11 @@ void Player::drawBoard(int boardGap) {
 char Player::getCharFromBoard(int row, int col) {
 	return this->gameBoard.getChar(row, col);
 }
+
+void Player::addToBoard(Tetrimino* t) {
+	this->gameBoard.addToBoard(t);
+}
+
+void Player::initBoard() {
+	this->gameBoard.init();
+}

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include <vector>
+
 #include "Tetrimino.h"
 
 class Board 
@@ -17,16 +17,19 @@ private:
 	char gameBoard1[GAME_WIDTH][GAME_HEIGHT];
 	
 public:
+	/*
 	Board() // Constructor to initialize the array
 	{
 		for (int i = 0; i < GAME_HEIGHT; i++)
 		{
 			for (int j = 0; j < GAME_WIDTH; j++)
 			{
-				gameBoard1[i][j] = ' '; // Initialize with some default value
+				gameBoard1[j][i] = ' '; // Initialize with some default value
 			}
 		}
-	}
+	}*/
+
+	void init();
 
 	/*
 	int getGameWidth();

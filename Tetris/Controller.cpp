@@ -15,6 +15,7 @@ using namespace std;
 
 void Controller::playGame()
 {
+	this->player1.initBoard();
 	this->player1.drawBoard(0);
 	char keyPressed;
 	Tetrimino *tetro1 = nullptr, *tetro2 = nullptr;
@@ -31,6 +32,11 @@ void Controller::playGame()
 
 		if(tetro1->moveDown(downArr))
 			tetro1->move();
+		else {
+			tetro1->draw();
+			tetro1->finishMoving();
+			this->player1.addToBoard(tetro1);
+		}
 
 		if(_kbhit())
 		{

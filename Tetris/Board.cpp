@@ -18,6 +18,16 @@ int GameBoard::getGameWidth()
 */
 
 
+void Board::init() {
+	for (int i = 0; i < GAME_HEIGHT; i++)
+	{
+		for (int j = 0; j < GAME_WIDTH; j++)
+		{
+			gameBoard1[j][i] = ' '; // Initialize with some default value
+		}
+	}
+}
+
 void Board::drawBoard(int boardsGap)
 {
 	
@@ -27,18 +37,18 @@ void Board::drawBoard(int boardsGap)
 		gotoxy(col, 0);
 		cout << "- ";
 
-		gotoxy(col, this->GAME_HEIGHT + 2);
+		gotoxy(col, this->GAME_HEIGHT);
 		cout << "- ";
 	}
 	
 
-	for (int row = 1; row <= this->GAME_HEIGHT +1; row++)
+	for (int row = 1; row <= this->GAME_HEIGHT; row++)
 	{
 
 		gotoxy(0 + boardsGap, row);
 		cout << "| ";
 
-		gotoxy(this->GAME_WIDTH + 1 + boardsGap,row);
+		gotoxy(this->GAME_WIDTH + boardsGap,row);
 		cout << " |";
 	}
 	cout << endl;

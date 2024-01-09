@@ -113,7 +113,7 @@ void Tetrimino::erase() {
 
 void Tetrimino::move() {
 	this->draw();
-	Sleep(500);
+	Sleep(300);
 	this->erase();
 	//this->moveDown();
 }
