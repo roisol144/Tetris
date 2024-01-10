@@ -25,13 +25,11 @@ public:
     void moveRight();
     void moveLeft();
     Point calculatePivot();
-    void rotateLeft();
-    void rotateRight();
     char getChar() { return m_char; }
     bool moveDown(char* down);
     void draw();
     void erase();
-    void checkCollision();
+
 
 
     void rotateClockwise();

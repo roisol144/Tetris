@@ -138,6 +138,12 @@ void Tetrimino::moveLeft()
 		this->m_points[i].setX(this->m_points[i].getX() - 1);
 	}
 }
+
+/*
+void Tetrimino::moveDrop() {
+
+}
+*/
  
 
 
