@@ -64,7 +64,7 @@ char** Board::getBoard()
 
 void Board::addToBoard(Tetrimino* shape) {
 	Point* arr = shape->getTetromino();
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		this->gameBoard[arr[i].getX()][arr[i].getY()] = shape->getChar();
 	}
 

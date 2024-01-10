@@ -5,9 +5,8 @@
 class Tetrimino
 { 
 private:
-    // Data members to store information about the Tetrimino
-    // (e.g., shape, rotation, position)
-    Point m_points[4];
+    static const int NUM_OF_POINTS = 4;
+    Point m_points[NUM_OF_POINTS];
     char m_char;
     bool isMoving = true;
 
@@ -16,14 +15,14 @@ public:
     // (e.g., rotate, moveLeft, moveRight, moveDown, etc.) 
 
     Tetrimino() : m_points{ {0, 0}, {0, 0}, {0, 0}, {0, 0} } {} //Default constructor 
-
+    
     void createTetromino(char ch);
     Point* getTetromino() { return m_points; }
     bool getIsMoving() { return isMoving; }
     void finishMoving() { isMoving = false; }
     void move();
-    void moveRight();
-    void moveLeft();
+    bool moveRight(char* right);
+    bool moveLeft(char* left);
     Point calculatePivot();
     char getChar() { return m_char; }
     bool moveDown(char* down);

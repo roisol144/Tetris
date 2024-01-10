@@ -6,7 +6,7 @@ class Player
 {
 public:
     // Methods for handling user input, updating the game state, etc.
-    //TODO inisialize with all letter in constractor
+    //TODO intialize with all letter in constructor
     Tetrimino* createNextTetrimino();
     void drawBoard(int boardGap);
     char getCharFromBoard(int row, int col);

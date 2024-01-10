@@ -81,17 +81,17 @@ void Tetrimino::createTetromino(char ch) {
 }
 
 bool Tetrimino::moveDown(char* down) {
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		if (this->m_points[i].getY() + 1 == 18)
 			return false;
 	}
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		if (down[i] != ' ')
 			return false;
 	}
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		this->m_points[i].setY(this->m_points[i].getY() + 1);	
 	}
 
@@ -100,14 +100,14 @@ bool Tetrimino::moveDown(char* down) {
 }
 
 void Tetrimino::draw() {
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		gotoxy(this->m_points[i].getX(), this->m_points[i].getY());
 		cout << this->m_char;
 	}
 }
 
 void Tetrimino::erase() {
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		gotoxy(this->m_points[i].getX(), this->m_points[i].getY());
 		cout << ' ';
 	}
@@ -115,28 +115,51 @@ void Tetrimino::erase() {
 
 void Tetrimino::move() {
 	this->draw();
-	Sleep(600);
+	Sleep(200);
 	this->erase();
 	//this->moveDown();
 }
 
 
 
-void Tetrimino::moveRight()
-{
-	for (int i = 0; i < 4; i++)
+bool Tetrimino::moveRight(char* right) {
+
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
+		if (this->m_points[i].getX() + 1 == 12)
+			return false;
+	}
+
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
+		if (right[i] != ' ')
+			return false;
+	}
+
+	for (int i = 0; i < NUM_OF_POINTS; i++)
 	{
 		this->m_points[i].setX(this->m_points[i].getX() + 1);
 	}
+	return true;
 }
 
 
-void Tetrimino::moveLeft()
+bool Tetrimino::moveLeft(char* left)
 {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
+		if (this->m_points[i].getX() - 1 == 0)
+			return false;
+	}
+
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
+		if (left[i] != ' ')
+			return false;
+	}
+
+
+	for (int i = 0; i < NUM_OF_POINTS; i++)
 	{
 		this->m_points[i].setX(this->m_points[i].getX() - 1);
 	}
+	return true;
 }
 
 /*
@@ -145,9 +168,6 @@ void Tetrimino::moveDrop() {
 }
 */
  
-
-
-// C
 
 Point Tetrimino::calculatePivot() 
 {
@@ -169,16 +189,16 @@ Point Tetrimino::calculatePivot()
 void Tetrimino::rotateClockwise()
 {
 	Point pivot = calculatePivot();
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < NUM_OF_POINTS; i++)
 	{
 		pivot.setX(pivot.getX() + m_points[i].getX());
 		pivot.setY(pivot.getY() + m_points[i].getY());
 	}
-	pivot.setX(pivot.getX() / 4);
-	pivot.setY(pivot.getY() / 4);
+	pivot.setX(pivot.getX() / NUM_OF_POINTS);
+	pivot.setY(pivot.getY() / NUM_OF_POINTS);
 
 	// Rotate clockwise around the pivot
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < NUM_OF_POINTS; i++)
 	{
 		m_points[i].rotateClockwise(pivot);
 	}
@@ -186,15 +206,14 @@ void Tetrimino::rotateClockwise()
 
 void Tetrimino::rotateCounterClockwise()
 {
-	// Choose a pivot point (e.g., the center of the Tetrimino)
 	Point pivot = calculatePivot();
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < NUM_OF_POINTS; i++)
 	{
 		pivot.setX(pivot.getX() + m_points[i].getX());
 		pivot.setY(pivot.getY() + m_points[i].getY());
 	}
-	pivot.setX(pivot.getX() / 4);
-	pivot.setY(pivot.getY() / 4);
+	pivot.setX(pivot.getX() / NUM_OF_POINTS);
+	pivot.setY(pivot.getY() / NUM_OF_POINTS);
 
 	// Rotate counterclockwise around the pivot
 	for (int i = 0; i < 4; i++)
