@@ -12,8 +12,6 @@ using namespace std;
 // TODO - all members must have m_ before them
 // TODO - adding defines - constants.
 
-//TODO - change order of _kbhit before drawing
-
 void Controller::playGame()
 {
 	this->player1.initBoard();
@@ -31,15 +29,7 @@ void Controller::playGame()
 							this->player1.getCharFromBoard(tetro1->getTetromino()[2].getX(),tetro1->getTetromino()[2].getY() + 1),
 							this->player1.getCharFromBoard(tetro1->getTetromino()[3].getX(),tetro1->getTetromino()[3].getY() + 1) };
 
-		if(tetro1->moveDown(downArr))
-			tetro1->move();
-		else {
-			tetro1->draw();
-			tetro1->finishMoving();
-			this->player1.addToBoard(tetro1);
-		}
-
-		if(_kbhit())
+		if (_kbhit())
 		{
 			keyPressed = _getch();
 			switch (keyPressed)
@@ -50,10 +40,26 @@ void Controller::playGame()
 			case 'd':
 				tetro1->moveRight();
 				break;
+			case 's':
+				tetro1->rotateClockwise();
+				break;
+			case 'w':
+				tetro1->rotateCounterClockwise();
+				break;
 			default:
 				break;
 			}
 		}
+
+		if(tetro1->moveDown(downArr))
+			tetro1->move();
+		else {
+			tetro1->draw();
+			tetro1->finishMoving();
+			this->player1.addToBoard(tetro1);
+		}
+		
+
 
 		/*
 		if (_kbhit())

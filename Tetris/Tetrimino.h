@@ -13,7 +13,10 @@ private:
 
 public:
     // Methods for manipulating the Tetrimino
-    // (e.g., rotate, moveLeft, moveRight, moveDown, etc.)
+    // (e.g., rotate, moveLeft, moveRight, moveDown, etc.) 
+
+    Tetrimino() : m_points{ {0, 0}, {0, 0}, {0, 0}, {0, 0} } {} //Default constructor 
+
     void createTetromino(char ch);
     Point* getTetromino() { return m_points; }
     bool getIsMoving() { return isMoving; }
@@ -21,6 +24,7 @@ public:
     void move();
     void moveRight();
     void moveLeft();
+    Point calculatePivot();
     void rotateLeft();
     void rotateRight();
     char getChar() { return m_char; }
@@ -28,6 +32,10 @@ public:
     void draw();
     void erase();
     void checkCollision();
+
+
+    void rotateClockwise();
+    void rotateCounterClockwise();
 
 
 };

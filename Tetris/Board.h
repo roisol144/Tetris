@@ -14,7 +14,7 @@ public:
 	static constexpr int SECOND_BOARD_START = 20;
 
 private:
-	char gameBoard1[GAME_WIDTH][GAME_HEIGHT];
+	char gameBoard[GAME_WIDTH][GAME_HEIGHT];
 	
 public:
 	/*

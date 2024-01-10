@@ -115,7 +115,7 @@ void Tetrimino::erase() {
 
 void Tetrimino::move() {
 	this->draw();
-	Sleep(300);
+	Sleep(600);
 	this->erase();
 	//this->moveDown();
 }
@@ -138,5 +138,65 @@ void Tetrimino::moveLeft()
 		this->m_points[i].setX(this->m_points[i].getX() - 1);
 	}
 }
+ 
+
+
+// C
+
+Point Tetrimino::calculatePivot() 
+{
+	int sumX = 0;
+	int sumY = 0;
+
+	for (Point& point : m_points)
+	{
+		sumX += point.getX();
+		sumY += point.getY();
+	}
+
+	int averageX = std::round(static_cast<double>(sumX) / 4); // TODO - Change 4 to constant
+	int averageY = std::round(static_cast<double>(sumY) / 4);
+
+	return Point(averageX, averageY);
+}
+
+void Tetrimino::rotateClockwise()
+{
+	Point pivot = calculatePivot();
+	for (int i = 0; i < 4; i++)
+	{
+		pivot.setX(pivot.getX() + m_points[i].getX());
+		pivot.setY(pivot.getY() + m_points[i].getY());
+	}
+	pivot.setX(pivot.getX() / 4);
+	pivot.setY(pivot.getY() / 4);
+
+	// Rotate clockwise around the pivot
+	for (int i = 0; i < 4; i++)
+	{
+		m_points[i].rotateClockwise(pivot);
+	}
+}
+
+void Tetrimino::rotateCounterClockwise()
+{
+	// Choose a pivot point (e.g., the center of the Tetrimino)
+	Point pivot = calculatePivot();
+	for (int i = 0; i < 4; ++i)
+	{
+		pivot.setX(pivot.getX() + m_points[i].getX());
+		pivot.setY(pivot.getY() + m_points[i].getY());
+	}
+	pivot.setX(pivot.getX() / 4);
+	pivot.setY(pivot.getY() / 4);
+
+	// Rotate counterclockwise around the pivot
+	for (int i = 0; i < 4; i++)
+	{
+		m_points[i].rotateCounterClockwise(pivot);
+	}
+}
+
+
 
 

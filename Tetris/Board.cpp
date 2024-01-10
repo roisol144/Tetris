@@ -23,7 +23,7 @@ void Board::init() {
 	{
 		for (int j = 0; j < GAME_WIDTH; j++)
 		{
-			gameBoard1[j][i] = ' '; // Initialize with some default value
+			gameBoard[j][i] = ' '; // Initialize with some default value
 		}
 	}
 }
@@ -65,13 +65,13 @@ char** Board::getBoard()
 void Board::addToBoard(Tetrimino* shape) {
 	Point* arr = shape->getTetromino();
 	for (int i = 0; i < 4; i++) {
-		this->gameBoard1[arr[i].getX()][arr[i].getY()] = shape->getChar();
+		this->gameBoard[arr[i].getX()][arr[i].getY()] = shape->getChar();
 	}
 
 }
 
 char Board::getChar(int row, int col) {
-	return this->gameBoard1[row][col];
+	return this->gameBoard[row][col];
 }
 
 
