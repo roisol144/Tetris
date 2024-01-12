@@ -14,8 +14,9 @@ public:
     // Methods for manipulating the Tetrimino
     // (e.g., rotate, moveLeft, moveRight, moveDown, etc.) 
 
-    Tetrimino() : m_points{ {0, 0}, {0, 0}, {0, 0}, {0, 0} } {} //Default constructor 
-    
+    Tetrimino() : m_points{ {0, 0}, {0, 0}, {0, 0}, {0, 0} }, m_char('A') {} //Default constructor 
+
+
     void createTetromino(char ch);
     Point* getTetromino() { return m_points; }
     bool getIsMoving() { return isMoving; }
@@ -28,8 +29,6 @@ public:
     bool moveDown(char* down);
     void draw();
     void erase();
-
-
 
     void rotateClockwise();
     void rotateCounterClockwise();

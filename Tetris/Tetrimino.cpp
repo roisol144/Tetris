@@ -1,12 +1,13 @@
 #include "Tetrimino.h"
+using namespace std;
 
 void Tetrimino::createTetromino(char ch) {
 	//reset the first point 
 	this->m_char = ch;
 	this->m_points[0].setX(4);
 	this->m_points[0].setY(0);
-	std::srand(std::time(nullptr));
-	int randNum = 1 + std::rand() % 7;
+	srand(time(nullptr));
+	int randNum = 1 + rand() % 7;
 
 	switch (randNum) {
 	case 1: { // STRAIGHT
@@ -115,7 +116,7 @@ void Tetrimino::erase() {
 
 void Tetrimino::move() {
 	this->draw();
-	Sleep(200);
+	Sleep(100);
 	this->erase();
 	//this->moveDown();
 }

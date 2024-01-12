@@ -11,7 +11,7 @@ using namespace std;
 void main() 
 {
 	Controller game;
-	game.playGame();
+	game.entryScreen();
 	//Board board1, board2;
 	//board1.drawBoard(Board::FIRST_BOARD_START);
 	//board2.drawBoard(Board::SECOND_BOARD_START);

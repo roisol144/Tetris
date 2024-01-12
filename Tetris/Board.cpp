@@ -35,10 +35,10 @@ void Board::drawBoard(int boardsGap)
 	{
 		
 		gotoxy(col, 0);
-		cout << "- ";
+		cout << "# ";
 
 		gotoxy(col, this->GAME_HEIGHT);
-		cout << "- ";
+		cout << "# ";
 	}
 	
 
@@ -46,10 +46,10 @@ void Board::drawBoard(int boardsGap)
 	{
 
 		gotoxy(0 + boardsGap, row);
-		cout << "| ";
+		cout << "# ";
 
 		gotoxy(this->GAME_WIDTH + boardsGap,row);
-		cout << " |";
+		cout << " #";
 	}
 	cout << endl;
 
