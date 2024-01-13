@@ -89,7 +89,7 @@ void Controller::playGame()
 			{
 				while (tetro1->moveDown(downArr)) {
 					tetro1->draw();
-					Sleep(50);
+					Sleep(20);
 					tetro1->erase();
 					for (int i = 0; i < 4; i++) {
 						downArr[i] = this->player1.getCharFromBoard(tetro1->getTetromino()[i].getX(), tetro1->getTetromino()[i].getY() + 1);
