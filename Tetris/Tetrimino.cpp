@@ -116,7 +116,7 @@ void Tetrimino::erase() {
 
 void Tetrimino::move() {
 	this->draw();
-	Sleep(100);
+	Sleep(300);
 	this->erase();
 	//this->moveDown();
 }
@@ -181,13 +181,13 @@ Point Tetrimino::calculatePivot()
 		sumY += point.getY();
 	}
 
-	int averageX = std::round(static_cast<double>(sumX) / 4); // TODO - Change 4 to constant
-	int averageY = std::round(static_cast<double>(sumY) / 4);
+	int averageX = round(static_cast<double>(sumX) / 4); // TODO - Change 4 to constant
+	int averageY = round(static_cast<double>(sumY) / 4);
 
 	return Point(averageX, averageY);
 }
 
-void Tetrimino::rotateClockwise()
+Point* Tetrimino::rotateClockwise()
 {
 	Point pivot = calculatePivot();
 	for (int i = 0; i < NUM_OF_POINTS; i++)
@@ -198,14 +198,43 @@ void Tetrimino::rotateClockwise()
 	pivot.setX(pivot.getX() / NUM_OF_POINTS);
 	pivot.setY(pivot.getY() / NUM_OF_POINTS);
 
+	Point points_to_rotate[NUM_OF_POINTS];
+	
 	// Rotate clockwise around the pivot
 	for (int i = 0; i < NUM_OF_POINTS; i++)
 	{
-		m_points[i].rotateClockwise(pivot);
+		//m_points[i].rotateClockwise(pivot);
+		points_to_rotate[i].setX(m_points[i].rotateClockwise(pivot).getX());
+		points_to_rotate[i].setY(m_points[i].rotateClockwise(pivot).getY());
 	}
+	return points_to_rotate;
 }
 
-void Tetrimino::rotateCounterClockwise()
+bool Tetrimino::isRotateLegal(Point* pointsArr,char* rotated)
+{
+	Point p;
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
+		p = { pointsArr[i].getX(),pointsArr[i].getY() };
+		if (p.getX() <= 0 || p.getX() >= 12)
+			return false;
+		if (p.getY() <= 0 || p.getY() >= 18)
+			return false;
+	}
+
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
+		if (rotated[i] != ' ')
+			return false;
+	}
+
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
+		this->m_points[i].setX(pointsArr[i].getX());
+		this->m_points[i].setY(pointsArr[i].getY());
+	}
+
+	return true;
+}
+
+Point* Tetrimino::rotateCounterClockwise()
 {
 	Point pivot = calculatePivot();
 	for (int i = 0; i < NUM_OF_POINTS; i++)
@@ -217,10 +246,16 @@ void Tetrimino::rotateCounterClockwise()
 	pivot.setY(pivot.getY() / NUM_OF_POINTS);
 
 	// Rotate counterclockwise around the pivot
-	for (int i = 0; i < 4; i++)
+	Point points_to_rotate[NUM_OF_POINTS];
+
+	// Rotate clockwise around the pivot
+	for (int i = 0; i < NUM_OF_POINTS; i++)
 	{
-		m_points[i].rotateCounterClockwise(pivot);
+		//m_points[i].rotateClockwise(pivot);
+		points_to_rotate[i].setX(m_points[i].rotateCounterClockwise(pivot).getX());
+		points_to_rotate[i].setY(m_points[i].rotateCounterClockwise(pivot).getY());
 	}
+	return points_to_rotate;
 }
 
 

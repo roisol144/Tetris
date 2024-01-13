@@ -29,9 +29,9 @@ public:
     bool moveDown(char* down);
     void draw();
     void erase();
-
-    void rotateClockwise();
-    void rotateCounterClockwise();
+    bool isRotateLegal(Point* pointsArr,char* rotated);
+    Point* rotateClockwise();
+    Point* rotateCounterClockwise();
 
 
 };
