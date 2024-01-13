@@ -31,7 +31,8 @@ void Controller::playGame()
 							this->player1.getCharFromBoard(tetro1->getTetromino()[2].getX() - 1,tetro1->getTetromino()[2].getY()),
 							this->player1.getCharFromBoard(tetro1->getTetromino()[3].getX() - 1,tetro1->getTetromino()[3].getY()) };
 
-		Point* pointsToRotate;
+		Point pointsToRotate[4];
+		Point* pointsArrTemp;
 		//char rotateArr[4];
 		//char rotateCounterArr[4];
 
@@ -55,7 +56,12 @@ void Controller::playGame()
 			case 's':
 			case 'S':
 			{
-				pointsToRotate = tetro1->rotateClockwise();
+				pointsArrTemp = tetro1->rotateClockwise();
+				for (int i = 0; i < 4; i++) {
+					pointsToRotate[i].setX(pointsArrTemp[i].getX());
+					pointsToRotate[i].setY(pointsArrTemp[i].getY());
+				}
+				
 				char rotateArr[4] = { this->player1.getCharFromBoard(pointsToRotate[0].getX(),pointsToRotate[0].getY()),
 									 this->player1.getCharFromBoard(pointsToRotate[1].getX(),pointsToRotate[1].getY()),
 									 this->player1.getCharFromBoard(pointsToRotate[2].getX(),pointsToRotate[2].getY()),
@@ -66,12 +72,29 @@ void Controller::playGame()
 			case 'w':
 			case 'W':
 			{
-				pointsToRotate = tetro1->rotateCounterClockwise();
+				pointsArrTemp = tetro1->rotateCounterClockwise();
+				for (int i = 0; i < 4; i++) {
+					pointsToRotate[i].setX(pointsArrTemp[i].getX());
+					pointsToRotate[i].setY(pointsArrTemp[i].getY());
+				}
 				char rotateCounterArr[4] = { this->player1.getCharFromBoard(pointsToRotate[0].getX(),pointsToRotate[0].getY()),
 											this->player1.getCharFromBoard(pointsToRotate[1].getX(),pointsToRotate[1].getY()),
 											this->player1.getCharFromBoard(pointsToRotate[2].getX(),pointsToRotate[2].getY()),
 											this->player1.getCharFromBoard(pointsToRotate[3].getX(),pointsToRotate[3].getY()) };
 				tetro1->isRotateLegal(pointsToRotate, rotateCounterArr);
+				break;
+			}
+			case 'x':
+			case 'X':
+			{
+				while (tetro1->moveDown(downArr)) {
+					tetro1->draw();
+					Sleep(50);
+					tetro1->erase();
+					for (int i = 0; i < 4; i++) {
+						downArr[i] = this->player1.getCharFromBoard(tetro1->getTetromino()[i].getX(), tetro1->getTetromino()[i].getY() + 1);
+					}
+				}
 				break;
 			}
 			case 27:

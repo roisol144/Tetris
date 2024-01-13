@@ -206,18 +206,17 @@ Point* Tetrimino::rotateClockwise()
 		//m_points[i].rotateClockwise(pivot);
 		points_to_rotate[i].setX(m_points[i].rotateClockwise(pivot).getX());
 		points_to_rotate[i].setY(m_points[i].rotateClockwise(pivot).getY());
+		
 	}
 	return points_to_rotate;
 }
 
 bool Tetrimino::isRotateLegal(Point* pointsArr,char* rotated)
 {
-	Point p;
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
-		p = { pointsArr[i].getX(),pointsArr[i].getY() };
-		if (p.getX() <= 0 || p.getX() >= 12)
+		if (pointsArr[i].getX() <= 0 || pointsArr[i].getX() >= 12)
 			return false;
-		if (p.getY() <= 0 || p.getY() >= 18)
+		if (pointsArr[i].getY() <= 0 || pointsArr[i].getY() >= 18)
 			return false;
 	}
 
