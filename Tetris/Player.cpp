@@ -24,3 +24,7 @@ void Player::addToBoard(Tetrimino* t) {
 void Player::initBoard() {
 	this->gameBoard.init();
 }
+
+void Player::drawBoardInGame(int boardsGap) {
+	this->gameBoard.drawBoardInGame(boardsGap);
+}

@@ -55,6 +55,19 @@ void Board::drawBoard(int boardsGap)
 
 }
 
+void Board::drawBoardInGame(int boardsGap) {
+	system("cls");
+	this->drawBoard(boardsGap);
+	for (int row = 0; row < this->GAME_HEIGHT; row++) {
+		for (int col = 0; col < this->GAME_WIDTH; col++) {
+			if (this->gameBoard[col][row] != ' ') {
+				gotoxy(boardsGap + col, row);
+				cout << this->gameBoard[col][row];
+			}
+		}
+	}
+}
+
 /*
 char** Board::getBoard()
 {

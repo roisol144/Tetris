@@ -45,6 +45,8 @@ public:
 
 
 	void drawBoard(int boardsGap);
+
+	void drawBoardInGame(int boardsGap);
 	//void initBoard();
 
 };

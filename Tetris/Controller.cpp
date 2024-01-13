@@ -167,7 +167,9 @@ void Controller::entryScreen()
 			system("cls");
 			playGame();
 			break;
-
+		case '2':
+			this->player1.drawBoardInGame(0);
+			break;
 		case '8':
 			showInstructions();
 			break;

@@ -11,6 +11,7 @@ public:
     void drawBoard(int boardGap);
     char getCharFromBoard(int row, int col);
     void addToBoard(Tetrimino* t);
+    void drawBoardInGame(int boardsGap);
     void initBoard();
 private:
     Board gameBoard;
