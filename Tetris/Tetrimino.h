@@ -21,14 +21,14 @@ public:
     Point* getTetromino() { return m_points; }
     bool getIsMoving() { return isMoving; }
     void finishMoving() { isMoving = false; }
-    void move();
+    void move(int gap = 0);
     bool moveRight(char* right);
     bool moveLeft(char* left);
     Point calculatePivot();
     char getChar() { return m_char; }
     bool moveDown(char* down);
-    void draw();
-    void erase();
+    void draw(int gap = 0);
+    void erase(int gap = 0);
     bool isRotateLegal(Point* pointsArr,char* rotated);
     Point* rotateClockwise();
     Point* rotateCounterClockwise();

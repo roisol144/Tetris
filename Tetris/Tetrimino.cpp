@@ -100,24 +100,24 @@ bool Tetrimino::moveDown(char* down) {
 
 }
 
-void Tetrimino::draw() {
+void Tetrimino::draw(int gap) {
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
-		gotoxy(this->m_points[i].getX(), this->m_points[i].getY());
+		gotoxy(this->m_points[i].getX() + gap, this->m_points[i].getY());
 		cout << this->m_char;
 	}
 }
 
-void Tetrimino::erase() {
+void Tetrimino::erase(int gap) {
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
-		gotoxy(this->m_points[i].getX(), this->m_points[i].getY());
+		gotoxy(this->m_points[i].getX() + gap, this->m_points[i].getY());
 		cout << ' ';
 	}
 }
 
-void Tetrimino::move() {
-	this->draw();
-	Sleep(300);
-	this->erase();
+void Tetrimino::move(int gap) {
+	this->draw(gap);
+	Sleep(500);
+	this->erase(gap);
 	//this->moveDown();
 }
 

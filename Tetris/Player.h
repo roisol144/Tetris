@@ -8,10 +8,10 @@ public:
     // Methods for handling user input, updating the game state, etc.
     //TODO intialize with all letter in constructor
     Tetrimino* createNextTetrimino();
-    void drawBoard(int boardGap);
+    void drawBoard(int boardGap = 0);
     char getCharFromBoard(int row, int col);
     void addToBoard(Tetrimino* t);
-    void drawBoardInGame(int boardsGap);
+    void drawBoardInGame(int boardsGap = 0);
     void initBoard();
 private:
     Board gameBoard;

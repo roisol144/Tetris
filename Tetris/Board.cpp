@@ -31,7 +31,7 @@ void Board::init() {
 void Board::drawBoard(int boardsGap)
 {
 	
-	for (int col = 1 + boardsGap; col <= this->GAME_WIDTH + 1 + boardsGap; col++)
+	for (int col = 0 + boardsGap; col <= this->GAME_WIDTH + 1 + boardsGap; col++)
 	{
 		
 		gotoxy(col, 0);
@@ -56,7 +56,6 @@ void Board::drawBoard(int boardsGap)
 }
 
 void Board::drawBoardInGame(int boardsGap) {
-	system("cls");
 	this->drawBoard(boardsGap);
 	for (int row = 0; row < this->GAME_HEIGHT; row++) {
 		for (int col = 0; col < this->GAME_WIDTH; col++) {

@@ -44,9 +44,9 @@ public:
 	char getChar(int row,int col);
 
 
-	void drawBoard(int boardsGap);
+	void drawBoard(int boardsGap = 0);
 
-	void drawBoardInGame(int boardsGap);
+	void drawBoardInGame(int boardsGap = 0);
 	//void initBoard();
 
 };
