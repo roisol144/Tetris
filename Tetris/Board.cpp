@@ -44,7 +44,6 @@ void Board::drawBoard(int boardsGap)
 
 	for (int row = 1; row <= this->GAME_HEIGHT; row++)
 	{
-
 		gotoxy(0 + boardsGap, row);
 		cout << "# ";
 

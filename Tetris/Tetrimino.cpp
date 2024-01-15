@@ -102,14 +102,14 @@ bool Tetrimino::moveDown(char* down) {
 
 void Tetrimino::draw(int gap) {
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
-		gotoxy(this->m_points[i].getX() + gap, this->m_points[i].getY());
+		gotoxy(this->m_points[i].getX() + gap + 1, this->m_points[i].getY());
 		cout << this->m_char;
 	}
 }
 
 void Tetrimino::erase(int gap) {
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
-		gotoxy(this->m_points[i].getX() + gap, this->m_points[i].getY());
+		gotoxy(this->m_points[i].getX() + gap + 1, this->m_points[i].getY());
 		cout << ' ';
 	}
 }
@@ -124,10 +124,13 @@ void Tetrimino::move(int gap) {
 
 
 bool Tetrimino::moveRight(char* right) {
-
+	
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		if (this->m_points[i].getX() + 1 == 12)
 			return false;
+		//if (this->m_points[i].getX() >= 12 - 1)
+			//return false;
+
 	}
 
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
@@ -146,7 +149,7 @@ bool Tetrimino::moveRight(char* right) {
 bool Tetrimino::moveLeft(char* left)
 {
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
-		if (this->m_points[i].getX() - 1 == 0)
+		if (this->m_points[i].getX() == 0)
 			return false;
 	}
 

@@ -181,8 +181,8 @@ void Controller::playGame()
 			}
 		}
 		
-		/*
-		if (tetro1->moveDown(downArr))
+		
+		if (tetro1->moveDown(downArr1))
 			tetro1->move();
 		else 
 		{
@@ -190,9 +190,9 @@ void Controller::playGame()
 			tetro1->finishMoving();
 			this->player1.addToBoard(tetro1);
 		}
-		*/
 		
-
+		
+		
 		if (tetro2->moveDown(downArr2))
 			tetro2->move(22);
 		else
@@ -201,6 +201,7 @@ void Controller::playGame()
 			tetro2->finishMoving();
 			this->player2.addToBoard(tetro2);
 		}
+		
 	}
 }
 
