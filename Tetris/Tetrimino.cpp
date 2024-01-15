@@ -7,7 +7,8 @@ void Tetrimino::createTetromino(char ch) {
 	this->m_points[0].setX(4);
 	this->m_points[0].setY(0);
 	srand(time(nullptr));
-	int randNum = 1 + rand() % 7;
+	//int randNum = 1 + rand() % 7;
+	int randNum = 1;
 
 	switch (randNum) {
 	case 1: { // STRAIGHT
@@ -116,7 +117,7 @@ void Tetrimino::erase(int gap) {
 
 void Tetrimino::move(int gap) {
 	this->draw(gap);
-	Sleep(500);
+	Sleep(300);
 	this->erase(gap);
 	//this->moveDown();
 }

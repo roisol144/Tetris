@@ -9,6 +9,9 @@ public:
     // Methods for managing the game loop, updating players, etc.
     void playGame();
     void entryScreen();
+    void handleUserInput(Tetrimino* tetro, Player& player, char* leftArr, char* rightArr, char* downArr, int gap = 0);
+    void moveTetriminoDown(Tetrimino* tetro, Player& player, int gap = 0);
+
     void showInstructions();
     void endGame(); // TODO
 

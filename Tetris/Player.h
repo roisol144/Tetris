@@ -13,6 +13,8 @@ public:
     void addToBoard(Tetrimino* t);
     void drawBoardInGame(int boardsGap = 0);
     void initBoard();
+    int whichRowFull();
+    void removeFullLine(int lineNum);
 private:
     Board gameBoard;
     //Tetrimino* currentTetrimino;

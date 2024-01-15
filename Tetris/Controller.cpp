@@ -3,6 +3,7 @@
 #include <windows.h>
 using namespace std;
 
+
 void Controller::playGame()
 {
 	this->gameStatus = true;
@@ -10,165 +11,253 @@ void Controller::playGame()
 	this->player2.initBoard();
 	this->player1.drawBoard();
 	this->player2.drawBoard(22);
-	char keyPressed;
-	Tetrimino *tetro1 = nullptr, *tetro2 = nullptr;
+	//char keyPressed;
+	Tetrimino* tetro1 = this->player1.createNextTetrimino();
+	//Tetrimino* tetro2 = this->player2.createNextTetrimino();
 	while (this->gameStatus)
 	{
+		/*
 		if (tetro1 == nullptr || tetro1->getIsMoving() == false) {
 			tetro1 = this->player1.createNextTetrimino();
 		}
 		if (tetro2 == nullptr || tetro2->getIsMoving() == false) {
 			tetro2 = this->player2.createNextTetrimino();
 		}
+		*/
+		//Point pointsToRotate[4];
+		//Point* pointsArrTemp;
+		//char rotateArr[4];
+		//char rotateCounterArr[4];
+
+		if (tetro1->getIsMoving() == false) {
+			tetro1 = this->player1.createNextTetrimino();
+		}
+		//if (tetro2->getIsMoving() == false) {
+		//	tetro2 = this->player2.createNextTetrimino();
+		//}
+
+		//----- PLAYER 1 -----
 
 		char downArr1[4] = { this->player1.getCharFromBoard(tetro1->getTetromino()[0].getX(),tetro1->getTetromino()[0].getY() + 1),
 							this->player1.getCharFromBoard(tetro1->getTetromino()[1].getX(),tetro1->getTetromino()[1].getY() + 1),
 							this->player1.getCharFromBoard(tetro1->getTetromino()[2].getX(),tetro1->getTetromino()[2].getY() + 1),
 							this->player1.getCharFromBoard(tetro1->getTetromino()[3].getX(),tetro1->getTetromino()[3].getY() + 1) };
 
-		char downArr2[4] = { this->player2.getCharFromBoard(tetro2->getTetromino()[0].getX(),tetro2->getTetromino()[0].getY() + 1),
-							this->player2.getCharFromBoard(tetro2->getTetromino()[1].getX(),tetro2->getTetromino()[1].getY() + 1),
-							this->player2.getCharFromBoard(tetro2->getTetromino()[2].getX(),tetro2->getTetromino()[2].getY() + 1),
-							this->player2.getCharFromBoard(tetro2->getTetromino()[3].getX(),tetro2->getTetromino()[3].getY() + 1) };
+		
 
 		char rightArr1[4] = { this->player1.getCharFromBoard(tetro1->getTetromino()[0].getX() + 1,tetro1->getTetromino()[0].getY()),
 							this->player1.getCharFromBoard(tetro1->getTetromino()[1].getX() + 1,tetro1->getTetromino()[1].getY()),
 							this->player1.getCharFromBoard(tetro1->getTetromino()[2].getX() + 1,tetro1->getTetromino()[2].getY()),
 							this->player1.getCharFromBoard(tetro1->getTetromino()[3].getX() + 1,tetro1->getTetromino()[3].getY()) };
 
-		char rightArr2[4] = { this->player2.getCharFromBoard(tetro2->getTetromino()[0].getX() + 1,tetro2->getTetromino()[0].getY()),
-							this->player2.getCharFromBoard(tetro2->getTetromino()[1].getX() + 1,tetro2->getTetromino()[1].getY()),
-							this->player2.getCharFromBoard(tetro2->getTetromino()[2].getX() + 1,tetro2->getTetromino()[2].getY()),
-							this->player2.getCharFromBoard(tetro2->getTetromino()[3].getX() + 1,tetro2->getTetromino()[3].getY()) };
+		
 
 		char leftArr1[4] = { this->player1.getCharFromBoard(tetro1->getTetromino()[0].getX() - 1,tetro1->getTetromino()[0].getY()),
 							this->player1.getCharFromBoard(tetro1->getTetromino()[1].getX() - 1,tetro1->getTetromino()[1].getY()),
 							this->player1.getCharFromBoard(tetro1->getTetromino()[2].getX() - 1,tetro1->getTetromino()[2].getY()),
 							this->player1.getCharFromBoard(tetro1->getTetromino()[3].getX() - 1,tetro1->getTetromino()[3].getY()) };
 
+		
+	
+		handleUserInput(tetro1, player1, leftArr1, rightArr1, downArr1);
+		
+		moveTetriminoDown(tetro1,player1);
+
+		//----- END PLAYER 1 -----
+
+		//----- PLAYER 2 -----
+		
+		/*
+		char downArr2[4] = { this->player2.getCharFromBoard(tetro2->getTetromino()[0].getX(),tetro2->getTetromino()[0].getY() + 1),
+							this->player2.getCharFromBoard(tetro2->getTetromino()[1].getX(),tetro2->getTetromino()[1].getY() + 1),
+							this->player2.getCharFromBoard(tetro2->getTetromino()[2].getX(),tetro2->getTetromino()[2].getY() + 1),
+							this->player2.getCharFromBoard(tetro2->getTetromino()[3].getX(),tetro2->getTetromino()[3].getY() + 1) };
+
+		char rightArr2[4] = { this->player2.getCharFromBoard(tetro2->getTetromino()[0].getX() + 1,tetro2->getTetromino()[0].getY()),
+							this->player2.getCharFromBoard(tetro2->getTetromino()[1].getX() + 1,tetro2->getTetromino()[1].getY()),
+							this->player2.getCharFromBoard(tetro2->getTetromino()[2].getX() + 1,tetro2->getTetromino()[2].getY()),
+							this->player2.getCharFromBoard(tetro2->getTetromino()[3].getX() + 1,tetro2->getTetromino()[3].getY()) };
+
 		char leftArr2[4] = { this->player2.getCharFromBoard(tetro2->getTetromino()[0].getX() - 1,tetro2->getTetromino()[0].getY()),
 							this->player2.getCharFromBoard(tetro2->getTetromino()[1].getX() - 1,tetro2->getTetromino()[1].getY()),
 							this->player2.getCharFromBoard(tetro2->getTetromino()[2].getX() - 1,tetro2->getTetromino()[2].getY()),
 							this->player2.getCharFromBoard(tetro2->getTetromino()[3].getX() - 1,tetro2->getTetromino()[3].getY()) };
 
-		Point pointsToRotate[4];
-		Point* pointsArrTemp;
-		//char rotateArr[4];
-		//char rotateCounterArr[4];
+		handleUserInput(tetro2, player2, leftArr2, rightArr2, downArr2, 22);
+		moveTetriminoDown(tetro2, player2, 22);
+		*/
+		
 
-		if (_kbhit())
+		// ----- END PLAYER 2 -----
+	
+
+	}
+
+
+
+
+}
+
+void Controller::moveTetriminoDown(Tetrimino* tetro, Player& player, int gap)
+{
+	char downArr[4] = {
+	player.getCharFromBoard(tetro->getTetromino()[0].getX(), tetro->getTetromino()[0].getY() + 1),
+	player.getCharFromBoard(tetro->getTetromino()[1].getX(), tetro->getTetromino()[1].getY() + 1),
+	player.getCharFromBoard(tetro->getTetromino()[2].getX(), tetro->getTetromino()[2].getY() + 1),
+	player.getCharFromBoard(tetro->getTetromino()[3].getX(), tetro->getTetromino()[3].getY() + 1)
+	};
+
+	if (tetro->moveDown(downArr))
+	{
+		tetro->move(gap);
+	}
+	else
+	{
+		int num;
+		tetro->draw(gap);
+		tetro->finishMoving();
+		player.addToBoard(tetro);
+		while((num=player.whichRowFull()) != -1)
+			player.removeFullLine(num);
+	}
+}
+
+
+
+
+void Controller::handleUserInput(Tetrimino* tetro, Player& player, char* leftArr, char* rightArr, char* downArr, int gap)
+{
+	Point pointsToRotate[4];
+	Point* pointsArrTemp;
+	char keyPressed;
+
+	if (_kbhit())
+	{
+		keyPressed = _getch();
+		if (gap == 22) // if it's the second player
 		{
-			keyPressed = _getch();
 			switch (keyPressed)
 			{
-			case 'a':
-			case 'A':
-			{
-				tetro1->moveLeft(leftArr1);
-				break;
-			}
-			case 'j':
-			case 'J':
-			{
-				tetro2->moveLeft(leftArr2);
-				break;
-			}
-			case 'd':
-			case 'D':
-			{
-				tetro1->moveRight(rightArr1);
-				break;
-			}
 			case 'l':
 			case 'L':
 			{
-				tetro2->moveRight(rightArr2);
-				break;
-			}
-			case 's':
-			case 'S':
-			{
-				pointsArrTemp = tetro1->rotateClockwise();
-				for (int i = 0; i < 4; i++) {
-					pointsToRotate[i].setX(pointsArrTemp[i].getX());
-					pointsToRotate[i].setY(pointsArrTemp[i].getY());
-				}
-				
-				char rotateArr[4] = { this->player1.getCharFromBoard(pointsToRotate[0].getX(),pointsToRotate[0].getY()),
-									 this->player1.getCharFromBoard(pointsToRotate[1].getX(),pointsToRotate[1].getY()),
-									 this->player1.getCharFromBoard(pointsToRotate[2].getX(),pointsToRotate[2].getY()),
-									 this->player1.getCharFromBoard(pointsToRotate[3].getX(),pointsToRotate[3].getY()) };
-				tetro1->isRotateLegal(pointsToRotate, rotateArr);
+				tetro->moveRight(rightArr);
 				break;
 			}
 			case 'k':
 			case 'K':
 			{
-				pointsArrTemp = tetro2->rotateClockwise();
+				pointsArrTemp = tetro->rotateClockwise();
 				for (int i = 0; i < 4; i++) {
 					pointsToRotate[i].setX(pointsArrTemp[i].getX());
 					pointsToRotate[i].setY(pointsArrTemp[i].getY());
 				}
 
-				char rotateArr[4] = { this->player2.getCharFromBoard(pointsToRotate[0].getX(),pointsToRotate[0].getY()),
-									 this->player2.getCharFromBoard(pointsToRotate[1].getX(),pointsToRotate[1].getY()),
-									 this->player2.getCharFromBoard(pointsToRotate[2].getX(),pointsToRotate[2].getY()),
-									 this->player2.getCharFromBoard(pointsToRotate[3].getX(),pointsToRotate[3].getY()) };
-				tetro2->isRotateLegal(pointsToRotate, rotateArr);
-				break;
-			}
-			case 'w':
-			case 'W':
-			{
-				pointsArrTemp = tetro1->rotateCounterClockwise();
-				for (int i = 0; i < 4; i++) {
-					pointsToRotate[i].setX(pointsArrTemp[i].getX());
-					pointsToRotate[i].setY(pointsArrTemp[i].getY());
-				}
-				char rotateCounterArr[4] = { this->player1.getCharFromBoard(pointsToRotate[0].getX(),pointsToRotate[0].getY()),
-											this->player1.getCharFromBoard(pointsToRotate[1].getX(),pointsToRotate[1].getY()),
-											this->player1.getCharFromBoard(pointsToRotate[2].getX(),pointsToRotate[2].getY()),
-											this->player1.getCharFromBoard(pointsToRotate[3].getX(),pointsToRotate[3].getY()) };
-				tetro1->isRotateLegal(pointsToRotate, rotateCounterArr);
+				char rotateArr[4] = { player.getCharFromBoard(pointsToRotate[0].getX(),pointsToRotate[0].getY()),
+									 player.getCharFromBoard(pointsToRotate[1].getX(),pointsToRotate[1].getY()),
+									 player.getCharFromBoard(pointsToRotate[2].getX(),pointsToRotate[2].getY()),
+									 player.getCharFromBoard(pointsToRotate[3].getX(),pointsToRotate[3].getY()) };
+				tetro->isRotateLegal(pointsToRotate, rotateArr);
 				break;
 			}
 			case 'i':
 			case 'I':
 			{
-				pointsArrTemp = tetro2->rotateCounterClockwise();
+				pointsArrTemp = tetro->rotateCounterClockwise();
 				for (int i = 0; i < 4; i++) {
 					pointsToRotate[i].setX(pointsArrTemp[i].getX());
 					pointsToRotate[i].setY(pointsArrTemp[i].getY());
 				}
-				char rotateCounterArr[4] = { this->player2.getCharFromBoard(pointsToRotate[0].getX(),pointsToRotate[0].getY()),
-											this->player2.getCharFromBoard(pointsToRotate[1].getX(),pointsToRotate[1].getY()),
-											this->player2.getCharFromBoard(pointsToRotate[2].getX(),pointsToRotate[2].getY()),
-											this->player2.getCharFromBoard(pointsToRotate[3].getX(),pointsToRotate[3].getY()) };
-				tetro2->isRotateLegal(pointsToRotate, rotateCounterArr);
+				char rotateCounterArr[4] = { player.getCharFromBoard(pointsToRotate[0].getX(),pointsToRotate[0].getY()),
+											player.getCharFromBoard(pointsToRotate[1].getX(),pointsToRotate[1].getY()),
+											player.getCharFromBoard(pointsToRotate[2].getX(),pointsToRotate[2].getY()),
+											player.getCharFromBoard(pointsToRotate[3].getX(),pointsToRotate[3].getY()) };
+				tetro->isRotateLegal(pointsToRotate, rotateCounterArr);
 				break;
-			}
-			case 'x':
-			case 'X':
+			}		
+			case 'j':
+			case 'J':
 			{
-				while (tetro1->moveDown(downArr1)) {
-					tetro1->draw();
-					Sleep(20);
-					tetro1->erase();
-					for (int i = 0; i < 4; i++) {
-						downArr1[i] = this->player1.getCharFromBoard(tetro1->getTetromino()[i].getX(), tetro1->getTetromino()[i].getY() + 1);
-					}
-				}
+				tetro->moveLeft(leftArr);
 				break;
 			}
 			case 'm':
 			case 'M':
 			{
-				while (tetro2->moveDown(downArr2)) {
-					tetro2->draw(22);
+				while (tetro->moveDown(downArr)) {
+					tetro->draw(gap);
 					Sleep(20);
-					tetro2->erase(22);
+					tetro->erase(gap);
 					for (int i = 0; i < 4; i++) {
-						downArr2[i] = this->player2.getCharFromBoard(tetro2->getTetromino()[i].getX(), tetro2->getTetromino()[i].getY() + 1);
+						downArr[i] = player.getCharFromBoard(tetro->getTetromino()[i].getX(), tetro->getTetromino()[i].getY() + 1);
+					}
+				}
+				break;
+			}
+			case 27:
+				entryScreen();
+				break;
+			default:
+				break;
+			}
+		}
+		else // Player 1
+		{
+			switch (keyPressed)
+			{
+			case 'a':
+			case 'A':
+			{
+				tetro->moveLeft(leftArr);
+				break;
+			}
+
+			case 'd':
+			case 'D':
+			{
+				tetro->moveRight(rightArr);
+				break;
+			}
+			case 's':
+			case 'S':
+			{
+				pointsArrTemp = tetro->rotateClockwise();
+				for (int i = 0; i < 4; i++) {
+					pointsToRotate[i].setX(pointsArrTemp[i].getX());
+					pointsToRotate[i].setY(pointsArrTemp[i].getY());
+				}
+
+				char rotateArr[4] = { player.getCharFromBoard(pointsToRotate[0].getX(),pointsToRotate[0].getY()),
+									 player.getCharFromBoard(pointsToRotate[1].getX(),pointsToRotate[1].getY()),
+									 player.getCharFromBoard(pointsToRotate[2].getX(),pointsToRotate[2].getY()),
+									 player.getCharFromBoard(pointsToRotate[3].getX(),pointsToRotate[3].getY()) };
+				tetro->isRotateLegal(pointsToRotate, rotateArr);
+				break;
+			}
+			case 'w':
+			case 'W':
+			{
+				pointsArrTemp = tetro->rotateCounterClockwise();
+				for (int i = 0; i < 4; i++) {
+					pointsToRotate[i].setX(pointsArrTemp[i].getX());
+					pointsToRotate[i].setY(pointsArrTemp[i].getY());
+				}
+				char rotateCounterArr[4] = { player.getCharFromBoard(pointsToRotate[0].getX(),pointsToRotate[0].getY()),
+											player.getCharFromBoard(pointsToRotate[1].getX(),pointsToRotate[1].getY()),
+											player.getCharFromBoard(pointsToRotate[2].getX(),pointsToRotate[2].getY()),
+											player.getCharFromBoard(pointsToRotate[3].getX(),pointsToRotate[3].getY()) };
+				tetro->isRotateLegal(pointsToRotate, rotateCounterArr);
+				break;
+			}
+			case 'x':
+			case 'X':
+			{
+				while (tetro->moveDown(downArr)) {
+					tetro->draw();
+					Sleep(20);
+					tetro->erase();
+					for (int i = 0; i < 4; i++) {
+						downArr[i] = player.getCharFromBoard(tetro->getTetromino()[i].getX(), tetro->getTetromino()[i].getY() + 1);
 					}
 				}
 				break;
@@ -181,28 +270,8 @@ void Controller::playGame()
 			}
 		}
 		
-		
-		if (tetro1->moveDown(downArr1))
-			tetro1->move();
-		else 
-		{
-			tetro1->draw();
-			tetro1->finishMoving();
-			this->player1.addToBoard(tetro1);
-		}
-		
-		
-		
-		if (tetro2->moveDown(downArr2))
-			tetro2->move(22);
-		else
-		{
-			tetro2->draw(22);
-			tetro2->finishMoving();
-			this->player2.addToBoard(tetro2);
-		}
-		
 	}
+
 }
 
 

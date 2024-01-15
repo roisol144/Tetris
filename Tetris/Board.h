@@ -8,14 +8,14 @@ class Board
 {
 	
 public:
-	static constexpr int GAME_WIDTH = 12;
 	static constexpr int GAME_HEIGHT = 18;
+	static constexpr int GAME_WIDTH = 12;
 	static constexpr int FIRST_BOARD_START = 0;
 	static constexpr int SECOND_BOARD_START = 20;
 	static const int NUM_OF_POINTS = 4;
 
 private:
-	char gameBoard[GAME_WIDTH][GAME_HEIGHT];
+	char gameBoard[GAME_HEIGHT][GAME_WIDTH];
 	
 public:
 	/*
@@ -32,13 +32,6 @@ public:
 
 	void init();
 
-	/*
-	int getGameWidth();
-	int getGameHeight();
-	*/
-	//TODO, maybe not needed
-	//char** getBoard();
-
 	void addToBoard(Tetrimino* shape);
 
 	char getChar(int row,int col);
@@ -47,6 +40,10 @@ public:
 	void drawBoard(int boardsGap = 0);
 
 	void drawBoardInGame(int boardsGap = 0);
-	//void initBoard();
 
+	int whichRowFull();
+
+	void removeFullLine(int lineNum);
+
+	
 };

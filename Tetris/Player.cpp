@@ -14,7 +14,7 @@ void Player::drawBoard(int boardGap) {
 }
 
 char Player::getCharFromBoard(int row, int col) {
-	return this->gameBoard.getChar(row, col);
+	return this->gameBoard.getChar(col,row);
 }
 
 void Player::addToBoard(Tetrimino* t) {
@@ -27,4 +27,13 @@ void Player::initBoard() {
 
 void Player::drawBoardInGame(int boardsGap) {
 	this->gameBoard.drawBoardInGame(boardsGap);
+}
+
+int Player::whichRowFull() {
+	return this->gameBoard.whichRowFull();
+}
+
+void Player::removeFullLine(int lineNum) {
+	if(lineNum!=-1)
+		this->gameBoard.removeFullLine(lineNum);
 }

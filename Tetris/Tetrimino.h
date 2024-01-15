@@ -32,7 +32,7 @@ public:
     bool isRotateLegal(Point* pointsArr,char* rotated);
     Point* rotateClockwise();
     Point* rotateCounterClockwise();
-    void drop();
+    //void drop();
 
 
 };
