@@ -37,3 +37,12 @@ void Player::removeFullLine(int lineNum) {
 	if(lineNum!=-1)
 		this->gameBoard.removeFullLine(lineNum);
 }
+
+void Player::increaseScore() {
+	this->score++;
+}
+
+void Player::resetScore() {
+	this->score = 0;
+}
+

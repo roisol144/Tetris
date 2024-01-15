@@ -6,6 +6,9 @@ using namespace std;
 
 void Controller::playGame()
 {
+	this->player1.resetScore();
+	this->player2.resetScore();
+	this->printScoreBoard();
 	this->gameStatus = true;
 	this->player1.initBoard();
 	this->player2.initBoard();
@@ -93,9 +96,6 @@ void Controller::playGame()
 
 	}
 
-
-
-
 }
 
 void Controller::moveTetriminoDown(Tetrimino* tetro, Player& player, int gap)
@@ -117,8 +117,11 @@ void Controller::moveTetriminoDown(Tetrimino* tetro, Player& player, int gap)
 		tetro->draw(gap);
 		tetro->finishMoving();
 		player.addToBoard(tetro);
-		while((num=player.whichRowFull()) != -1)
+		while ((num = player.whichRowFull()) != -1) {
 			player.removeFullLine(num);
+			player.increaseScore();
+			this->updateScore(player);
+		}
 	}
 }
 
@@ -329,6 +332,7 @@ void Controller::entryScreen()
 			system("cls");
 			this->player1.drawBoardInGame();
 			this->player2.drawBoardInGame(20);
+			this->printScoreBoard();
 			break;
 		case '8':
 			showInstructions();
@@ -371,4 +375,29 @@ void Controller::showInstructions()
 	cin.ignore();
 	if (_kbhit)
 		entryScreen();
+}
+
+void Controller::printScoreBoard() {
+	for (int row = 20; row <= 23; row++) {
+		gotoxy(0, row);
+		cout << '*';
+		gotoxy(13, row);
+		cout << '*';
+	}
+
+	for (int col = 1; col <= 12; col++) {
+		gotoxy(col, 20);
+		cout << '*';
+		gotoxy(col, 23);
+		cout << '*';
+	}
+	gotoxy(3, 21);
+	cout << "Player #1";
+	gotoxy(3, 22);
+	cout << "Score: " << this->player1.getScore();
+}
+
+void Controller::updateScore(Player& p) {
+	gotoxy(3 + p.getGap(), 22);
+	cout << "Score: " << p.getScore();
 }

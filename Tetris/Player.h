@@ -15,10 +15,17 @@ public:
     void initBoard();
     int whichRowFull();
     void removeFullLine(int lineNum);
+    void increaseScore();
+    void resetScore();
+    int getScore() { return this->score; }
+    void setGap(int gapParam) { this->gap = gapParam; }
+    int getGap() { return this->gap; }
 private:
     Board gameBoard;
     //Tetrimino* currentTetrimino;
     char letters[54] = { 'A','B','C','D','E','F','G','H','I','L','M','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
     int currLettersIdx = 0;
+    int score = 0;
+    int gap = 0;
     
 };

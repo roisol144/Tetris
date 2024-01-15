@@ -11,8 +11,9 @@ public:
     void entryScreen();
     void handleUserInput(Tetrimino* tetro, Player& player, char* leftArr, char* rightArr, char* downArr, int gap = 0);
     void moveTetriminoDown(Tetrimino* tetro, Player& player, int gap = 0);
-
+    void printScoreBoard();
     void showInstructions();
+    void updateScore(Player& p);
     void endGame(); // TODO
 
 private:
