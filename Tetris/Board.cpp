@@ -80,7 +80,7 @@ char** Board::getBoard()
 */
 
 void Board::addToBoard(Tetrimino* shape) {
-	Point* arr = shape->getTetromino();
+	Point* arr = shape->getTetroPoints();
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		this->gameBoard[arr[i].getY()][arr[i].getX()] = shape->getChar();
 	}
@@ -119,7 +119,7 @@ int Board::whichRowFull() {
 	
 }
 
-void Board::removeFullLine(int lineNum) {
+void Board::removeFullLine(int lineNum, int gap) {
 	for (int row = lineNum; row > 0; row--) {
 		for (int col = 0; col < this->GAME_WIDTH; col++) {
 			if (row == 1)
@@ -128,7 +128,7 @@ void Board::removeFullLine(int lineNum) {
 				this->gameBoard[row][col] = this->gameBoard[row - 1][col];
 		}
 	}
-	this->drawBoardInGame(0); //TODO add gap
+	this->drawBoardInGame(gap); //TODO add gap
 	
 }
 

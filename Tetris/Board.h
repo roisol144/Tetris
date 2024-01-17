@@ -43,7 +43,7 @@ public:
 
 	int whichRowFull();
 
-	void removeFullLine(int lineNum);
+	void removeFullLine(int lineNum, int gap);
 
 	
 };

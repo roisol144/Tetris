@@ -10,6 +10,7 @@ using namespace std;
 
 void main() 
 {
+
 	Controller game;
 	game.entryScreen();
 	//Board board1, board2;

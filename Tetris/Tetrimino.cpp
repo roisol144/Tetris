@@ -7,8 +7,8 @@ void Tetrimino::createTetromino(char ch) {
 	this->m_points[0].setX(4);
 	this->m_points[0].setY(0);
 	srand(time(nullptr));
-	//int randNum = 1 + rand() % 7;
-	int randNum = 1;
+	int randNum = 1 + rand() % 7;
+	//int randNum = 1;
 
 	switch (randNum) {
 	case 1: { // STRAIGHT
@@ -109,16 +109,18 @@ void Tetrimino::draw(int gap) {
 }
 
 void Tetrimino::erase(int gap) {
-	for (int i = 0; i < NUM_OF_POINTS; i++) {
+	for (int i = 0; i < NUM_OF_POINTS && !newBorn; i++) {
 		gotoxy(this->m_points[i].getX() + gap + 1, this->m_points[i].getY());
 		cout << ' ';
 	}
 }
 
-void Tetrimino::move(int gap) {
+void Tetrimino::move(int gap) 
+{
+	//this->erase(gap);
 	this->draw(gap);
-	Sleep(300);
-	this->erase(gap);
+	//Sleep(300);
+	//this->erase(gap);
 	//this->moveDown();
 }
 
@@ -259,6 +261,32 @@ Point* Tetrimino::rotateCounterClockwise()
 		points_to_rotate[i].setY(m_points[i].rotateCounterClockwise(pivot).getY());
 	}
 	return points_to_rotate;
+}
+
+bool Tetrimino::isTopReached()
+{
+	for (int i = 0; i < NUM_OF_POINTS; i++)
+	{
+		if (this->m_points[i].getY() == 0)
+		{
+			for (int j = i; j < NUM_OF_POINTS; j++)
+				this->m_points[j].setY(this->m_points[j].getY() + 1);
+			return true;
+		}
+	}
+	return false;
+}
+
+void Tetrimino::setNextMove(char ch1, char ch2, char ch3, char ch4) {
+	this->nextMove[0] = ch1;
+	this->nextMove[1] = ch2;
+	this->nextMove[2] = ch3;
+	this->nextMove[3] = ch4;
+}
+
+void Tetrimino::setNextMoveByIndex(char ch1, int index) {
+	this->nextMove[index] = ch1;
+	
 }
 
 

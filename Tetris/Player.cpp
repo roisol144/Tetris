@@ -6,6 +6,7 @@ Tetrimino* Player::createNextTetrimino()
 {
 	Tetrimino* t = new Tetrimino;
 	t->createTetromino(this->letters[this->currLettersIdx++]);
+	this->currTetro = t;
 	return t;
 }
 
@@ -33,16 +34,24 @@ int Player::whichRowFull() {
 	return this->gameBoard.whichRowFull();
 }
 
-void Player::removeFullLine(int lineNum) {
+void Player::removeFullLine(int lineNum, int gap) {
 	if(lineNum!=-1)
-		this->gameBoard.removeFullLine(lineNum);
+		this->gameBoard.removeFullLine(lineNum,gap);
 }
 
 void Player::increaseScore() {
 	this->score++;
 }
 
+
 void Player::resetScore() {
 	this->score = 0;
 }
+
+void Player::setPlayerName(string name)
+{
+	this->name = name;
+}
+
+
 

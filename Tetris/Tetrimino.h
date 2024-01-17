@@ -8,8 +8,9 @@ private:
     static const int NUM_OF_POINTS = 4;
     Point m_points[NUM_OF_POINTS];
     char m_char;
+    char nextMove[4];
     bool isMoving = true;
-
+    bool newBorn = true;
 public:
     // Methods for manipulating the Tetrimino
     // (e.g., rotate, moveLeft, moveRight, moveDown, etc.) 
@@ -18,7 +19,7 @@ public:
 
 
     void createTetromino(char ch);
-    Point* getTetromino() { return m_points; }
+    Point* getTetroPoints() { return m_points; }
     bool getIsMoving() { return isMoving; }
     void finishMoving() { isMoving = false; }
     void move(int gap = 0);
@@ -32,6 +33,12 @@ public:
     bool isRotateLegal(Point* pointsArr,char* rotated);
     Point* rotateClockwise();
     Point* rotateCounterClockwise();
+    void setNewBorn(bool newborn) { newBorn = newborn; }
+    bool isNewBorn() { return newBorn; }
+    bool isTopReached();
+    void setNextMove(char ch1, char ch2, char ch3, char ch4);
+    char* getNextMove() { return this->nextMove; }
+    void setNextMoveByIndex(char ch1, int index);
     //void drop();
 
 
