@@ -10,6 +10,7 @@ private:
     Player player2;
     int winner;
     bool gameStatus = true; // true for there's active game, false if not.
+    static const int NUM_OF_POINTS = 4;
 
    
 public:
@@ -23,6 +24,6 @@ public:
     void printScoreBoard();
     void showInstructions();
     void updateScore(Player& p, int gap);
-    void endGame(); // TODO
+    void endGame(); 
  
 };

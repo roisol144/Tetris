@@ -5,19 +5,6 @@ using namespace std;
 #include "Board.h"
 #include "general.h"
 
-/*
-int GameBoard::getGameHeight() 
-{
-	return this->GAME_HEIGHT;
-}
-
-int GameBoard::getGameWidth() 
-{
-	return this->GAME_WIDTH;
-}
-*/
-
-
 void Board::init() {
 	for (int i = 0; i < GAME_HEIGHT; i++)
 	{
@@ -72,13 +59,6 @@ void Board::drawBoardInGame(int boardsGap) {
 	}
 }
 
-/*
-char** Board::getBoard()
-{
-	return gameBoard1;
-}
-*/
-
 void Board::addToBoard(Tetrimino* shape) {
 	Point* arr = shape->getTetroPoints();
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
@@ -91,16 +71,6 @@ void Board::addToBoard(Tetrimino* shape) {
 char Board::getChar(int row, int col) {
 	return this->gameBoard[row][col];
 }
-
-/*
-bool Board::isRowFull(char* row) {
-	for (int col = 0; col < this->GAME_WIDTH; col++) {
-		if (row[col] == ' ')
-			return false;
-	}
-	return true;
-}
-*/
 
 int Board::whichRowFull() {
 	int counter;

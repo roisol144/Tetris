@@ -18,18 +18,6 @@ private:
 	char gameBoard[GAME_HEIGHT][GAME_WIDTH];
 	
 public:
-	/*
-	Board() // Constructor to initialize the array
-	{
-		for (int i = 0; i < GAME_HEIGHT; i++)
-		{
-			for (int j = 0; j < GAME_WIDTH; j++)
-			{
-				gameBoard1[j][i] = ' '; // Initialize with some default value
-			}
-		}
-	}*/
-
 	void init();
 
 	void addToBoard(Tetrimino* shape);

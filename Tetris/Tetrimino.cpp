@@ -12,7 +12,7 @@ void Tetrimino::createTetromino(char ch) {
 
 	switch (randNum) {
 	case 1: { // STRAIGHT
-		for (int i = 1; i < 4; i++) {
+		for (int i = 1; i < NUM_OF_POINTS; i++) {
 			this->m_points[i].setX(this->m_points[i-1].getX() + 1);
 			this->m_points[i].setY(0);
 		}
@@ -23,7 +23,7 @@ void Tetrimino::createTetromino(char ch) {
 			this->m_points[i].setX(this->m_points[i - 1].getX() + 1);
 			this->m_points[i].setY(0);
 		}
-		for (int i = 2; i < 4; i++) {
+		for (int i = 2; i < NUM_OF_POINTS; i++) {
 			this->m_points[i].setX(this->m_points[i - 2].getX());
 			this->m_points[i].setY(1);
 		}
@@ -117,11 +117,7 @@ void Tetrimino::erase(int gap) {
 
 void Tetrimino::move(int gap) 
 {
-	//this->erase(gap);
 	this->draw(gap);
-	//Sleep(300);
-	//this->erase(gap);
-	//this->moveDown();
 }
 
 
@@ -131,9 +127,6 @@ bool Tetrimino::moveRight(char* right) {
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		if (this->m_points[i].getX() + 1 == 12)
 			return false;
-		//if (this->m_points[i].getX() >= 12 - 1)
-			//return false;
-
 	}
 
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
@@ -169,12 +162,6 @@ bool Tetrimino::moveLeft(char* left)
 	return true;
 }
 
-/*
-void Tetrimino::moveDrop() {
-
-}
-*/
- 
 
 Point Tetrimino::calculatePivot() 
 {
@@ -187,8 +174,8 @@ Point Tetrimino::calculatePivot()
 		sumY += point.getY();
 	}
 
-	int averageX = round(static_cast<double>(sumX) / 4); // TODO - Change 4 to constant
-	int averageY = round(static_cast<double>(sumY) / 4);
+	int averageX = round(static_cast<double>(sumX) / NUM_OF_POINTS); // TODO - Change 4 to constant
+	int averageY = round(static_cast<double>(sumY) / NUM_OF_POINTS);
 
 	return Point(averageX, averageY);
 }
@@ -209,7 +196,6 @@ Point* Tetrimino::rotateClockwise()
 	// Rotate clockwise around the pivot
 	for (int i = 0; i < NUM_OF_POINTS; i++)
 	{
-		//m_points[i].rotateClockwise(pivot);
 		points_to_rotate[i].setX(m_points[i].rotateClockwise(pivot).getX());
 		points_to_rotate[i].setY(m_points[i].rotateClockwise(pivot).getY());
 		
@@ -220,9 +206,9 @@ Point* Tetrimino::rotateClockwise()
 bool Tetrimino::isRotateLegal(Point* pointsArr,char* rotated)
 {
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
-		if (pointsArr[i].getX() <= 0 || pointsArr[i].getX() >= 12)
+		if (pointsArr[i].getX() <= 0 || pointsArr[i].getX() >= GAME_HEIGHT)
 			return false;
-		if (pointsArr[i].getY() <= 0 || pointsArr[i].getY() >= 18)
+		if (pointsArr[i].getY() <= 0 || pointsArr[i].getY() >= GAME_WIDTH)
 			return false;
 	}
 
@@ -256,7 +242,6 @@ Point* Tetrimino::rotateCounterClockwise()
 	// Rotate clockwise around the pivot
 	for (int i = 0; i < NUM_OF_POINTS; i++)
 	{
-		//m_points[i].rotateClockwise(pivot);
 		points_to_rotate[i].setX(m_points[i].rotateCounterClockwise(pivot).getX());
 		points_to_rotate[i].setY(m_points[i].rotateCounterClockwise(pivot).getY());
 	}

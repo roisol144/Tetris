@@ -8,13 +8,13 @@ private:
     static const int NUM_OF_POINTS = 4;
     Point m_points[NUM_OF_POINTS];
     char m_char;
-    char nextMove[4];
+    char nextMove[NUM_OF_POINTS];
     bool isMoving = true;
     bool newBorn = true;
+    static constexpr int GAME_HEIGHT = 18;
+    static constexpr int GAME_WIDTH = 12;
 public:
     // Methods for manipulating the Tetrimino
-    // (e.g., rotate, moveLeft, moveRight, moveDown, etc.) 
-
     Tetrimino() : m_points{ {0, 0}, {0, 0}, {0, 0}, {0, 0} }, m_char('A') {} //Default constructor 
 
 
@@ -39,7 +39,4 @@ public:
     void setNextMove(char ch1, char ch2, char ch3, char ch4);
     char* getNextMove() { return this->nextMove; }
     void setNextMoveByIndex(char ch1, int index);
-    //void drop();
-
-
 };
