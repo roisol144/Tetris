@@ -8,7 +8,7 @@ private:
     Player player1;
     Player player2;
     int winner;
-    bool gameStatus = true; // true for there's active game, false if not.
+    bool gameStatus = false; // true for there's active game, false if not.
     static const int NUM_OF_POINTS = 4;
 
    

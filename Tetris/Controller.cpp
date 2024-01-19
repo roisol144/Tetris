@@ -420,13 +420,12 @@ void Controller::showInstructions()
 	cout << "*    Instructions   *" << endl;
 	cout << "*********************" << endl << endl;
 	cout << "Player 1 - Use 'A' to move the Tetromino left and 'D' for right." << endl;
-	cout << "Player 1 - Use 'X' to drop the Tetromino" << endl;
+	cout << "Player 1 - Use 'X' to drop the Tetromino." << endl;
 	cout << "Player 1 - Use 'S' to rotate the Tetromino clockwise and 'W' for counter clockwise." << endl << endl;
 
 	cout << "Player 2 - Use 'J' to move the Tetromino left and 'L' for right." << endl;
-	cout << "Player 2 - Use 'M' to drop the Tetromino" << endl;
+	cout << "Player 2 - Use 'M' to drop the Tetromino." << endl;
 	cout << "Player 2 - Use 'K' to rotate the Tetromino clockwise and 'I' for counter clockwise." << endl << endl;
-	cout << "Press 'ESC' to pause the game." << endl;
 	cout << "Press 'Enter' key to go back to the menu...";
 	cin.ignore();
 	cin.ignore();
