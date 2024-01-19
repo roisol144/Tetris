@@ -213,9 +213,9 @@ Point* Tetrimino::rotateClockwise()
 bool Tetrimino::isRotateLegal(Point* pointsArr,char* rotated)
 {
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
-		if (pointsArr[i].getX() <= 0 || pointsArr[i].getX() >= GAME_HEIGHT)
+		if (pointsArr[i].getX() <= 0 || pointsArr[i].getX() >= GAME_WIDTH)
 			return false;
-		if (pointsArr[i].getY() <= 0 || pointsArr[i].getY() >= GAME_WIDTH)
+		if (pointsArr[i].getY() <= 0 || pointsArr[i].getY() >= GAME_HEIGHT)
 			return false;
 	}
 

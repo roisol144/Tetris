@@ -44,7 +44,7 @@ void Controller::playGame()
 			this->player2.createNextTetrimino(); // Create a new tetromino for Player 2
 		}
 
-		Sleep(50); // Pause for a short duration (milliseconds) for game update
+		Sleep(300); // Pause for a short duration (milliseconds) for game update
 		this->handleUserInput(); // Handle user input during the game
 		this->moveTetriminoDown(this->player1); // Move the tetromino of Player 1 down
 		this->moveTetriminoDown(this->player2); // Move the tetromino of Player 2 down
