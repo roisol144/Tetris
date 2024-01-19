@@ -1,14 +1,14 @@
 #include "Tetrimino.h"
 using namespace std;
 
-void Tetrimino::createTetromino(char ch) {
+void Tetrimino::createTetromino() {
 	//reset the first point 
-	this->m_char = ch;
 	this->m_points[0].setX(4);
 	this->m_points[0].setY(0);
 	srand(time(nullptr));
 	int randNum = 1 + rand() % 7;
-	//int randNum = 1;
+
+	//int randNum = 1; // FOR TESTS
 
 	switch (randNum) {
 	case 1: { // STRAIGHT
@@ -16,6 +16,7 @@ void Tetrimino::createTetromino(char ch) {
 			this->m_points[i].setX(this->m_points[i-1].getX() + 1);
 			this->m_points[i].setY(0);
 		}
+		this->colorAnsciCode = "\033[36m";
 		break;
 	}
 	case 2: { // SQUARE
@@ -27,6 +28,7 @@ void Tetrimino::createTetromino(char ch) {
 			this->m_points[i].setX(this->m_points[i - 2].getX());
 			this->m_points[i].setY(1);
 		}
+		this->colorAnsciCode = "\033[33m";
 		break;
 	}
 	case 3: { // T
@@ -36,6 +38,7 @@ void Tetrimino::createTetromino(char ch) {
 		}
 		this->m_points[3].setX(5);
 		this->m_points[3].setY(1);
+		this->colorAnsciCode = "\033[35m";
 		break;
 	}
 	case 4: { // J
@@ -46,6 +49,7 @@ void Tetrimino::createTetromino(char ch) {
 		}
 		this->m_points[3].setX(4);
 		this->m_points[3].setY(2);
+		this->colorAnsciCode = "\033[34m";
 		break;
 	}
 	case 5: { // L
@@ -56,6 +60,7 @@ void Tetrimino::createTetromino(char ch) {
 		}
 		this->m_points[3].setX(5);
 		this->m_points[3].setY(2);
+		this->colorAnsciCode = "\033[37m";
 		break;
 	}
 		
@@ -68,6 +73,7 @@ void Tetrimino::createTetromino(char ch) {
 		this->m_points[2].setY(0);
 		this->m_points[3].setX(6);
 		this->m_points[3].setY(0);
+		this->colorAnsciCode = "\033[32m";
 		break;
 	}
 	case 7: { // Z
@@ -77,6 +83,7 @@ void Tetrimino::createTetromino(char ch) {
 		this->m_points[2].setY(1);
 		this->m_points[3].setX(6);
 		this->m_points[3].setY(1);
+		this->colorAnsciCode = "\033[31m";
 		break;
 	}
 	}	
@@ -84,7 +91,7 @@ void Tetrimino::createTetromino(char ch) {
 
 bool Tetrimino::moveDown(char* down) {
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
-		if (this->m_points[i].getY() + 1 == 18)
+		if (this->m_points[i].getY() + 1 == this->GAME_HEIGHT)
 			return false;
 	}
 
@@ -104,7 +111,7 @@ bool Tetrimino::moveDown(char* down) {
 void Tetrimino::draw(int gap) {
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		gotoxy(this->m_points[i].getX() + gap + 1, this->m_points[i].getY());
-		cout << this->m_char;
+		cout << this->colorAnsciCode << this->m_char << this->RESETCOLOR;
 	}
 }
 
@@ -125,7 +132,7 @@ void Tetrimino::move(int gap)
 bool Tetrimino::moveRight(char* right) {
 	
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
-		if (this->m_points[i].getX() + 1 == 12)
+		if (this->m_points[i].getX() + 1 == this->GAME_WIDTH)
 			return false;
 	}
 
@@ -262,12 +269,6 @@ bool Tetrimino::isTopReached()
 	return false;
 }
 
-void Tetrimino::setNextMove(char ch1, char ch2, char ch3, char ch4) {
-	this->nextMove[0] = ch1;
-	this->nextMove[1] = ch2;
-	this->nextMove[2] = ch3;
-	this->nextMove[3] = ch4;
-}
 
 void Tetrimino::setNextMoveByIndex(char ch1, int index) {
 	this->nextMove[index] = ch1;

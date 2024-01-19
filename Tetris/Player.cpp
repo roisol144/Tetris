@@ -5,7 +5,7 @@
 Tetrimino* Player::createNextTetrimino()
 {
 	Tetrimino* t = new Tetrimino;
-	t->createTetromino(this->letters[this->currLettersIdx++]);
+	t->createTetromino();
 	this->currTetro = t;
 	return t;
 }
@@ -35,7 +35,7 @@ int Player::whichRowFull() {
 }
 
 void Player::removeFullLine(int lineNum, int gap) {
-	if(lineNum!=-1)
+	if(lineNum != this->FULLROW_NOTFOUND)
 		this->gameBoard.removeFullLine(lineNum,gap);
 }
 

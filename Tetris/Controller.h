@@ -1,6 +1,5 @@
 #include "Player.h"
 #include "general.h"
-#include "Board.h"
 
 
 class Controller 
@@ -15,8 +14,13 @@ private:
    
 public:
     // Methods for managing the game loop, updating players, etc.
-
-    //Controller(Player _player1, Player _player2) : player1(_player1), player2(_player2) {}   
+    
+    //CONSTS
+    static constexpr int PLAYER1 = 1;
+    static constexpr int PLAYER2 = 2;
+    static constexpr int TIE = 0;
+    static constexpr int HARDDROP_SLEEPTIME = 20;
+    static constexpr int ESC_KEYCODE = 27;
     void playGame();
     void entryScreen();
     void handleUserInput();

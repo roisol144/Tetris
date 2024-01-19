@@ -13,5 +13,6 @@ using namespace std;
 
 void gotoxy(int x, int y);
 void clrscr();
+void ShowConsoleCursor(bool showFlag);
 
 #endif // __GENERAL_H

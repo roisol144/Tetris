@@ -74,7 +74,7 @@ char Board::getChar(int row, int col) {
 
 int Board::whichRowFull() {
 	int counter;
-	for (int row = 17; row >= 0; row--) {
+	for (int row = this->GAME_HEIGHT-1; row >= 0; row--) {
 		counter = 0;
 		for (int col = 0; col < this->GAME_WIDTH; col++) {
 			if (this->getChar(row,col) == ' ') {
@@ -82,7 +82,7 @@ int Board::whichRowFull() {
 			}
 			counter++;
 		}
-		if (counter == 12)
+		if (counter == this->GAME_WIDTH)
 			return row;
 	}
 	return -1;
@@ -98,7 +98,7 @@ void Board::removeFullLine(int lineNum, int gap) {
 				this->gameBoard[row][col] = this->gameBoard[row - 1][col];
 		}
 	}
-	this->drawBoardInGame(gap); //TODO add gap
+	this->drawBoardInGame(gap);
 	
 }
 

@@ -3,22 +3,28 @@
 #include "general.h"
 
 class Tetrimino
-{ 
+{
 private:
     static const int NUM_OF_POINTS = 4;
     Point m_points[NUM_OF_POINTS];
-    char m_char;
+    char m_char = 219;
     char nextMove[NUM_OF_POINTS];
     bool isMoving = true;
     bool newBorn = true;
-    static constexpr int GAME_HEIGHT = 18;
-    static constexpr int GAME_WIDTH = 12;
+    string colorAnsciCode;
 public:
     // Methods for manipulating the Tetrimino
-    Tetrimino() : m_points{ {0, 0}, {0, 0}, {0, 0}, {0, 0} }, m_char('A') {} //Default constructor 
+    Tetrimino() : m_points{ {0, 0}, {0, 0}, {0, 0}, {0, 0} } {} //Default constructor 
 
+    //CONSTS
+    static constexpr int GAME_HEIGHT = 18;
+    static constexpr int GAME_WIDTH = 12;
+    static constexpr char RESETCOLOR[7] = "\033[0m";
 
-    void createTetromino(char ch);
+    //functions
+    void createTetromino();
+    //string getColor() { return colorAnsciCode; }
+    //void setColor(string color) { colorAnsciCode = color; }
     Point* getTetroPoints() { return m_points; }
     bool getIsMoving() { return isMoving; }
     void finishMoving() { isMoving = false; }
@@ -36,7 +42,6 @@ public:
     void setNewBorn(bool newborn) { newBorn = newborn; }
     bool isNewBorn() { return newBorn; }
     bool isTopReached();
-    void setNextMove(char ch1, char ch2, char ch3, char ch4);
     char* getNextMove() { return this->nextMove; }
     void setNextMoveByIndex(char ch1, int index);
 };

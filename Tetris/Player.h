@@ -1,25 +1,15 @@
 #include "Board.h"
-#include "Tetrimino.h"
+
 
 
 class Player 
 {
 public:
-    // Methods for handling user input, updating the game state, etc.
-    //TODO intialize with all letter in constructor
-    /*
-    Player(int _gap, string _name) {
-        this->initBoard();
-        //this->drawBoard();
-        this->createNextTetrimino();
-        this->score = 0;
-        this->currLettersIdx = 0;
-        this->gap = _gap;
-        this->name = _name;
-    }
-    */
-    //Player() {};
-
+   
+    //CONSTS
+    static constexpr int PLAYER2_GAP = 22;
+    static constexpr int FULLROW_NOTFOUND = -1;
+ // Methods for handling user input, updating the game state, etc.
     /* createNextTetrimino() - creating a new tetrimino*/
     Tetrimino* createNextTetrimino();
     /* drawBoard() - drawing the board */
@@ -54,8 +44,6 @@ public:
 private:
     Board gameBoard;
     Tetrimino* currTetro;
-    char letters[54] = { 'A','B','C','D','E','F','G','H','I','L','M','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
-    int currLettersIdx = 0;
     int score = 0;
     int gap = 0;
     string name;
