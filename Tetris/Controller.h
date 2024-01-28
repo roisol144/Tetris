@@ -21,7 +21,7 @@ public:
     static constexpr int TIE = 0;
     static constexpr int HARDDROP_SLEEPTIME = 20;
     static constexpr int ESC_KEYCODE = 27;
-    void playGame();
+    void playGame(bool isColor);
     void entryScreen();
     void handleUserInput();
     void moveTetriminoDown(Player& player);
@@ -29,5 +29,7 @@ public:
     void showInstructions();
     void updateScore(Player& p, int gap);
     void endGame(); 
+    void resetColor();
+    
  
 };

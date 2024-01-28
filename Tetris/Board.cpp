@@ -4,7 +4,7 @@
 using namespace std;
 #include "Board.h"
 #include "general.h"
-
+/*
 void Board::init() {
 	for (int i = 0; i < GAME_HEIGHT; i++)
 	{
@@ -14,10 +14,12 @@ void Board::init() {
 		}
 	}
 }
+*/
 
 void Board::drawBoard(int boardsGap)
 {
-	
+	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hStdOut, 15);
 	for (int col = 0 + boardsGap; col <= this->GAME_WIDTH + 1 + boardsGap; col++)
 	{
 		
@@ -42,12 +44,15 @@ void Board::drawBoard(int boardsGap)
 }
 
 void Board::drawBoardInGame(int boardsGap) {
+	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	//SetConsoleTextAttribute(hStdOut, 15);
 	this->drawBoard(boardsGap);
 	for (int row = 0; row < this->GAME_HEIGHT; row++) {
 		for (int col = 0; col < this->GAME_WIDTH; col++) {
 			if (this->gameBoard[row][col] != ' ') {
 				gotoxy(boardsGap + col + 1, row);
-				cout << this->gameBoard[row][col];
+				SetConsoleTextAttribute(hStdOut, this->gameBoard[row][col]);
+				cout << (char)219;
 			}
 			else {
 				if (row == 0)
@@ -62,14 +67,14 @@ void Board::drawBoardInGame(int boardsGap) {
 void Board::addToBoard(Tetrimino* shape) {
 	Point* arr = shape->getTetroPoints();
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
-		this->gameBoard[arr[i].getY()][arr[i].getX()] = shape->getChar();
+		this->gameBoard[arr[i].getY()][arr[i].getX()] = shape->getColor();
+
 	}
 
 }
 
-
 char Board::getChar(int row, int col) {
-	return this->gameBoard[row][col];
+	return this->gameBoard[col][row];
 }
 
 int Board::whichRowFull() {
@@ -77,7 +82,7 @@ int Board::whichRowFull() {
 	for (int row = this->GAME_HEIGHT-1; row >= 0; row--) {
 		counter = 0;
 		for (int col = 0; col < this->GAME_WIDTH; col++) {
-			if (this->getChar(row,col) == ' ') {
+			if (this->getChar(col,row) == ' ') {
 				break;
 			}
 			counter++;
@@ -99,7 +104,6 @@ void Board::removeFullLine(int lineNum, int gap) {
 		}
 	}
 	this->drawBoardInGame(gap);
-	
 }
 
 

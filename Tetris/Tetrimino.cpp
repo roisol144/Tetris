@@ -1,7 +1,7 @@
 #include "Tetrimino.h"
 using namespace std;
 
-void Tetrimino::createTetromino() {
+void Tetrimino::createTetromino(bool isColor) {
 	//reset the first point 
 	this->m_points[0].setX(4);
 	this->m_points[0].setY(0);
@@ -16,7 +16,9 @@ void Tetrimino::createTetromino() {
 			this->m_points[i].setX(this->m_points[i-1].getX() + 1);
 			this->m_points[i].setY(0);
 		}
-		this->colorAnsciCode = "\033[36m";
+		//this->colorAnsciCode = "\033[36m";
+		if(isColor)
+			this->color = Colors::CYAN;
 		break;
 	}
 	case 2: { // SQUARE
@@ -28,7 +30,10 @@ void Tetrimino::createTetromino() {
 			this->m_points[i].setX(this->m_points[i - 2].getX());
 			this->m_points[i].setY(1);
 		}
-		this->colorAnsciCode = "\033[33m";
+		//this->colorAnsciCode = "\033[33m";
+		if (isColor)
+			this->color = Colors::YELLOW;
+
 		break;
 	}
 	case 3: { // T
@@ -38,7 +43,10 @@ void Tetrimino::createTetromino() {
 		}
 		this->m_points[3].setX(5);
 		this->m_points[3].setY(1);
-		this->colorAnsciCode = "\033[35m";
+		//this->colorAnsciCode = "\033[35m";
+		if (isColor)
+			this->color = Colors::MAGENTA;
+
 		break;
 	}
 	case 4: { // J
@@ -49,7 +57,10 @@ void Tetrimino::createTetromino() {
 		}
 		this->m_points[3].setX(4);
 		this->m_points[3].setY(2);
-		this->colorAnsciCode = "\033[34m";
+		//this->colorAnsciCode = "\033[34m";
+		if (isColor)
+			this->color = Colors::BLUE;
+
 		break;
 	}
 	case 5: { // L
@@ -60,7 +71,10 @@ void Tetrimino::createTetromino() {
 		}
 		this->m_points[3].setX(5);
 		this->m_points[3].setY(2);
-		this->colorAnsciCode = "\033[37m";
+		//this->colorAnsciCode = "\033[37m";
+		if (isColor)
+			this->color = Colors::BROWN;
+
 		break;
 	}
 		
@@ -73,7 +87,10 @@ void Tetrimino::createTetromino() {
 		this->m_points[2].setY(0);
 		this->m_points[3].setX(6);
 		this->m_points[3].setY(0);
-		this->colorAnsciCode = "\033[32m";
+		//this->colorAnsciCode = "\033[32m";
+		if (isColor)
+			this->color = Colors::GREEN;
+
 		break;
 	}
 	case 7: { // Z
@@ -83,7 +100,10 @@ void Tetrimino::createTetromino() {
 		this->m_points[2].setY(1);
 		this->m_points[3].setX(6);
 		this->m_points[3].setY(1);
-		this->colorAnsciCode = "\033[31m";
+		//this->colorAnsciCode = "\033[31m";
+		if (isColor)
+			this->color = Colors::RED;
+
 		break;
 	}
 	}	
@@ -109,9 +129,12 @@ bool Tetrimino::moveDown(char* down) {
 }
 
 void Tetrimino::draw(int gap) {
+	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		gotoxy(this->m_points[i].getX() + gap + 1, this->m_points[i].getY());
-		cout << this->colorAnsciCode << this->m_char << this->RESETCOLOR;
+		SetConsoleTextAttribute(hStdOut, this->color);
+		cout << (char)219;
 	}
 }
 
