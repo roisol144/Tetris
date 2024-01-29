@@ -23,12 +23,12 @@ public:
 	}
 
 	//void init();
-	void addToBoard(Tetrimino* shape);
-	char getChar(int row, int col);
-	void drawBoard(int boardsGap = 0);
-	void drawBoardInGame(int boardsGap = 0);
-	int whichRowFull();
-	void removeFullLine(int lineNum, int gap);
+	void addToBoard(const Tetrimino* shape);
+	char getChar(int row, int col) const;
+	void drawBoard(const int boardsGap = 0) const;
+	void drawBoardInGame(const int boardsGap = 0) const;
+	int whichRowFull() const;
+	void removeFullLine(const int lineNum,const int gap);
 
 
 private:

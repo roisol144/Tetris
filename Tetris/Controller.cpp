@@ -3,7 +3,7 @@
 using namespace std;
 
 
-void Controller::playGame(bool isColor)
+void Controller::playGame(const bool isColor)
 {
 	/* Define and reset new players */
 	this->player1.resetScore();

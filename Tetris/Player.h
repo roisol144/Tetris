@@ -11,7 +11,7 @@ public:
     static constexpr int FULLROW_NOTFOUND = -1;
  // Methods for handling user input, updating the game state, etc.
     /* createNextTetrimino() - creating a new tetrimino*/
-    Tetrimino* createNextTetrimino(bool isColor);
+    Tetrimino* createNextTetrimino(const bool isColor);
     /* drawBoard() - drawing the board */
     //void drawBoard(int boardGap = 0);
     /* getting cooridantes to retrieve char from thr board 2D array. */
@@ -31,11 +31,11 @@ public:
     /* function will reset the score of the player at the beginning of the game.  */
     void resetScore();
     /*  function will return the score of the player */
-    int getScore() { return this->score; }
+    int getScore() const { return this->score; }
     /* function will set the gap of the player (printed gap of the console board)*/
-    void setGap(int gapParam) { this->gap = gapParam; }
+    void setGap(const int gapParam) { this->gap = gapParam; }
     /* function will return the gap of the player */
-    int getGap() { return this->gap; }
+    int getGap() const { return this->gap; }
     /* function will initilize the player name  */
     void setPlayerName(string name);
     /* funtion will return the current tetrimino that is moving on the board. */

@@ -1,7 +1,7 @@
 #include "Point.h"
 
 
-Point Point::rotateClockwise(Point& pivot)
+Point Point::rotateClockwise(const Point& pivot) const
 {
     int newX = pivot.getX() + (pivot.getY() - y);
     int newY = pivot.getY() - (pivot.getX() - x);
@@ -9,7 +9,7 @@ Point Point::rotateClockwise(Point& pivot)
     return p;
 }
 
-Point Point::rotateCounterClockwise(Point& pivot)
+Point Point::rotateCounterClockwise(const Point& pivot) const
 {
     int newX = pivot.getX() - (pivot.getY() - y);
     int newY = pivot.getY() + (pivot.getX() - x);

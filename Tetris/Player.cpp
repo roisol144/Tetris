@@ -2,7 +2,7 @@
 
 
 
-Tetrimino* Player::createNextTetrimino(bool isColor)
+Tetrimino* Player::createNextTetrimino(const bool isColor)
 {
 	Tetrimino* t = new Tetrimino;
 	t->createTetromino(isColor);

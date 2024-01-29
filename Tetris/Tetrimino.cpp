@@ -109,7 +109,7 @@ void Tetrimino::createTetromino(bool isColor) {
 	}	
 }
 
-bool Tetrimino::moveDown(char* down) {
+bool Tetrimino::moveDown(const char* down) {
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		if (this->m_points[i].getY() + 1 == this->GAME_HEIGHT)
 			return false;
@@ -128,7 +128,7 @@ bool Tetrimino::moveDown(char* down) {
 
 }
 
-void Tetrimino::draw(int gap) {
+void Tetrimino::draw(int gap) const {
 	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
@@ -138,21 +138,21 @@ void Tetrimino::draw(int gap) {
 	}
 }
 
-void Tetrimino::erase(int gap) {
+void Tetrimino::erase(int gap) const {
 	for (int i = 0; i < NUM_OF_POINTS && !newBorn; i++) {
 		gotoxy(this->m_points[i].getX() + gap + 1, this->m_points[i].getY());
 		cout << ' ';
 	}
 }
 
-void Tetrimino::move(int gap) 
+void Tetrimino::move(int gap) const
 {
 	this->draw(gap);
 }
 
 
 
-bool Tetrimino::moveRight(char* right) {
+bool Tetrimino::moveRight(const char* right) {
 	
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		if (this->m_points[i].getX() + 1 == this->GAME_WIDTH)
@@ -172,7 +172,7 @@ bool Tetrimino::moveRight(char* right) {
 }
 
 
-bool Tetrimino::moveLeft(char* left)
+bool Tetrimino::moveLeft(const char* left)
 {
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		if (this->m_points[i].getX() == 0)
@@ -193,7 +193,7 @@ bool Tetrimino::moveLeft(char* left)
 }
 
 
-Point Tetrimino::calculatePivot() 
+Point Tetrimino::calculatePivot()
 {
 	int sumX = 0;
 	int sumY = 0;
@@ -204,7 +204,7 @@ Point Tetrimino::calculatePivot()
 		sumY += point.getY();
 	}
 
-	int averageX = round(static_cast<double>(sumX) / NUM_OF_POINTS); // TODO - Change 4 to constant
+	int averageX = round(static_cast<double>(sumX) / NUM_OF_POINTS); 
 	int averageY = round(static_cast<double>(sumY) / NUM_OF_POINTS);
 
 	return Point(averageX, averageY);
@@ -233,7 +233,7 @@ Point* Tetrimino::rotateClockwise()
 	return points_to_rotate;
 }
 
-bool Tetrimino::isRotateLegal(Point* pointsArr,char* rotated)
+bool Tetrimino::isRotateLegal(const Point* pointsArr, const char* rotated)
 {
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		if (pointsArr[i].getX() <= 0 || pointsArr[i].getX() >= GAME_WIDTH)

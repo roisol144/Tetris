@@ -30,23 +30,23 @@ public:
     void createTetromino(bool isColor);
     //string getColor() { return colorAnsciCode; }
     //void setColor(string color) { colorAnsciCode = color; }
-    Point* getTetroPoints() { return m_points; }
-    bool getIsMoving() { return isMoving; }
+    const Point* getTetroPoints() const { return m_points; }
+    bool getIsMoving() const { return isMoving; }
     void finishMoving() { isMoving = false; }
-    void move(int gap = 0);
-    bool moveRight(char* right);
-    bool moveLeft(char* left);
+    void move(int gap = 0) const;
+    bool moveRight(const char* right);
+    bool moveLeft(const char* left);
     Point calculatePivot();
-    bool moveDown(char* down);
-    void draw(int gap = 0);
-    void erase(int gap = 0);
-    bool isRotateLegal(Point* pointsArr,char* rotated);
+    bool moveDown(const char* down);
+    void draw(int gap = 0) const;
+    void erase(int gap = 0) const;
+    bool isRotateLegal(const Point* pointsArr,const char* rotated);
     Point* rotateClockwise();
     Point* rotateCounterClockwise();
     void setNewBorn(bool newborn) { newBorn = newborn; }
-    bool isNewBorn() { return newBorn; }
+    bool isNewBorn() const { return newBorn; }
     bool isTopReached();
-    char* getNextMove() { return this->nextMove; }
+    const char* getNextMove() const { return this->nextMove; }
     void setNextMoveByIndex(char ch1, int index);
-    int getColor() { return this->color; }
+    int getColor() const { return this->color; }
 };

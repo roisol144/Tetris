@@ -16,7 +16,7 @@ void Board::init() {
 }
 */
 
-void Board::drawBoard(int boardsGap)
+void Board::drawBoard(const int boardsGap) const
 {
 	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hStdOut, 15);
@@ -43,7 +43,7 @@ void Board::drawBoard(int boardsGap)
 
 }
 
-void Board::drawBoardInGame(int boardsGap) {
+void Board::drawBoardInGame(int boardsGap) const {
 	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	//SetConsoleTextAttribute(hStdOut, 15);
 	this->drawBoard(boardsGap);
@@ -64,20 +64,19 @@ void Board::drawBoardInGame(int boardsGap) {
 	}
 }
 
-void Board::addToBoard(Tetrimino* shape) {
-	Point* arr = shape->getTetroPoints();
+void Board::addToBoard(const Tetrimino* shape) {
+	const Point* arr = shape->getTetroPoints();
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		this->gameBoard[arr[i].getY()][arr[i].getX()] = shape->getColor();
-
 	}
 
 }
 
-char Board::getChar(int row, int col) {
+char Board::getChar(int row, int col) const {
 	return this->gameBoard[col][row];
 }
 
-int Board::whichRowFull() {
+int Board::whichRowFull() const {
 	int counter;
 	for (int row = this->GAME_HEIGHT-1; row >= 0; row--) {
 		counter = 0;
@@ -94,7 +93,7 @@ int Board::whichRowFull() {
 	
 }
 
-void Board::removeFullLine(int lineNum, int gap) {
+void Board::removeFullLine(const int lineNum,const int gap) {
 	for (int row = lineNum; row > 0; row--) {
 		for (int col = 0; col < this->GAME_WIDTH; col++) {
 			if (row == 1)
