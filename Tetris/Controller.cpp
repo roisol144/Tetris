@@ -1,5 +1,6 @@
 #include "Controller.h"
 #include <windows.h>
+#pragma comment(lib, "winmm.lib")
 using namespace std;
 
 
@@ -31,15 +32,17 @@ void Controller::playGame(const bool isColor)
 		/* Checking if tetromino is not moving (landed), then create a new tetromino */
 		if (this->player1.currTetro->getIsMoving() == false)
 		{
-			delete (this->player1.currTetro); // Delete the previous tetromino for Player 1
-			this->player1.createNextTetrimino(isColor); // Create a new tetromino for Player 1
+			delete (this->player1.currTetro); // Delete the previous tetromino for Player 1		
+			this->player1.createNextTetrimino(isColor); // Create a new tetromino for Player 1			
 		}
 
 		if (this->player2.currTetro->getIsMoving() == false)
 		{
+			
 			delete (this->player2.currTetro); // Delete the previous tetromino for Player 2
-			this->player2.createNextTetrimino(isColor); // Create a new tetromino for Player 2
+			this->player2.createNextTetrimino(isColor); // Create a new tetromino for Player 2		
 		}
+
 
 		Sleep(300); // Pause for a short duration (milliseconds) for game update
 		this->handleUserInput(); // Handle user input during the game
@@ -98,9 +101,15 @@ void Controller::moveTetriminoDown(Player& player)
 		player.currTetro->setNewBorn(true); // Mark the tetromino as newly born
 		player.currTetro->draw(player.gap); // Draw the tetromino on the board
 		player.currTetro->finishMoving(); // Finish moving the tetromino
-
-		// Add the tetromino to the player's board
-		player.gameBoard.addToBoard(player.currTetro);
+		if (player.currTetro->isBombSet()) {
+			player.gameBoard.explosion(player.currTetro->getTetroPoints()[0],player.gap);
+			PlaySound(TEXT("explosion.wav"), NULL, SND_FILENAME| SND_ASYNC);
+		}
+		else {
+			// Add the tetromino to the player's board
+			player.gameBoard.addToBoard(player.currTetro);
+		}
+		
 
 		// Check for and remove full lines, increase score, and update the score display
 		while ((fullRowIndex = player.gameBoard.whichRowFull()) != player.FULLROW_NOTFOUND) {

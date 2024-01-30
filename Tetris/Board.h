@@ -29,6 +29,8 @@ public:
 	void drawBoardInGame(const int boardsGap = 0) const;
 	int whichRowFull() const;
 	void removeFullLine(const int lineNum,const int gap);
+	void explosion(const Point& pnt, const int gap);
+	// void minimizeGapsInBoard();
 
 
 private:

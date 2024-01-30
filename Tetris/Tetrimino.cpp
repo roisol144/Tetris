@@ -6,107 +6,118 @@ void Tetrimino::createTetromino(bool isColor) {
 	this->m_points[0].setX(4);
 	this->m_points[0].setY(0);
 	srand(time(nullptr));
-	int randNum = 1 + rand() % 7;
-
-	//int randNum = 1; // FOR TESTS
-
-	switch (randNum) {
-	case 1: { // STRAIGHT
+	int randShape = 1 + rand() % 7;
+	int randBomb = 1 + rand() % 5;
+	//int randShape = 1; // FOR TESTS
+	if (randBomb == 1) {
+		this->isBomb = true;
 		for (int i = 1; i < NUM_OF_POINTS; i++) {
-			this->m_points[i].setX(this->m_points[i-1].getX() + 1);
-			this->m_points[i].setY(0);
-		}
-		//this->colorAnsciCode = "\033[36m";
-		if(isColor)
-			this->color = Colors::CYAN;
-		break;
-	}
-	case 2: { // SQUARE
-		for (int i = 1; i < 2; i++) {
-			this->m_points[i].setX(this->m_points[i - 1].getX() + 1);
-			this->m_points[i].setY(0);
-		}
-		for (int i = 2; i < NUM_OF_POINTS; i++) {
-			this->m_points[i].setX(this->m_points[i - 2].getX());
-			this->m_points[i].setY(1);
-		}
-		//this->colorAnsciCode = "\033[33m";
-		if (isColor)
-			this->color = Colors::YELLOW;
-
-		break;
-	}
-	case 3: { // T
-		for (int i = 1; i < 3; i++) {
-			this->m_points[i].setX(this->m_points[i - 1].getX() + 1);
-			this->m_points[i].setY(0);
-		}
-		this->m_points[3].setX(5);
-		this->m_points[3].setY(1);
-		//this->colorAnsciCode = "\033[35m";
-		if (isColor)
-			this->color = Colors::MAGENTA;
-
-		break;
-	}
-	case 4: { // J
-		this->m_points[0].setX(5);
-		for (int i = 1; i < 3; i++) {
-			this->m_points[i].setX(5);
-			this->m_points[i].setY(this->m_points[i-1].getY() + 1);
-		}
-		this->m_points[3].setX(4);
-		this->m_points[3].setY(2);
-		//this->colorAnsciCode = "\033[34m";
-		if (isColor)
-			this->color = Colors::BLUE;
-
-		break;
-	}
-	case 5: { // L
-		for (int i = 1; i < 3; i++)
-		{
 			this->m_points[i].setX(4);
-			this->m_points[i].setY(this->m_points[i - 1].getY() + 1);
+			this->m_points[i].setY(0);
 		}
-		this->m_points[3].setX(5);
-		this->m_points[3].setY(2);
-		//this->colorAnsciCode = "\033[37m";
-		if (isColor)
-			this->color = Colors::BROWN;
-
-		break;
-	}
-		
-	case 6: { // S
-		this->m_points[0].setX(4);
-		this->m_points[0].setY(1);
-		this->m_points[1].setX(5);
-		this->m_points[1].setY(1);
-		this->m_points[2].setX(5);
-		this->m_points[2].setY(0);
-		this->m_points[3].setX(6);
-		this->m_points[3].setY(0);
-		//this->colorAnsciCode = "\033[32m";
-		if (isColor)
-			this->color = Colors::GREEN;
-
-		break;
-	}
-	case 7: { // Z
-		this->m_points[1].setX(5);
-		this->m_points[1].setY(0);
-		this->m_points[2].setX(5);
-		this->m_points[2].setY(1);
-		this->m_points[3].setX(6);
-		this->m_points[3].setY(1);
-		//this->colorAnsciCode = "\033[31m";
 		if (isColor)
 			this->color = Colors::RED;
-
-		break;
 	}
-	}	
+	else {
+		this->isBomb = false;
+		switch (randShape) {
+		case 1: { // STRAIGHT
+			for (int i = 1; i < NUM_OF_POINTS; i++) {
+				this->m_points[i].setX(this->m_points[i - 1].getX() + 1);
+				this->m_points[i].setY(0);
+			}
+			//this->colorAnsciCode = "\033[36m";
+			if (isColor)
+				this->color = Colors::CYAN;
+			break;
+		}
+		case 2: { // SQUARE
+			for (int i = 1; i < 2; i++) {
+				this->m_points[i].setX(this->m_points[i - 1].getX() + 1);
+				this->m_points[i].setY(0);
+			}
+			for (int i = 2; i < NUM_OF_POINTS; i++) {
+				this->m_points[i].setX(this->m_points[i - 2].getX());
+				this->m_points[i].setY(1);
+			}
+			//this->colorAnsciCode = "\033[33m";
+			if (isColor)
+				this->color = Colors::YELLOW;
+
+			break;
+		}
+		case 3: { // T
+			for (int i = 1; i < 3; i++) {
+				this->m_points[i].setX(this->m_points[i - 1].getX() + 1);
+				this->m_points[i].setY(0);
+			}
+			this->m_points[3].setX(5);
+			this->m_points[3].setY(1);
+			//this->colorAnsciCode = "\033[35m";
+			if (isColor)
+				this->color = Colors::MAGENTA;
+
+			break;
+		}
+		case 4: { // J
+			this->m_points[0].setX(5);
+			for (int i = 1; i < 3; i++) {
+				this->m_points[i].setX(5);
+				this->m_points[i].setY(this->m_points[i - 1].getY() + 1);
+			}
+			this->m_points[3].setX(4);
+			this->m_points[3].setY(2);
+			//this->colorAnsciCode = "\033[34m";
+			if (isColor)
+				this->color = Colors::BLUE;
+
+			break;
+		}
+		case 5: { // L
+			for (int i = 1; i < 3; i++)
+			{
+				this->m_points[i].setX(4);
+				this->m_points[i].setY(this->m_points[i - 1].getY() + 1);
+			}
+			this->m_points[3].setX(5);
+			this->m_points[3].setY(2);
+			//this->colorAnsciCode = "\033[37m";
+			if (isColor)
+				this->color = Colors::BROWN;
+
+			break;
+		}
+
+		case 6: { // S
+			this->m_points[0].setX(4);
+			this->m_points[0].setY(1);
+			this->m_points[1].setX(5);
+			this->m_points[1].setY(1);
+			this->m_points[2].setX(5);
+			this->m_points[2].setY(0);
+			this->m_points[3].setX(6);
+			this->m_points[3].setY(0);
+			//this->colorAnsciCode = "\033[32m";
+			if (isColor)
+				this->color = Colors::GREEN;
+
+			break;
+		}
+		case 7: { // Z
+			this->m_points[1].setX(5);
+			this->m_points[1].setY(0);
+			this->m_points[2].setX(5);
+			this->m_points[2].setY(1);
+			this->m_points[3].setX(6);
+			this->m_points[3].setY(1);
+			//this->colorAnsciCode = "\033[31m";
+			if (isColor)
+				this->color = Colors::LIGHTRED;
+
+			break;
+		}
+		}
+	}
 }
 
 bool Tetrimino::moveDown(const char* down) {
@@ -134,7 +145,10 @@ void Tetrimino::draw(int gap) const {
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		gotoxy(this->m_points[i].getX() + gap + 1, this->m_points[i].getY());
 		SetConsoleTextAttribute(hStdOut, this->color);
-		cout << (char)219;
+		if (this->isBomb)
+			cout << 'X';
+		else
+			cout << (char)219;
 	}
 }
 

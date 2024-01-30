@@ -8,7 +8,7 @@
 #include <random>
 #include <cstdlib> // for std::rand and std::srand
 #include <ctime> 
-#include <iostream>
+#include <cmath>
 using namespace std;
 
 void gotoxy(int x, int y);

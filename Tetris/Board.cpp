@@ -4,6 +4,7 @@
 using namespace std;
 #include "Board.h"
 #include "general.h"
+
 /*
 void Board::init() {
 	for (int i = 0; i < GAME_HEIGHT; i++)
@@ -104,6 +105,46 @@ void Board::removeFullLine(const int lineNum,const int gap) {
 	}
 	this->drawBoardInGame(gap);
 }
+
+void Board::explosion(const Point& pnt,const int gap)
+{
+	double squaredX;
+	double squaredY;
+	Point erasedPnts[16];
+	int howManyToErase = 0;
+	for (int row = 0; row < GAME_HEIGHT; row++)
+	{
+		for (int col = 0; col < GAME_WIDTH; col++)
+		{
+			squaredX = pow((col - pnt.getX()), 2);
+			squaredY = pow((row - pnt.getY()), 2);
+			if (sqrt(squaredX + squaredY) <= 4 && this->gameBoard[row][col] != ' ')
+			{
+				//cout << row << "," << col << " ";
+				//this->gameBoard[row][col] = ' ';
+				erasedPnts[howManyToErase] = { col,row };
+				howManyToErase++;
+			}
+		}
+	}
+
+	
+	//************ BUG!!!!! ***************
+	
+	for (int i = howManyToErase - 1; i >= 0; i--) {
+		int newRow = erasedPnts[i].getY();
+		for (int j = erasedPnts[i].getY() - 1; j >= 0; j--) {
+			if (this->gameBoard[j][erasedPnts[i].getX()] != ' ') {
+				gameBoard[newRow][erasedPnts[i].getX()] = gameBoard[j][erasedPnts[i].getX()];		
+				gameBoard[j][erasedPnts[i].getX()] = ' ';
+				newRow--;
+			}
+		}
+	}
+	
+	this->drawBoardInGame(gap);
+}
+
 
 
 #endif // !__GAMEBOARD_H
