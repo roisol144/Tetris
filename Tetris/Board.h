@@ -10,7 +10,7 @@ public:
 	static constexpr int FIRST_BOARD_START = 0;
 	static constexpr int SECOND_BOARD_START = 22;
 	static const int NUM_OF_POINTS = 4;
-
+/*
 	Board()
 	{
 		for (int i = 0; i < GAME_HEIGHT; i++)
@@ -21,8 +21,8 @@ public:
 			}
 		}
 	}
-
-	//void init();
+*/
+	void init();
 	void addToBoard(const Tetrimino* shape);
 	char getChar(int row, int col) const;
 	void drawBoard(const int boardsGap = 0) const;

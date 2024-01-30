@@ -13,9 +13,9 @@ void Controller::playGame(const bool isColor)
 	this->printScoreBoard(); // Display the initial scoreboard
 	this->gameStatus = true; // Set game status to true to start the game
 	//this->player1.initBoard(); // Initialize the game board for Player 1
-	//this->player1.gameBoard.init();
+	this->player1.gameBoard.init();
 	//this->player2.initBoard(); // Initialize the game board for Player 2
-	//this->player2.gameBoard.init();
+	this->player2.gameBoard.init();
 	//this->player1.drawBoard(); // Draw the initial game board for Player 1
 	this->player1.gameBoard.drawBoard();
 	//this->player2.drawBoard(this->player2.getGap()); // Draw the initial game board for Player 2 with gap
@@ -114,6 +114,7 @@ void Controller::moveTetriminoDown(Player& player)
 		// Check for and remove full lines, increase score, and update the score display
 		while ((fullRowIndex = player.gameBoard.whichRowFull()) != player.FULLROW_NOTFOUND) {
 			player.gameBoard.removeFullLine(fullRowIndex, player.gap);
+			PlaySound(TEXT("fullLine.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			player.increaseScore();
 			this->updateScore(player, player.gap);
 		}
@@ -389,7 +390,11 @@ void Controller::entryScreen()
 	{
 		case '1':
 			system("cls");
-			cout << "Do you want to play with colors or without?" << endl << "Press 1 for colors" << endl << "Press 0 for no colors" << endl;		
+			cout << "****************************" << endl;
+			cout << "*   Choose Color Option    *" << endl;
+			cout << "****************************" << endl;
+			cout << "With Color: 1" << endl << "No Color: 0" << endl;	
+			cout << "Your Choice: ";
 			bool isColor;
 			cin >> isColor;
 			system("cls");
@@ -497,6 +502,7 @@ void Controller::updateScore(Player& p,int gap) {
 //Print endgame window
 void Controller::endGame()
 {
+	int x;
 	resetColor();
 	system("cls");
 	cout << "\033[1;32m********************************\033[0m" << endl;  // Bold green text
@@ -523,7 +529,11 @@ void Controller::endGame()
 	cout << "Player 1 Score: " << this->player1.getScore() << endl;
 	cout << "Player 2 Score: " << this->player2.getScore() << endl;
 	cout << "Press any key to return to main menu. "<< endl;
-	while (!_kbhit()) {}
+
+	//TODO ************** BUGGGGG ************ 
+	cin.ignore();
+	cin >> x;
+	//while (!_kbhit()) {}
 	_getch();
 	this->entryScreen();
 

@@ -5,7 +5,7 @@ using namespace std;
 #include "Board.h"
 #include "general.h"
 
-/*
+
 void Board::init() {
 	for (int i = 0; i < GAME_HEIGHT; i++)
 	{
@@ -15,7 +15,8 @@ void Board::init() {
 		}
 	}
 }
-*/
+
+
 
 void Board::drawBoard(const int boardsGap) const
 {
@@ -110,7 +111,7 @@ void Board::explosion(const Point& pnt,const int gap)
 {
 	double squaredX;
 	double squaredY;
-	Point erasedPnts[16];
+	Point erasedPnts[GAME_HEIGHT * GAME_WIDTH];
 	int howManyToErase = 0;
 	for (int row = 0; row < GAME_HEIGHT; row++)
 	{
@@ -118,29 +119,45 @@ void Board::explosion(const Point& pnt,const int gap)
 		{
 			squaredX = pow((col - pnt.getX()), 2);
 			squaredY = pow((row - pnt.getY()), 2);
-			if (sqrt(squaredX + squaredY) <= 4 && this->gameBoard[row][col] != ' ')
+			if (sqrt(squaredX + squaredY) <= 4)
 			{
-				//cout << row << "," << col << " ";
-				//this->gameBoard[row][col] = ' ';
+				
+				this->gameBoard[row][col] = ' ';
 				erasedPnts[howManyToErase] = { col,row };
 				howManyToErase++;
 			}
 		}
 	}
 
-	
-	//************ BUG!!!!! ***************
-	
-	for (int i = howManyToErase - 1; i >= 0; i--) {
-		int newRow = erasedPnts[i].getY();
-		for (int j = erasedPnts[i].getY() - 1; j >= 0; j--) {
-			if (this->gameBoard[j][erasedPnts[i].getX()] != ' ') {
-				gameBoard[newRow][erasedPnts[i].getX()] = gameBoard[j][erasedPnts[i].getX()];		
-				gameBoard[j][erasedPnts[i].getX()] = ' ';
-				newRow--;
+	/* CHAT GPT SOLUTION FOR MINIMIZING GAPS AFTER BOMB
+	for (int col = 0; col < GAME_WIDTH; col++) {
+		int emptyCells = 0;
+		for (int row = GAME_HEIGHT - 1; row >= 0; row--) {
+			if (this->gameBoard[row][col] == ' ') {
+				emptyCells++;
+			}
+			else if (emptyCells > 0) {
+				// Shift non-empty cell downwards by emptyCells
+				this->gameBoard[row + emptyCells][col] = this->gameBoard[row][col];
+				this->gameBoard[row][col] = ' '; // Clear original cell
 			}
 		}
 	}
+	*/
+
+	int currRow;
+	for (int i = 0; i < howManyToErase; i++) { //iterate over the points that got erased
+		currRow = erasedPnts[i].getY();
+		for (int rowUp = currRow - 1; rowUp >= 0; rowUp--) {
+			if (this->gameBoard[rowUp][erasedPnts[i].getX()] != ' ') 
+			{
+				this->gameBoard[currRow][erasedPnts[i].getX()] = this->gameBoard[rowUp][erasedPnts[i].getX()];
+				this->gameBoard[rowUp][erasedPnts[i].getX()] = ' ';
+				currRow--;
+			}
+		}
+	}
+
 	
 	this->drawBoardInGame(gap);
 }
