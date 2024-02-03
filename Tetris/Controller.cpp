@@ -1,5 +1,7 @@
 #include "Controller.h"
 #include <windows.h>
+#include <chrono>
+#include <thread>
 #pragma comment(lib, "winmm.lib")
 using namespace std;
 
@@ -7,6 +9,7 @@ using namespace std;
 void Controller::playGame(const bool isColor)
 {
 	/* Define and reset new players */
+	PlaySound(TEXT("mainMenu.wav"), NULL, SND_FILENAME | SND_ASYNC);
 	this->player1.resetScore();
 	this->player2.resetScore();
 	this->player2.setGap(this->player2.PLAYER2_GAP); // Set gap for Player 2
@@ -108,6 +111,7 @@ void Controller::moveTetriminoDown(Player& player)
 		else {
 			// Add the tetromino to the player's board
 			player.gameBoard.addToBoard(player.currTetro);
+			PlaySound(TEXT("tetroFall.wav"), NULL, SND_FILENAME | SND_ASYNC);
 		}
 		
 
@@ -345,9 +349,12 @@ void Controller::handleUserInput()
 void Controller::entryScreen()
 {
 	resetColor();
+	//PlaySound(TEXT("bestTetris.wav"), NULL, SND_FILENAME | SND_ASYNC);
+	//cout << "]";
 
 	// Clear the console screen
 	system("cls");
+
 	if (this->gameStatus)
 	{
 		// Display the Tetris headline
@@ -367,6 +374,17 @@ void Controller::entryScreen()
 
 	else 
 	{
+		gotoxy(50, 13);
+		PlaySound(TEXT("bestTetris.wav"), NULL, SND_FILENAME | SND_ASYNC);
+		cout << "Loading: [";
+
+		for (int i = 0; i < 5; ++i) {
+			cout << "=";
+			(i == 4) ? (cout << "]") : cout;
+			cout.flush();
+			this_thread::sleep_for(chrono::seconds(20 / 20));
+		}
+		system("cls");
 		// Display the Tetris headline
 		cout << "*********************" << endl;
 		cout << "*    Tetris C++    *" << endl;
@@ -396,7 +414,8 @@ void Controller::entryScreen()
 			cout << "With Color: 1" << endl << "No Color: 0" << endl;	
 			cout << "Your Choice: ";
 			bool isColor;
-			cin >> isColor;
+			//cin >> isColor;
+			isColor = _getch();
 			system("cls");
 			playGame(isColor);
 			break;
@@ -446,7 +465,7 @@ void Controller::showInstructions()
 	cout << "Press 'Enter' key to go back to the menu...";
 	cin.ignore();
 	cin.ignore();
-	if (_kbhit)
+	if (_kbhit())
 		entryScreen();
 }
 
