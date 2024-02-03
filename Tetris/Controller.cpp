@@ -130,7 +130,7 @@ void Controller::handleUserInput()
 {
 	// Arrays and variables for handling rotation
 	Point pointsToRotate[NUM_OF_POINTS];
-	Point* pointsArrTemp;
+	Point pointsArrTemp[NUM_OF_POINTS];
 	char keyPressed;
 
 	// Erase the current tetrominos for both players before processing user input
@@ -163,7 +163,8 @@ void Controller::handleUserInput()
 			{
 				// Rotate Player 2's tetromino clockwise
 				// Get the rotated points and check if the rotation is legal
-				pointsArrTemp = this->player2.currTetro->rotateClockwise();	
+				//pointsArrTemp = this->player2.currTetro->rotateClockwise();	
+				this->player2.currTetro->rotateClockwise(pointsArrTemp);
 				for (int i = 0; i < NUM_OF_POINTS; i++) {
 					pointsToRotate[i].setX(pointsArrTemp[i].getX());
 					pointsToRotate[i].setY(pointsArrTemp[i].getY());
@@ -184,7 +185,8 @@ void Controller::handleUserInput()
 			{
 				// Rotate Player 2's tetromino counter-clockwise
 				// Get the rotated points and check if the rotation is legal
-				pointsArrTemp = this->player2.currTetro->rotateCounterClockwise();
+				//pointsArrTemp = this->player2.currTetro->rotateCounterClockwise();
+				this->player2.currTetro->rotateCounterClockwise(pointsArrTemp);
 				// Copy rotated points to a temporary array
 				for (int i = 0; i < NUM_OF_POINTS; i++) {
 					pointsToRotate[i].setX(pointsArrTemp[i].getX());
@@ -278,7 +280,8 @@ void Controller::handleUserInput()
 			case 's':
 			case 'S':
 			{
-				pointsArrTemp = this->player1.currTetro->rotateClockwise();
+				//pointsArrTemp = this->player1.currTetro->rotateClockwise();
+				this->player1.currTetro->rotateClockwise(pointsArrTemp);
 				for (int i = 0; i < NUM_OF_POINTS; i++) {
 					pointsToRotate[i].setX(pointsArrTemp[i].getX());
 					pointsToRotate[i].setY(pointsArrTemp[i].getY());
@@ -296,7 +299,8 @@ void Controller::handleUserInput()
 			case 'w':
 			case 'W':
 			{
-				pointsArrTemp = this->player1.currTetro->rotateCounterClockwise();
+				//pointsArrTemp = this->player1.currTetro->rotateCounterClockwise();
+				this->player1.currTetro->rotateCounterClockwise(pointsArrTemp);
 				for (int i = 0; i < NUM_OF_POINTS; i++) {
 					pointsToRotate[i].setX(pointsArrTemp[i].getX());
 					pointsToRotate[i].setY(pointsArrTemp[i].getY());
@@ -375,7 +379,7 @@ void Controller::entryScreen()
 	else 
 	{
 		gotoxy(50, 13);
-		PlaySound(TEXT("bestTetris.wav"), NULL, SND_FILENAME | SND_ASYNC);
+		//PlaySound(TEXT("bestTetris.wav"), NULL, SND_FILENAME | SND_ASYNC);
 		cout << "Loading: [";
 
 		for (int i = 0; i < 5; ++i) {

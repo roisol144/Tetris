@@ -6,6 +6,7 @@ using namespace std;
 
 void main() 
 {
+	srand(time(nullptr));
 	ShowConsoleCursor(false);
 	Controller game;
 	game.entryScreen();

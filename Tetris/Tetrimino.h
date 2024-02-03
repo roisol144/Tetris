@@ -42,8 +42,10 @@ public:
     void draw(int gap = 0) const;
     void erase(int gap = 0) const;
     bool isRotateLegal(const Point* pointsArr,const char* rotated);
-    Point* rotateClockwise();
-    Point* rotateCounterClockwise();
+    //Point* rotateClockwise();
+    void rotateClockwise(Point* pointsToRotate);
+    //Point* rotateCounterClockwise();
+    void rotateCounterClockwise(Point* pointToRotate);
     void setNewBorn(bool newborn) { newBorn = newborn; }
     bool isNewBorn() const { return newBorn; }
     bool isTopReached();

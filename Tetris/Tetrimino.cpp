@@ -5,7 +5,7 @@ void Tetrimino::createTetromino(bool isColor) {
 	//reset the first point 
 	this->m_points[0].setX(4);
 	this->m_points[0].setY(0);
-	srand(time(nullptr));
+	//srand(time(nullptr));
 	int randShape = 1 + rand() % 7;
 	int randBomb = 1 + rand() % 5;
 	//int randShape = 1; // FOR TESTS
@@ -223,7 +223,7 @@ Point Tetrimino::calculatePivot()
 
 	return Point(averageX, averageY);
 }
-
+/*
 Point* Tetrimino::rotateClockwise()
 {
 	Point pivot = calculatePivot();
@@ -246,6 +246,31 @@ Point* Tetrimino::rotateClockwise()
 	}
 	return points_to_rotate;
 }
+*/
+
+
+void Tetrimino::rotateClockwise(Point* pointsToRotate)
+{
+	Point pivot = calculatePivot();
+	for (int i = 0; i < NUM_OF_POINTS; i++)
+	{
+		pivot.setX(pivot.getX() + m_points[i].getX());
+		pivot.setY(pivot.getY() + m_points[i].getY());
+	}
+	pivot.setX(pivot.getX() / NUM_OF_POINTS);
+	pivot.setY(pivot.getY() / NUM_OF_POINTS);
+
+	//Point points_to_rotate[NUM_OF_POINTS];
+
+	// Rotate clockwise around the pivot
+	for (int i = 0; i < NUM_OF_POINTS; i++)
+	{
+		pointsToRotate[i].setX(m_points[i].rotateClockwise(pivot).getX());
+		pointsToRotate[i].setY(m_points[i].rotateClockwise(pivot).getY());
+
+	}
+}
+
 
 bool Tetrimino::isRotateLegal(const Point* pointsArr, const char* rotated)
 {
@@ -268,7 +293,7 @@ bool Tetrimino::isRotateLegal(const Point* pointsArr, const char* rotated)
 
 	return true;
 }
-
+/*
 Point* Tetrimino::rotateCounterClockwise()
 {
 	Point pivot = calculatePivot();
@@ -290,6 +315,29 @@ Point* Tetrimino::rotateCounterClockwise()
 		points_to_rotate[i].setY(m_points[i].rotateCounterClockwise(pivot).getY());
 	}
 	return points_to_rotate;
+}
+*/
+
+void Tetrimino::rotateCounterClockwise(Point* pointToRotate)
+{
+	Point pivot = calculatePivot();
+	for (int i = 0; i < NUM_OF_POINTS; i++)
+	{
+		pivot.setX(pivot.getX() + m_points[i].getX());
+		pivot.setY(pivot.getY() + m_points[i].getY());
+	}
+	pivot.setX(pivot.getX() / NUM_OF_POINTS);
+	pivot.setY(pivot.getY() / NUM_OF_POINTS);
+
+	// Rotate counterclockwise around the pivot
+	//Point points_to_rotate[NUM_OF_POINTS];
+
+	// Rotate clockwise around the pivot
+	for (int i = 0; i < NUM_OF_POINTS; i++)
+	{
+		pointToRotate[i].setX(m_points[i].rotateCounterClockwise(pivot).getX());
+		pointToRotate[i].setY(m_points[i].rotateCounterClockwise(pivot).getY());
+	}
 }
 
 bool Tetrimino::isTopReached()
