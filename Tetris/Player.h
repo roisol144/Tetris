@@ -1,5 +1,5 @@
 #include "Board.h"
-
+#include <vector>
 
 
 class Player 
@@ -11,7 +11,7 @@ public:
     static constexpr int FULLROW_NOTFOUND = -1;
  // Methods for handling user input, updating the game state, etc.
     /* createNextTetrimino() - creating a new tetrimino*/
-    Tetrimino* createNextTetrimino(const bool isColor);
+    Tetrimino createNextTetrimino(const bool isColor);
     /* drawBoard() - drawing the board */
     //void drawBoard(int boardGap = 0);
     /* getting cooridantes to retrieve char from thr board 2D array. */
@@ -40,14 +40,32 @@ public:
     void setPlayerName(string name);
     /* funtion will return the current tetrimino that is moving on the board. */
     //Tetrimino* getCurrTetro() { return this->currTetro; }
+    void setDestsPerRotation();
+    void setNextMove(int x, int y);
+    void pickComputerMove();
+    int bestMoveFromDestsIndex(int* score);
+    int sumOfYcoordsByIndex(int index);
+    void moveComputer(Point* dest);
+    bool isXSumEqual(Point* dest);
+    int sumOfXcoords(const Point* p);
+    int sumOfYcoords(const Point* p);
+    
+    
+  
+
 
   
 
 private:
     Board gameBoard;
-    Tetrimino* currTetro;
+    //Tetrimino* currTetro;
+    Tetrimino currTetro;
     int score = 0;
     int gap = 0;
     string name;
+
+    //members only for computer!!
+    Point dests[12][4];
+    int logSize = 0;
     friend class Controller;
 };

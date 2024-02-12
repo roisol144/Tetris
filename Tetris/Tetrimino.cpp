@@ -7,8 +7,8 @@ void Tetrimino::createTetromino(bool isColor) {
 	this->m_points[0].setY(0);
 	//srand(time(nullptr));
 	int randShape = 1 + rand() % 7;
-	int randBomb = 1 + rand() % 5;
-	//int randShape = 1; // FOR TESTS
+	int randBomb = 1 + rand() % 200;
+	//int randShape = 3; // FOR TESTS
 	if (randBomb == 1) {
 		this->isBomb = true;
 		for (int i = 1; i < NUM_OF_POINTS; i++) {
@@ -21,7 +21,7 @@ void Tetrimino::createTetromino(bool isColor) {
 	else {
 		this->isBomb = false;
 		switch (randShape) {
-		case 1: { // STRAIGHT
+		case STRAIGHT: { // STRAIGHT
 			for (int i = 1; i < NUM_OF_POINTS; i++) {
 				this->m_points[i].setX(this->m_points[i - 1].getX() + 1);
 				this->m_points[i].setY(0);
@@ -31,7 +31,7 @@ void Tetrimino::createTetromino(bool isColor) {
 				this->color = Colors::CYAN;
 			break;
 		}
-		case 2: { // SQUARE
+		case SQUARE: { // SQUARE
 			for (int i = 1; i < 2; i++) {
 				this->m_points[i].setX(this->m_points[i - 1].getX() + 1);
 				this->m_points[i].setY(0);
@@ -46,7 +46,7 @@ void Tetrimino::createTetromino(bool isColor) {
 
 			break;
 		}
-		case 3: { // T
+		case T: { // T
 			for (int i = 1; i < 3; i++) {
 				this->m_points[i].setX(this->m_points[i - 1].getX() + 1);
 				this->m_points[i].setY(0);
@@ -59,7 +59,7 @@ void Tetrimino::createTetromino(bool isColor) {
 
 			break;
 		}
-		case 4: { // J
+		case J: { // J
 			this->m_points[0].setX(5);
 			for (int i = 1; i < 3; i++) {
 				this->m_points[i].setX(5);
@@ -73,7 +73,7 @@ void Tetrimino::createTetromino(bool isColor) {
 
 			break;
 		}
-		case 5: { // L
+		case L: { // L
 			for (int i = 1; i < 3; i++)
 			{
 				this->m_points[i].setX(4);
@@ -88,7 +88,7 @@ void Tetrimino::createTetromino(bool isColor) {
 			break;
 		}
 
-		case 6: { // S
+		case S: { // S
 			this->m_points[0].setX(4);
 			this->m_points[0].setY(1);
 			this->m_points[1].setX(5);
@@ -103,7 +103,7 @@ void Tetrimino::createTetromino(bool isColor) {
 
 			break;
 		}
-		case 7: { // Z
+		case Z: { // Z
 			this->m_points[1].setX(5);
 			this->m_points[1].setY(0);
 			this->m_points[2].setX(5);
@@ -143,7 +143,7 @@ void Tetrimino::draw(int gap) const {
 	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
-		gotoxy(this->m_points[i].getX() + gap + 1, this->m_points[i].getY());
+		gotoxy(this->m_points[i].getX() + gap + 1, this->m_points[i].getY()+1);
 		SetConsoleTextAttribute(hStdOut, this->color);
 		if (this->isBomb)
 			cout << 'X';
@@ -154,7 +154,7 @@ void Tetrimino::draw(int gap) const {
 
 void Tetrimino::erase(int gap) const {
 	for (int i = 0; i < NUM_OF_POINTS && !newBorn; i++) {
-		gotoxy(this->m_points[i].getX() + gap + 1, this->m_points[i].getY());
+		gotoxy(this->m_points[i].getX() + gap + 1, this->m_points[i].getY()+1);
 		cout << ' ';
 	}
 }
@@ -275,9 +275,9 @@ void Tetrimino::rotateClockwise(Point* pointsToRotate)
 bool Tetrimino::isRotateLegal(const Point* pointsArr, const char* rotated)
 {
 	for (int i = 0; i < NUM_OF_POINTS; i++) {
-		if (pointsArr[i].getX() <= 0 || pointsArr[i].getX() >= GAME_WIDTH)
+		if (pointsArr[i].getX() < 0 || pointsArr[i].getX() >= GAME_WIDTH)
 			return false;
-		if (pointsArr[i].getY() <= 0 || pointsArr[i].getY() >= GAME_HEIGHT)
+		if (pointsArr[i].getY() < 0 || pointsArr[i].getY() >= GAME_HEIGHT)
 			return false;
 	}
 
@@ -358,6 +358,29 @@ bool Tetrimino::isTopReached()
 void Tetrimino::setNextMoveByIndex(char ch1, int index) {
 	this->nextMove[index] = ch1;
 	
+}
+
+void Tetrimino::setYcoords(int* y) {
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
+		this->m_points[i].setY(y[i]);
+	}
+}
+void Tetrimino::setYcoordsByIndex(int y,int index) {
+	
+		this->m_points[index].setY(y);
+	
+}
+
+void Tetrimino::setXcoordsByIndex(int x, int index) {
+	
+		this->m_points[index].setX(x);
+	
+}
+
+void Tetrimino::setXcoords(int* x) {
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
+		this->m_points[i].setX(x[i]);
+	}
 }
 
 

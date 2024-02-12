@@ -183,6 +183,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Computer.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="general.cpp" />
     <ClCompile Include="main.cpp" />
@@ -192,6 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
+    <ClInclude Include="Computer.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="general.h" />
     <ClInclude Include="Player.h" />

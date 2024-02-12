@@ -23,6 +23,10 @@ public:
 		this->x = x;
 		this->y = y;
 	}
+
+	
+
+	
 	
 
 	int getX() const { return x; }

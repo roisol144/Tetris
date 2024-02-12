@@ -30,13 +30,15 @@ public:
     static constexpr int SCORE_FRAME_END_COL = 12;
     void playGame(const bool isColor);
     void entryScreen();
-    void handleUserInput();
+    bool handleUserInput();
     void moveTetriminoDown(Player& player);
     void printScoreBoard();
     void showInstructions();
     void updateScore(Player& p, int gap);
     void endGame(); 
     void resetColor();
+    void computerMove(Player& player);
+
     
  
 };

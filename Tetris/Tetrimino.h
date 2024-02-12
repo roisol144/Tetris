@@ -9,6 +9,9 @@ private:
     enum Colors {
         WHITE=15, BLUE=1, GREEN=2, CYAN=3, LIGHTRED=12, MAGENTA=5, BROWN=6,YELLOW=14, RED=4
     };
+    enum Shapes {
+        STRAIGHT=1, SQUARE, T, J, L, S, Z
+    };
     Point m_points[NUM_OF_POINTS];
     //char m_char = 219;
     char nextMove[NUM_OF_POINTS];
@@ -32,6 +35,8 @@ public:
     //string getColor() { return colorAnsciCode; }
     //void setColor(string color) { colorAnsciCode = color; }
     const Point* getTetroPoints() const { return m_points; }
+    void setYcoords(int* y);
+    void setXcoords(int* x);
     bool getIsMoving() const { return isMoving; }
     void finishMoving() { isMoving = false; }
     void move(int gap = 0) const;
@@ -53,4 +58,6 @@ public:
     void setNextMoveByIndex(char ch1, int index);
     int getColor() const { return this->color; }
     bool isBombSet() { return isBomb; }
+    void setYcoordsByIndex(int y, int index);
+    void setXcoordsByIndex(int x, int index);
 };

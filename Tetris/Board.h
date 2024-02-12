@@ -23,13 +23,21 @@ public:
 	}
 */
 	void init();
-	void addToBoard(const Tetrimino* shape);
+	void addToBoard(const Tetrimino shape);
 	char getChar(int row, int col) const;
 	void drawBoard(const int boardsGap = 0) const;
 	void drawBoardInGame(const int boardsGap = 0) const;
 	int whichRowFull() const;
 	void removeFullLine(const int lineNum,const int gap);
 	void explosion(const Point& pnt, const int gap);
+	int countFullRows(Point* dest);
+	void addTempPoint(Point p);
+	void removeTempPoint(Point p);
+	int countHoles();
+	int calcBumpiness();
+	int calcHeight(int col);
+	int aggregateHeight();
+	//void explosion2(const Point& pnt, const int gap);
 	// void minimizeGapsInBoard();
 
 
