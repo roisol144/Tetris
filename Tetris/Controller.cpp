@@ -47,7 +47,7 @@ void Controller::playGame(const bool isColor)
 		}
 		this->player1.pickComputerMove();
 		this->player2.pickComputerMove();
-		
+		this->moveComputer();
 		//Sleep(300); // Pause for a short duration (milliseconds) for game update
 		//if (this->handleUserInput())// Handle user input during the game
 		//	return;
@@ -121,6 +121,215 @@ void Controller::moveTetriminoDown(Player& player)
 			player.increaseScore();
 			this->updateScore(player, player.gap);
 		}
+	}
+}
+
+void Controller::moveComputer() {
+	this->player1.currTetro.setNewBorn(false);
+	this->player2.currTetro.setNewBorn(false);
+
+
+	/*this->setNextMove(0, 1);
+	this->currTetro.moveDown(this->currTetro.getNextMove());*/
+
+	//go right for both players:
+	if (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) < this->player1.sumOfXcoords(this->player1.dests[12]) &&
+		this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) < this->player2.sumOfXcoords(this->player2.dests[12])) {
+
+		while (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) < this->player1.sumOfXcoords(this->player1.dests[12]) &&
+			this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) < this->player2.sumOfXcoords(this->player2.dests[12])) {
+			this->player1.currTetro.erase(this->player1.getGap());
+			this->player2.currTetro.erase(this->player2.getGap());
+			this->player1.setNextMove(1, 0);
+			this->player2.setNextMove(1, 0);
+			if (!this->player1.currTetro.moveRight(this->player1.currTetro.getNextMove()) ||
+				!this->player2.currTetro.moveRight(this->player2.currTetro.getNextMove()))
+				break;
+			this->player1.currTetro.draw(this->player1.getGap());
+			this->player2.currTetro.draw(this->player2.getGap());
+			Sleep(50);
+		}
+		while (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) < this->player1.sumOfXcoords(this->player1.dests[12])) {
+			this->player1.currTetro.erase(this->player1.getGap());
+
+			this->player1.setNextMove(1, 0);
+
+			if (!this->player1.currTetro.moveRight(this->player1.currTetro.getNextMove()))
+				break;
+			this->player1.currTetro.draw(this->player1.getGap());
+
+			Sleep(50);
+		}
+		while (this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) < this->player2.sumOfXcoords(this->player2.dests[12])) {
+			this->player2.currTetro.erase(this->player2.getGap());
+
+			this->player2.setNextMove(1, 0);
+
+			if (!this->player2.currTetro.moveRight(this->player2.currTetro.getNextMove()))
+				break;
+			this->player2.currTetro.draw(this->player2.getGap());
+
+			Sleep(50);
+		}
+	}
+	else {
+		//player 1 left, player 2 right
+		if (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) > this->player1.sumOfXcoords(this->player1.dests[12]) &&
+			this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) < this->player2.sumOfXcoords(this->player2.dests[12])) {
+			while (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) > this->player1.sumOfXcoords(this->player1.dests[12]) &&
+				this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) < this->player2.sumOfXcoords(this->player2.dests[12])) {
+				this->player1.currTetro.erase(this->player1.getGap());
+				this->player2.currTetro.erase(this->player2.getGap());
+				this->player1.setNextMove(-1, 0);
+				this->player2.setNextMove(1, 0);
+				if (!this->player1.currTetro.moveLeft(this->player1.currTetro.getNextMove()) ||
+					!this->player2.currTetro.moveRight(this->player2.currTetro.getNextMove()))
+					break;
+				this->player1.currTetro.draw(this->player1.getGap());
+				this->player2.currTetro.draw(this->player2.getGap());
+				Sleep(50);
+			}
+			while (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) > this->player1.sumOfXcoords(this->player1.dests[12])) {
+				this->player1.currTetro.erase(this->player1.getGap());
+
+				this->player1.setNextMove(-1, 0);
+
+				if (!this->player1.currTetro.moveLeft(this->player1.currTetro.getNextMove()))
+					break;
+				this->player1.currTetro.draw(this->player1.getGap());
+
+				Sleep(50);
+			}
+			while (this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) < this->player2.sumOfXcoords(this->player2.dests[12])) {
+				this->player2.currTetro.erase(this->player2.getGap());
+
+				this->player2.setNextMove(1, 0);
+
+				if (!this->player2.currTetro.moveRight(this->player2.currTetro.getNextMove()))
+					break;
+				this->player2.currTetro.draw(this->player2.getGap());
+
+				Sleep(50);
+			}
+		}
+		else {//player 1 right, player 2 left
+			if (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) < this->player1.sumOfXcoords(this->player1.dests[12]) &&
+				this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) > this->player2.sumOfXcoords(this->player2.dests[12])) {
+
+				while (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) < this->player1.sumOfXcoords(this->player1.dests[12]) &&
+					this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) > this->player2.sumOfXcoords(this->player2.dests[12])) {
+					this->player1.currTetro.erase(this->player1.getGap());
+					this->player2.currTetro.erase(this->player2.getGap());
+					this->player1.setNextMove(1, 0);
+					this->player2.setNextMove(-1, 0);
+					if (!this->player1.currTetro.moveRight(this->player1.currTetro.getNextMove()) ||
+						!this->player2.currTetro.moveLeft(this->player2.currTetro.getNextMove()))
+						break;
+					this->player1.currTetro.draw(this->player1.getGap());
+					this->player2.currTetro.draw(this->player2.getGap());
+					Sleep(50);
+				}
+				while (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) < this->player1.sumOfXcoords(this->player1.dests[12])) {
+					this->player1.currTetro.erase(this->player1.getGap());
+
+					this->player1.setNextMove(1, 0);
+
+					if (!this->player1.currTetro.moveRight(this->player1.currTetro.getNextMove()))
+						break;
+					this->player1.currTetro.draw(this->player1.getGap());
+
+					Sleep(50);
+				}
+				while (this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) > this->player2.sumOfXcoords(this->player2.dests[12])) {
+					this->player2.currTetro.erase(this->player2.getGap());
+
+					this->player2.setNextMove(-1, 0);
+
+					if (!this->player2.currTetro.moveLeft(this->player2.currTetro.getNextMove()))
+						break;
+					this->player2.currTetro.draw(this->player2.getGap());
+
+					Sleep(50);
+				}
+			}
+			else {//both players left
+				while (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) > this->player1.sumOfXcoords(this->player1.dests[12]) &&
+					this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) > this->player2.sumOfXcoords(this->player2.dests[12])) {
+					this->player1.currTetro.erase(this->player1.getGap());
+					this->player2.currTetro.erase(this->player2.getGap());
+					this->player1.setNextMove(-1, 0);
+					this->player2.setNextMove(-1, 0);
+					if (!this->player1.currTetro.moveLeft(this->player1.currTetro.getNextMove()) ||
+						!this->player2.currTetro.moveLeft(this->player2.currTetro.getNextMove()))
+						break;
+					this->player1.currTetro.draw(this->player1.getGap());
+					this->player2.currTetro.draw(this->player2.getGap());
+					Sleep(50);
+				}
+				while (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) > this->player1.sumOfXcoords(this->player1.dests[12])) {
+					this->player1.currTetro.erase(this->player1.getGap());
+
+					this->player1.setNextMove(-1, 0);
+
+					if (!this->player1.currTetro.moveLeft(this->player1.currTetro.getNextMove()))
+						break;
+					this->player1.currTetro.draw(this->player1.getGap());
+
+					Sleep(50);
+				}
+				while (this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) > this->player2.sumOfXcoords(this->player2.dests[12])) {
+					this->player2.currTetro.erase(this->player2.getGap());
+
+					this->player2.setNextMove(-1, 0);
+
+					if (!this->player2.currTetro.moveLeft(this->player2.currTetro.getNextMove()))
+						break;
+					this->player2.currTetro.draw(this->player2.getGap());
+
+					Sleep(50);
+				}
+			}
+
+		}
+		
+	}
+	while (this->player1.sumOfYcoords(this->player1.currTetro.getTetroPoints()) < this->player1.sumOfYcoords(this->player1.dests[12]) &&
+		this->player2.sumOfYcoords(this->player2.currTetro.getTetroPoints()) < this->player2.sumOfYcoords(this->player2.dests[12])) {
+		this->player1.currTetro.erase(this->player1.getGap());
+		this->player2.currTetro.erase(this->player2.getGap());
+		this->player1.setNextMove(0, 1);
+		this->player2.setNextMove(0, 1);
+		if (!this->player1.currTetro.moveDown(this->player1.currTetro.getNextMove()) ||
+			!this->player2.currTetro.moveDown(this->player2.currTetro.getNextMove())) {
+			break;
+		}
+		this->player1.currTetro.draw(this->player1.getGap());
+		this->player2.currTetro.draw(this->player2.getGap());
+		Sleep(50);
+	}
+	while (this->player1.sumOfYcoords(this->player1.currTetro.getTetroPoints()) < this->player1.sumOfYcoords(this->player1.dests[12])) {
+		this->player1.currTetro.erase(this->player1.getGap());
+
+		this->player1.setNextMove(0, 1);
+
+		if (!this->player1.currTetro.moveDown(this->player1.currTetro.getNextMove())) {
+			break;
+		}
+		this->player1.currTetro.draw(this->player1.getGap());
+
+		Sleep(50);
+	}
+	while (this->player2.sumOfYcoords(this->player2.currTetro.getTetroPoints()) < this->player2.sumOfYcoords(this->player2.dests[12])) {
+		this->player2.currTetro.erase(this->player2.getGap());
+
+		this->player2.setNextMove(0, 1);
+
+		if (!this->player2.currTetro.moveDown(this->player2.currTetro.getNextMove())) {
+			break;
+		}
+		this->player2.currTetro.draw(this->player2.getGap());
+
+		Sleep(50);
 	}
 }
 

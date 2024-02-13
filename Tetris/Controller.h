@@ -37,7 +37,7 @@ public:
     void updateScore(Player& p, int gap);
     void endGame(); 
     void resetColor();
-    void computerMove(Player& player);
+    void moveComputer();
 
     
  

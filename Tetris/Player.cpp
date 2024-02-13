@@ -75,46 +75,46 @@ int Player::sumOfXcoords(const Point* p) {
 }
 
 
-void Player::moveComputer(Point* dest) {
-	this->currTetro.setNewBorn(false);
-	
-
-	/*this->setNextMove(0, 1);
-	this->currTetro.moveDown(this->currTetro.getNextMove());*/
-
-	//go right!
-	if (this->sumOfXcoords(this->currTetro.getTetroPoints()) < this->sumOfXcoords(dest)) {
-
-		while (this->sumOfXcoords(this->currTetro.getTetroPoints()) < this->sumOfXcoords(dest)) {
-			this->currTetro.erase(this->getGap());
-			this->setNextMove(1, 0);
-			if (!this->currTetro.moveRight(this->currTetro.getNextMove()))
-				return;
-			this->currTetro.draw(this->getGap());
-			Sleep(5);
-		}
-	}
-	else { // go left!
-		while (this->sumOfXcoords(this->currTetro.getTetroPoints()) > this->sumOfXcoords(dest)) {
-			this->currTetro.erase(this->getGap());
-			this->setNextMove(-1, 0);
-			if (!this->currTetro.moveLeft(this->currTetro.getNextMove()))
-				return;
-			this->currTetro.draw(this->getGap());
-			Sleep(5);
-			
-		}
-	}
-	while (this->sumOfYcoords(this->currTetro.getTetroPoints()) < this->sumOfYcoords(dest)) {
-		this->currTetro.erase(this->getGap());
-		this->setNextMove(0, 1);
-		if (!this->currTetro.moveDown(this->currTetro.getNextMove())) {
-			return;
-		}
-		this->currTetro.draw(this->getGap());
-		Sleep(5);
-	}
-}
+//void Player::moveComputer(Point* dest) {
+//	this->currTetro.setNewBorn(false);
+//	
+//
+//	/*this->setNextMove(0, 1);
+//	this->currTetro.moveDown(this->currTetro.getNextMove());*/
+//
+//	//go right!
+//	if (this->sumOfXcoords(this->currTetro.getTetroPoints()) < this->sumOfXcoords(dest)) {
+//
+//		while (this->sumOfXcoords(this->currTetro.getTetroPoints()) < this->sumOfXcoords(dest)) {
+//			this->currTetro.erase(this->getGap());
+//			this->setNextMove(1, 0);
+//			if (!this->currTetro.moveRight(this->currTetro.getNextMove()))
+//				return;
+//			this->currTetro.draw(this->getGap());
+//			Sleep(5);
+//		}
+//	}
+//	else { // go left!
+//		while (this->sumOfXcoords(this->currTetro.getTetroPoints()) > this->sumOfXcoords(dest)) {
+//			this->currTetro.erase(this->getGap());
+//			this->setNextMove(-1, 0);
+//			if (!this->currTetro.moveLeft(this->currTetro.getNextMove()))
+//				return;
+//			this->currTetro.draw(this->getGap());
+//			Sleep(5);
+//			
+//		}
+//	}
+//	while (this->sumOfYcoords(this->currTetro.getTetroPoints()) < this->sumOfYcoords(dest)) {
+//		this->currTetro.erase(this->getGap());
+//		this->setNextMove(0, 1);
+//		if (!this->currTetro.moveDown(this->currTetro.getNextMove())) {
+//			return;
+//		}
+//		this->currTetro.draw(this->getGap());
+//		Sleep(5);
+//	}
+//}
 
 void Player::pickComputerMove() {
 	Point movesToPickFrom[4][4];
@@ -187,20 +187,31 @@ void Player::pickComputerMove() {
 		this->currTetro.setXcoordsByIndex(this->currTetro.getTetroPoints()[2].getX() - 1, 2);
 		this->currTetro.setXcoordsByIndex(this->currTetro.getTetroPoints()[3].getX() - 1, 3);
 	}
-	this->moveComputer(movesToPickFrom[bestMoveIndex]);
+	memcpy(dests[12], movesToPickFrom[bestMoveIndex], sizeof(Point) * 4);
+	//this->moveComputer(movesToPickFrom[bestMoveIndex]);
 
 }
 
 int Player::bestMoveFromDestsIndex(int* score) {
 	int bestMoveIndex = 0;
 	vector<int> movesScores(logSize);
-	int max = -1000000;
-	int counter = 0;
-	for (int i = 0; i < logSize; i++) {
+	for (int k = 0; k < 4; k++) {
+		this->gameBoard.addTempPoint(dests[0][k]);
+	}
+	movesScores[0] = -1.2 * this->gameBoard.aggregateHeight() +
+		0.760666 * this->gameBoard.countFullRows(dests[0]) +
+		-0.35663 * this->gameBoard.countHoles() +
+		-0.184483 * this->gameBoard.calcBumpiness();
+	for (int k = 0; k < 4; k++) {
+		this->gameBoard.removeTempPoint(dests[0][k]);
+	}
+	int max = movesScores[0];
+	//int counter = 0;
+	for (int i = 1; i < logSize; i++) {
 		for (int k = 0; k < 4; k++) {
 			this->gameBoard.addTempPoint(dests[i][k]);
 		}
-		movesScores[i] = -2.5 * this->gameBoard.aggregateHeight() + 
+		movesScores[i] = -1.2 * this->gameBoard.aggregateHeight() + 
 						0.760666 * this->gameBoard.countFullRows(dests[i]) + 
 						 -0.35663* this->gameBoard.countHoles() +
 						 -0.184483* this->gameBoard.calcBumpiness();

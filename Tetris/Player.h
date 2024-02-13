@@ -65,7 +65,7 @@ private:
     string name;
 
     //members only for computer!!
-    Point dests[12][4];
+    Point dests[13][4];
     int logSize = 0;
     friend class Controller;
 };
