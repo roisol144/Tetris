@@ -1,12 +1,18 @@
+#ifndef __CONTROLLER_H
+#define __CONTROLLER_H
+
+
+
 #include "Player.h"
 #include "general.h"
-
+#include "Human.h";
+#include "Computer.h"
 
 class Controller 
 {
 private:
-    Player player1;
-    Player player2;
+    Player* player1;
+    Player* player2;
     int winner;
     bool gameStatus = false; // true for there's active game, false if not.
    
@@ -30,15 +36,17 @@ public:
     static constexpr int SCORE_FRAME_END_COL = 12;
     void playGame(const bool isColor);
     void entryScreen();
-    bool handleUserInput();
+    //bool handleUserInput();
+    bool scanKeys();
     void moveTetriminoDown(Player& player);
     void printScoreBoard();
     void showInstructions();
     void updateScore(Player& p, int gap);
     void endGame(); 
     void resetColor();
-    void moveComputer();
+    void computerMove(Player& player);
 
     
  
 };
+#endif // __CONTROLLER_H

@@ -186,6 +186,7 @@
     <ClCompile Include="Computer.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="general.cpp" />
+    <ClCompile Include="Human.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Point.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="Computer.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="general.h" />
+    <ClInclude Include="Human.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Tetrimino.h" />

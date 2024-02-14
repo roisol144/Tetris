@@ -11,53 +11,75 @@ void Controller::playGame(const bool isColor)
 	/* Define and reset new players */
 	PlaySound(TEXT("mainMenu.wav"), NULL, SND_FILENAME | SND_ASYNC);
 	if (!this->gameStatus) {
-		this->player1.resetScore();
-		this->player2.resetScore();
-		this->player2.setGap(this->player2.PLAYER2_GAP); // Set gap for Player 2
+		this->player1->resetScore();
+		this->player2->resetScore();
+		this->player2->setGap(this->player2->PLAYER2_GAP); // Set gap for Player 2
 		this->printScoreBoard(); // Display the initial scoreboard
 		this->gameStatus = true; // Set game status to true to start the game
-		//this->player1.initBoard(); // Initialize the game board for Player 1
-		this->player1.gameBoard.init();
-		//this->player2.initBoard(); // Initialize the game board for Player 2
-		this->player2.gameBoard.init();
-		//this->player1.drawBoard(); // Draw the initial game board for Player 1
-		this->player1.gameBoard.drawBoard();
-		//this->player2.drawBoard(this->player2.getGap()); // Draw the initial game board for Player 2 with gap
-		this->player2.gameBoard.drawBoard(this->player2.gap);
+		//this->player1->initBoard(); // Initialize the game board for Player 1
+		this->player1->gameBoard.init();
+		//this->player2->initBoard(); // Initialize the game board for Player 2
+		this->player2->gameBoard.init();
+		//this->player1->drawBoard(); // Draw the initial game board for Player 1
+		this->player1->gameBoard.drawBoard();
+		//this->player2->drawBoard(this->player2->getGap()); // Draw the initial game board for Player 2 with gap
+		this->player2->gameBoard.drawBoard(this->player2->gap);
 
-		this->player1.setPlayerName("Player 1"); // Set the name for Player 1
-		this->player2.setPlayerName("Player 2"); // Set the name for Player 2
+		this->player1->setPlayerName("Player 1"); // Set the name for Player 1
+		this->player2->setPlayerName("Player 2"); // Set the name for Player 2
 
-		this->player1.createNextTetrimino(isColor); // Create the first tetromino for player 1
-		this->player2.createNextTetrimino(isColor); // Create the first tetromino for player 2
+		this->player1->createNextTetrimino(isColor); // Create the first tetromino for player 1
+		this->player2->createNextTetrimino(isColor); // Create the first tetromino for player 2
 	
 	}
 	
 	while (this->gameStatus)
 	{
 		/* Checking if tetromino is not moving (landed), then create a new tetromino */
-		if (this->player1.currTetro.getIsMoving() == false)
+		if (this->player1->currTetro.getIsMoving() == false)
 		{
-			this->player1.createNextTetrimino(isColor); // Create a new tetromino for Player 1			
+			this->player1->createNextTetrimino(isColor); // Create a new tetromino for Player 1			
 		}
 
-		if (this->player2.currTetro.getIsMoving() == false)
+		if (this->player2->currTetro.getIsMoving() == false)
 		{			
-			this->player2.createNextTetrimino(isColor); // Create a new tetromino for Player 2		
+			this->player2->createNextTetrimino(isColor); // Create a new tetromino for Player 2		
 		}
-		this->player1.pickComputerMove();
-		this->player2.pickComputerMove();
-		this->moveComputer();
-		//Sleep(300); // Pause for a short duration (milliseconds) for game update
-		//if (this->handleUserInput())// Handle user input during the game
-		//	return;
-		this->moveTetriminoDown(this->player1); // Move the tetromino of Player 1 down
-		this->moveTetriminoDown(this->player2); // Move the tetromino of Player 2 down
+		/*this->player1->pickComputerMove();
+		this->player2->pickComputerMove();*/
+		
+		Sleep(300); // Pause for a short duration (milliseconds) for game update
+		if (scanKeys())// Handle user input during the game
+			return;
+		// Erase the current tetrominos for both players before processing user input
+		this->player1->currTetro.erase(this->player1->getGap());
+		this->player2->currTetro.erase(this->player2->getGap());
+		
+		this->moveTetriminoDown(*this->player1); // Move the tetromino of Player 1 down
+		this->moveTetriminoDown(*this->player2); // Move the tetromino of Player 2 down
 		
 	}
 	// check if both players lost at the same time
 
 	endGame(); // End the game when the game status is false	
+}
+
+bool Controller::scanKeys() {
+	char keyPressed;
+	while (_kbhit()) {
+		
+		keyPressed = _getch();
+		keyPressed = (char)tolower(keyPressed);
+		if (keyPressed == 'x' || keyPressed == 'a' || keyPressed == 's' || keyPressed == 'd' || keyPressed == 'w') {
+			player1->handleUserInput(keyPressed);
+		}
+		if (keyPressed == 'i' || keyPressed == 'j' || keyPressed == 'k' || keyPressed == 'l' || keyPressed == 'm') {
+			player2->handleUserInput(keyPressed);
+		}
+		if (keyPressed == 27)
+			return true;
+	}
+	return false;
 }
 
 
@@ -75,6 +97,7 @@ void Controller::moveTetriminoDown(Player& player)
 	if (player.currTetro.moveDown(player.currTetro.getNextMove()))
 	{
 		// Move the tetromino based on the player's gap
+		
 		player.currTetro.move(player.gap);
 
 		// If the tetromino is newly born, mark it as not new born after moving
@@ -87,7 +110,7 @@ void Controller::moveTetriminoDown(Player& player)
 		if (player.currTetro.isTopReached())
 		{
 			// Check who's the winner based on the gap
-			player.gap == this->player2.gap ? this->winner = this->PLAYER1 : this->winner = this->PLAYER2;
+			player.gap == this->player2->gap ? this->winner = this->PLAYER1 : this->winner = this->PLAYER2;
 			if (this->gameStatus == false)
 			{
 				this->winner = this->TIE;
@@ -124,449 +147,241 @@ void Controller::moveTetriminoDown(Player& player)
 	}
 }
 
-void Controller::moveComputer() {
-	this->player1.currTetro.setNewBorn(false);
-	this->player2.currTetro.setNewBorn(false);
 
-
-	/*this->setNextMove(0, 1);
-	this->currTetro.moveDown(this->currTetro.getNextMove());*/
-
-	//go right for both players:
-	if (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) < this->player1.sumOfXcoords(this->player1.dests[12]) &&
-		this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) < this->player2.sumOfXcoords(this->player2.dests[12])) {
-
-		while (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) < this->player1.sumOfXcoords(this->player1.dests[12]) &&
-			this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) < this->player2.sumOfXcoords(this->player2.dests[12])) {
-			this->player1.currTetro.erase(this->player1.getGap());
-			this->player2.currTetro.erase(this->player2.getGap());
-			this->player1.setNextMove(1, 0);
-			this->player2.setNextMove(1, 0);
-			if (!this->player1.currTetro.moveRight(this->player1.currTetro.getNextMove()) ||
-				!this->player2.currTetro.moveRight(this->player2.currTetro.getNextMove()))
-				break;
-			this->player1.currTetro.draw(this->player1.getGap());
-			this->player2.currTetro.draw(this->player2.getGap());
-			Sleep(50);
-		}
-		while (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) < this->player1.sumOfXcoords(this->player1.dests[12])) {
-			this->player1.currTetro.erase(this->player1.getGap());
-
-			this->player1.setNextMove(1, 0);
-
-			if (!this->player1.currTetro.moveRight(this->player1.currTetro.getNextMove()))
-				break;
-			this->player1.currTetro.draw(this->player1.getGap());
-
-			Sleep(50);
-		}
-		while (this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) < this->player2.sumOfXcoords(this->player2.dests[12])) {
-			this->player2.currTetro.erase(this->player2.getGap());
-
-			this->player2.setNextMove(1, 0);
-
-			if (!this->player2.currTetro.moveRight(this->player2.currTetro.getNextMove()))
-				break;
-			this->player2.currTetro.draw(this->player2.getGap());
-
-			Sleep(50);
-		}
-	}
-	else {
-		//player 1 left, player 2 right
-		if (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) > this->player1.sumOfXcoords(this->player1.dests[12]) &&
-			this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) < this->player2.sumOfXcoords(this->player2.dests[12])) {
-			while (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) > this->player1.sumOfXcoords(this->player1.dests[12]) &&
-				this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) < this->player2.sumOfXcoords(this->player2.dests[12])) {
-				this->player1.currTetro.erase(this->player1.getGap());
-				this->player2.currTetro.erase(this->player2.getGap());
-				this->player1.setNextMove(-1, 0);
-				this->player2.setNextMove(1, 0);
-				if (!this->player1.currTetro.moveLeft(this->player1.currTetro.getNextMove()) ||
-					!this->player2.currTetro.moveRight(this->player2.currTetro.getNextMove()))
-					break;
-				this->player1.currTetro.draw(this->player1.getGap());
-				this->player2.currTetro.draw(this->player2.getGap());
-				Sleep(50);
-			}
-			while (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) > this->player1.sumOfXcoords(this->player1.dests[12])) {
-				this->player1.currTetro.erase(this->player1.getGap());
-
-				this->player1.setNextMove(-1, 0);
-
-				if (!this->player1.currTetro.moveLeft(this->player1.currTetro.getNextMove()))
-					break;
-				this->player1.currTetro.draw(this->player1.getGap());
-
-				Sleep(50);
-			}
-			while (this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) < this->player2.sumOfXcoords(this->player2.dests[12])) {
-				this->player2.currTetro.erase(this->player2.getGap());
-
-				this->player2.setNextMove(1, 0);
-
-				if (!this->player2.currTetro.moveRight(this->player2.currTetro.getNextMove()))
-					break;
-				this->player2.currTetro.draw(this->player2.getGap());
-
-				Sleep(50);
-			}
-		}
-		else {//player 1 right, player 2 left
-			if (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) < this->player1.sumOfXcoords(this->player1.dests[12]) &&
-				this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) > this->player2.sumOfXcoords(this->player2.dests[12])) {
-
-				while (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) < this->player1.sumOfXcoords(this->player1.dests[12]) &&
-					this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) > this->player2.sumOfXcoords(this->player2.dests[12])) {
-					this->player1.currTetro.erase(this->player1.getGap());
-					this->player2.currTetro.erase(this->player2.getGap());
-					this->player1.setNextMove(1, 0);
-					this->player2.setNextMove(-1, 0);
-					if (!this->player1.currTetro.moveRight(this->player1.currTetro.getNextMove()) ||
-						!this->player2.currTetro.moveLeft(this->player2.currTetro.getNextMove()))
-						break;
-					this->player1.currTetro.draw(this->player1.getGap());
-					this->player2.currTetro.draw(this->player2.getGap());
-					Sleep(50);
-				}
-				while (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) < this->player1.sumOfXcoords(this->player1.dests[12])) {
-					this->player1.currTetro.erase(this->player1.getGap());
-
-					this->player1.setNextMove(1, 0);
-
-					if (!this->player1.currTetro.moveRight(this->player1.currTetro.getNextMove()))
-						break;
-					this->player1.currTetro.draw(this->player1.getGap());
-
-					Sleep(50);
-				}
-				while (this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) > this->player2.sumOfXcoords(this->player2.dests[12])) {
-					this->player2.currTetro.erase(this->player2.getGap());
-
-					this->player2.setNextMove(-1, 0);
-
-					if (!this->player2.currTetro.moveLeft(this->player2.currTetro.getNextMove()))
-						break;
-					this->player2.currTetro.draw(this->player2.getGap());
-
-					Sleep(50);
-				}
-			}
-			else {//both players left
-				while (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) > this->player1.sumOfXcoords(this->player1.dests[12]) &&
-					this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) > this->player2.sumOfXcoords(this->player2.dests[12])) {
-					this->player1.currTetro.erase(this->player1.getGap());
-					this->player2.currTetro.erase(this->player2.getGap());
-					this->player1.setNextMove(-1, 0);
-					this->player2.setNextMove(-1, 0);
-					if (!this->player1.currTetro.moveLeft(this->player1.currTetro.getNextMove()) ||
-						!this->player2.currTetro.moveLeft(this->player2.currTetro.getNextMove()))
-						break;
-					this->player1.currTetro.draw(this->player1.getGap());
-					this->player2.currTetro.draw(this->player2.getGap());
-					Sleep(50);
-				}
-				while (this->player1.sumOfXcoords(this->player1.currTetro.getTetroPoints()) > this->player1.sumOfXcoords(this->player1.dests[12])) {
-					this->player1.currTetro.erase(this->player1.getGap());
-
-					this->player1.setNextMove(-1, 0);
-
-					if (!this->player1.currTetro.moveLeft(this->player1.currTetro.getNextMove()))
-						break;
-					this->player1.currTetro.draw(this->player1.getGap());
-
-					Sleep(50);
-				}
-				while (this->player2.sumOfXcoords(this->player2.currTetro.getTetroPoints()) > this->player2.sumOfXcoords(this->player2.dests[12])) {
-					this->player2.currTetro.erase(this->player2.getGap());
-
-					this->player2.setNextMove(-1, 0);
-
-					if (!this->player2.currTetro.moveLeft(this->player2.currTetro.getNextMove()))
-						break;
-					this->player2.currTetro.draw(this->player2.getGap());
-
-					Sleep(50);
-				}
-			}
-
-		}
-		
-	}
-	while (this->player1.sumOfYcoords(this->player1.currTetro.getTetroPoints()) < this->player1.sumOfYcoords(this->player1.dests[12]) &&
-		this->player2.sumOfYcoords(this->player2.currTetro.getTetroPoints()) < this->player2.sumOfYcoords(this->player2.dests[12])) {
-		this->player1.currTetro.erase(this->player1.getGap());
-		this->player2.currTetro.erase(this->player2.getGap());
-		this->player1.setNextMove(0, 1);
-		this->player2.setNextMove(0, 1);
-		if (!this->player1.currTetro.moveDown(this->player1.currTetro.getNextMove()) ||
-			!this->player2.currTetro.moveDown(this->player2.currTetro.getNextMove())) {
-			break;
-		}
-		this->player1.currTetro.draw(this->player1.getGap());
-		this->player2.currTetro.draw(this->player2.getGap());
-		Sleep(50);
-	}
-	while (this->player1.sumOfYcoords(this->player1.currTetro.getTetroPoints()) < this->player1.sumOfYcoords(this->player1.dests[12])) {
-		this->player1.currTetro.erase(this->player1.getGap());
-
-		this->player1.setNextMove(0, 1);
-
-		if (!this->player1.currTetro.moveDown(this->player1.currTetro.getNextMove())) {
-			break;
-		}
-		this->player1.currTetro.draw(this->player1.getGap());
-
-		Sleep(50);
-	}
-	while (this->player2.sumOfYcoords(this->player2.currTetro.getTetroPoints()) < this->player2.sumOfYcoords(this->player2.dests[12])) {
-		this->player2.currTetro.erase(this->player2.getGap());
-
-		this->player2.setNextMove(0, 1);
-
-		if (!this->player2.currTetro.moveDown(this->player2.currTetro.getNextMove())) {
-			break;
-		}
-		this->player2.currTetro.draw(this->player2.getGap());
-
-		Sleep(50);
-	}
-}
-
-
-bool Controller::handleUserInput()
-{
-	// Arrays and variables for handling rotation
-	Point pointsToRotate[NUM_OF_POINTS];
-	Point pointsArrTemp[NUM_OF_POINTS];
-	char keyPressed;
-
-	// Erase the current tetrominos for both players before processing user input
-	this->player1.currTetro.erase(player1.gap);
-	this->player2.currTetro.erase(player2.gap);
-
-	// Process user input while keys are pressed
-	while(_kbhit())
-	{
-		keyPressed = _getch();
-		// Switch statement to handle different key inputs for Player 2
-			switch (keyPressed)
-			{
-			case 'l':
-			case 'L':
-			{// Move Player 2's tetromino to the right
-				
-				// Update the next move based on the character on the board to the right
-				/*for (int i = 0; i < NUM_OF_POINTS; i++) {
-					this->player2.currTetro.setNextMoveByIndex
-					(this->player2.gameBoard.getChar(this->player2.currTetro.getTetroPoints()[i].getX() + 1, 
-													this->player2.currTetro.getTetroPoints()[i].getY()), i);
-				}*/
-				this->player2.setNextMove(1, 0);
-				// Move the tetromino to the right
-				this->player2.currTetro.moveRight(this->player2.currTetro.getNextMove());
-				break;
-			}
-			case 'k':
-			case 'K':
-			{
-				// Rotate Player 2's tetromino clockwise
-				// Get the rotated points and check if the rotation is legal
-				//pointsArrTemp = this->player2.currTetro->rotateClockwise();	
-				this->player2.currTetro.rotateClockwise(pointsArrTemp);
-				for (int i = 0; i < NUM_OF_POINTS; i++) {
-					pointsToRotate[i].setX(pointsArrTemp[i].getX());
-					pointsToRotate[i].setY(pointsArrTemp[i].getY());
-				}
-				// Copy rotated points to a temporary array
-				for (int i = 0; i < NUM_OF_POINTS; i++)
-				{
-					this->player2.currTetro.setNextMoveByIndex
-					(this->player2.gameBoard.getChar(pointsToRotate[i].getX(),
-						pointsToRotate[i].getY()), i);
-				}
-				//this->player2.setNextMove(0, 0);
-				// Update the next move based on the character on the board after rotation
-				this->player2.currTetro.isRotateLegal(pointsToRotate, this->player2.currTetro.getNextMove());
-				break;
-			}
-			case 'i':
-			case 'I':
-			{
-				// Rotate Player 2's tetromino counter-clockwise
-				// Get the rotated points and check if the rotation is legal
-				//pointsArrTemp = this->player2.currTetro->rotateCounterClockwise();
-				this->player2.currTetro.rotateCounterClockwise(pointsArrTemp);
-				// Copy rotated points to a temporary array
-				for (int i = 0; i < NUM_OF_POINTS; i++) {
-					pointsToRotate[i].setX(pointsArrTemp[i].getX());
-					pointsToRotate[i].setY(pointsArrTemp[i].getY());
-				}
-				for (int i = 0; i < NUM_OF_POINTS; i++)
-				{
-					this->player2.currTetro.setNextMoveByIndex
-					(this->player2.gameBoard.getChar(pointsToRotate[i].getX(),
-						pointsToRotate[i].getY()), i);
-				}
-				//this->player2.setNextMove(0, 0);
-				// Update the next move based on the character on the board after rotation
-				this->player2.currTetro.isRotateLegal(pointsToRotate, this->player2.currTetro.getNextMove());
-				break;
-			}		
-			case 'j':
-			case 'J':
-			{
-				// Move Player 2's tetromino to the left
-				// Update the next move based on the character on the board to the left		
-				/*for (int i = 0; i < NUM_OF_POINTS; i++) {
-					this->player2.currTetro.setNextMoveByIndex
-					(this->player2.gameBoard.getChar(this->player2.currTetro.getTetroPoints()[i].getX() - 1,
-													this->player2.currTetro.getTetroPoints()[i].getY()), i);
-				}*/
-				this->player2.setNextMove(-1, 0);
-				// Move the tetromino to the left
-				this->player2.currTetro.moveLeft(this->player2.currTetro.getNextMove());
-				break;
-			}
-			case 'm':
-			case 'M':
-			{
-				// Move Player 2's tetromino down quickly (hard drop)
-				// Update the next move based on the character below, move down until landing
-				// Draw and erase the tetromino for each step to create the falling effect
-				for (int i = 0; i < NUM_OF_POINTS; i++) {
-					this->player2.currTetro.setNextMoveByIndex
-					(this->player2.gameBoard.getChar(this->player2.currTetro.getTetroPoints()[i].getX(),
-													this->player2.currTetro.getTetroPoints()[i].getY() + 1), i);
-				}
-				this->player2.setNextMove(0, 1);
-				this->player2.currTetro.setNewBorn(false);
-				while (this->player2.currTetro.moveDown(this->player2.currTetro.getNextMove())) {	
-					this->player2.currTetro.draw(this->player2.gap);
-					Sleep(this->HARDDROP_SLEEPTIME);
-					this->player2.currTetro.erase(this->player2.gap);
-					/*for (int i = 0; i < NUM_OF_POINTS; i++) {
-						this->player2.currTetro.setNextMoveByIndex(this->player2.gameBoard.getChar(this->player2.currTetro.getTetroPoints()[i].getX(), this->player2.currTetro.getTetroPoints()[i].getY() + 1), i);
-					}*/
-					this->player2.setNextMove(0, 1);
-				}
-				break;
-			}
-			case this->ESC_KEYCODE:
-				// Escape key pressed, go back to the entry screen
-				return true;
-				break;
-			default:
-				break;
-			}
-
-			// Switch statement for Player 1 Controls
-			// Same logic and functions as player 2
-			switch (keyPressed)
-			{
-			case 'a':
-			case 'A':
-			{
-				for (int i = 0; i < NUM_OF_POINTS; i++) {
-					this->player1.currTetro.setNextMoveByIndex
-					(this->player1.gameBoard.getChar(this->player1.currTetro.getTetroPoints()[i].getX() - 1,
-													this->player1.currTetro.getTetroPoints()[i].getY()), i);
-				}
-
-				this->player1.currTetro.moveLeft(this->player1.currTetro.getNextMove());
-				break;
-			}
-
-			case 'd':
-			case 'D':
-			{
-				for (int i = 0; i < NUM_OF_POINTS; i++) {
-					this->player1.currTetro.setNextMoveByIndex
-					(this->player1.gameBoard.getChar(this->player1.currTetro.getTetroPoints()[i].getX() + 1,
-													this->player1.currTetro.getTetroPoints()[i].getY()), i);
-				}
-
-				this->player1.currTetro.moveRight(this->player1.currTetro.getNextMove());
-				break;
-			}
-			case 's':
-			case 'S':
-			{
-				//pointsArrTemp = this->player1.currTetro->rotateClockwise();
-				this->player1.currTetro.rotateClockwise(pointsArrTemp);
-				for (int i = 0; i < NUM_OF_POINTS; i++) {
-					pointsToRotate[i].setX(pointsArrTemp[i].getX());
-					pointsToRotate[i].setY(pointsArrTemp[i].getY());
-				}
-
-				for (int i = 0; i < NUM_OF_POINTS; i++)
-				{
-					this->player1.currTetro.setNextMoveByIndex
-					(this->player1.gameBoard.getChar(pointsToRotate[i].getX(),
-						pointsToRotate[i].getY()), i);
-				}
-				this->player1.currTetro.isRotateLegal(pointsToRotate, this->player1.currTetro.getNextMove());
-				break;
-			}
-			case 'w':
-			case 'W':
-			{
-				//pointsArrTemp = this->player1.currTetro->rotateCounterClockwise();
-				this->player1.currTetro.rotateCounterClockwise(pointsArrTemp);
-				for (int i = 0; i < NUM_OF_POINTS; i++) {
-					pointsToRotate[i].setX(pointsArrTemp[i].getX());
-					pointsToRotate[i].setY(pointsArrTemp[i].getY());
-				}
-
-				for (int i = 0; i < NUM_OF_POINTS; i++)
-				{
-					this->player1.currTetro.setNextMoveByIndex
-					(this->player1.gameBoard.getChar(pointsToRotate[i].getX(),
-						pointsToRotate[i].getY()), i);
-				}
-
-				this->player1.currTetro.isRotateLegal(pointsToRotate, this->player1.currTetro.getNextMove());
-				break;
-			}
-			case 'x':
-			case 'X':
-			{
-				for (int i = 0; i < NUM_OF_POINTS; i++) {
-					this->player1.currTetro.setNextMoveByIndex
-					(this->player1.gameBoard.getChar(this->player1.currTetro.getTetroPoints()[i].getX(),
-													this->player1.currTetro.getTetroPoints()[i].getY() + 1), i);
-				}
-				
-				while (this->player1.currTetro.moveDown(this->player1.currTetro.getNextMove())) {
-					this->player1.currTetro.setNewBorn(false);
-					this->player1.currTetro.draw(this->player1.gap);
-					Sleep(this->HARDDROP_SLEEPTIME);
-					this->player1.currTetro.erase(this->player1.gap);
-					for (int i = 0; i < NUM_OF_POINTS; i++) {
-						this->player1.currTetro.setNextMoveByIndex
-						(this->player1.gameBoard.getChar(this->player1.currTetro.getTetroPoints()[i].getX(),
-														this->player1.currTetro.getTetroPoints()[i].getY() + 1), i);
-					}			
-				}
-				break;
-			}
-			case this->ESC_KEYCODE:
-				return true;
-				break;
-			default:
-				break;
-			}		
-	}
-	return false;
-
-}
+//bool Controller::handleUserInput()
+//{
+//	// Arrays and variables for handling rotation
+//	Point pointsToRotate[NUM_OF_POINTS];
+//	Point pointsArrTemp[NUM_OF_POINTS];
+//	char keyPressed;
+//
+//	// Erase the current tetrominos for both players before processing user input
+//	this->player1->currTetro.erase(player1->gap);
+//	this->player2->currTetro.erase(player2->gap);
+//
+//	// Process user input while keys are pressed
+//	while(_kbhit())
+//	{
+//		keyPressed = _getch();
+//		// Switch statement to handle different key inputs for Player 2
+//			switch (keyPressed)
+//			{
+//			case 'l':
+//			case 'L':
+//			{// Move Player 2's tetromino to the right
+//				
+//				// Update the next move based on the character on the board to the right
+//				/*for (int i = 0; i < NUM_OF_POINTS; i++) {
+//					this->player2->currTetro.setNextMoveByIndex
+//					(this->player2->gameBoard.getChar(this->player2->currTetro.getTetroPoints()[i].getX() + 1, 
+//													this->player2->currTetro.getTetroPoints()[i].getY()), i);
+//				}*/
+//				this->player2->setNextMove(1, 0);
+//				// Move the tetromino to the right
+//				this->player2->currTetro.moveRight(this->player2->currTetro.getNextMove());
+//				break;
+//			}
+//			case 'k':
+//			case 'K':
+//			{
+//				// Rotate Player 2's tetromino clockwise
+//				// Get the rotated points and check if the rotation is legal
+//				//pointsArrTemp = this->player2->currTetro->rotateClockwise();	
+//				this->player2->currTetro.rotateClockwise(pointsArrTemp);
+//				for (int i = 0; i < NUM_OF_POINTS; i++) {
+//					pointsToRotate[i].setX(pointsArrTemp[i].getX());
+//					pointsToRotate[i].setY(pointsArrTemp[i].getY());
+//				}
+//				// Copy rotated points to a temporary array
+//				for (int i = 0; i < NUM_OF_POINTS; i++)
+//				{
+//					this->player2->currTetro.setNextMoveByIndex
+//					(this->player2->gameBoard.getChar(pointsToRotate[i].getX(),
+//						pointsToRotate[i].getY()), i);
+//				}
+//				//this->player2->setNextMove(0, 0);
+//				// Update the next move based on the character on the board after rotation
+//				this->player2->currTetro.isRotateLegal(pointsToRotate, this->player2->currTetro.getNextMove());
+//				break;
+//			}
+//			case 'i':
+//			case 'I':
+//			{
+//				// Rotate Player 2's tetromino counter-clockwise
+//				// Get the rotated points and check if the rotation is legal
+//				//pointsArrTemp = this->player2->currTetro->rotateCounterClockwise();
+//				this->player2->currTetro.rotateCounterClockwise(pointsArrTemp);
+//				// Copy rotated points to a temporary array
+//				for (int i = 0; i < NUM_OF_POINTS; i++) {
+//					pointsToRotate[i].setX(pointsArrTemp[i].getX());
+//					pointsToRotate[i].setY(pointsArrTemp[i].getY());
+//				}
+//				for (int i = 0; i < NUM_OF_POINTS; i++)
+//				{
+//					this->player2->currTetro.setNextMoveByIndex
+//					(this->player2->gameBoard.getChar(pointsToRotate[i].getX(),
+//						pointsToRotate[i].getY()), i);
+//				}
+//				//this->player2->setNextMove(0, 0);
+//				// Update the next move based on the character on the board after rotation
+//				this->player2->currTetro.isRotateLegal(pointsToRotate, this->player2->currTetro.getNextMove());
+//				break;
+//			}		
+//			case 'j':
+//			case 'J':
+//			{
+//				// Move Player 2's tetromino to the left
+//				// Update the next move based on the character on the board to the left		
+//				/*for (int i = 0; i < NUM_OF_POINTS; i++) {
+//					this->player2->currTetro.setNextMoveByIndex
+//					(this->player2->gameBoard.getChar(this->player2->currTetro.getTetroPoints()[i].getX() - 1,
+//													this->player2->currTetro.getTetroPoints()[i].getY()), i);
+//				}*/
+//				this->player2->setNextMove(-1, 0);
+//				// Move the tetromino to the left
+//				this->player2->currTetro.moveLeft(this->player2->currTetro.getNextMove());
+//				break;
+//			}
+//			case 'm':
+//			case 'M':
+//			{
+//				// Move Player 2's tetromino down quickly (hard drop)
+//				// Update the next move based on the character below, move down until landing
+//				// Draw and erase the tetromino for each step to create the falling effect
+//				for (int i = 0; i < NUM_OF_POINTS; i++) {
+//					this->player2->currTetro.setNextMoveByIndex
+//					(this->player2->gameBoard.getChar(this->player2->currTetro.getTetroPoints()[i].getX(),
+//													this->player2->currTetro.getTetroPoints()[i].getY() + 1), i);
+//				}
+//				this->player2->setNextMove(0, 1);
+//				this->player2->currTetro.setNewBorn(false);
+//				while (this->player2->currTetro.moveDown(this->player2->currTetro.getNextMove())) {	
+//					this->player2->currTetro.draw(this->player2->gap);
+//					Sleep(this->HARDDROP_SLEEPTIME);
+//					this->player2->currTetro.erase(this->player2->gap);
+//					/*for (int i = 0; i < NUM_OF_POINTS; i++) {
+//						this->player2->currTetro.setNextMoveByIndex(this->player2->gameBoard.getChar(this->player2->currTetro.getTetroPoints()[i].getX(), this->player2->currTetro.getTetroPoints()[i].getY() + 1), i);
+//					}*/
+//					this->player2->setNextMove(0, 1);
+//				}
+//				break;
+//			}
+//			case this->ESC_KEYCODE:
+//				// Escape key pressed, go back to the entry screen
+//				return true;
+//				break;
+//			default:
+//				break;
+//			}
+//
+//			// Switch statement for Player 1 Controls
+//			// Same logic and functions as player 2
+//			switch (keyPressed)
+//			{
+//			case 'a':
+//			case 'A':
+//			{
+//				for (int i = 0; i < NUM_OF_POINTS; i++) {
+//					this->player1->currTetro.setNextMoveByIndex
+//					(this->player1->gameBoard.getChar(this->player1->currTetro.getTetroPoints()[i].getX() - 1,
+//													this->player1->currTetro.getTetroPoints()[i].getY()), i);
+//				}
+//
+//				this->player1->currTetro.moveLeft(this->player1->currTetro.getNextMove());
+//				break;
+//			}
+//
+//			case 'd':
+//			case 'D':
+//			{
+//				for (int i = 0; i < NUM_OF_POINTS; i++) {
+//					this->player1->currTetro.setNextMoveByIndex
+//					(this->player1->gameBoard.getChar(this->player1->currTetro.getTetroPoints()[i].getX() + 1,
+//													this->player1->currTetro.getTetroPoints()[i].getY()), i);
+//				}
+//
+//				this->player1->currTetro.moveRight(this->player1->currTetro.getNextMove());
+//				break;
+//			}
+//			case 's':
+//			case 'S':
+//			{
+//				//pointsArrTemp = this->player1->currTetro->rotateClockwise();
+//				this->player1->currTetro.rotateClockwise(pointsArrTemp);
+//				for (int i = 0; i < NUM_OF_POINTS; i++) {
+//					pointsToRotate[i].setX(pointsArrTemp[i].getX());
+//					pointsToRotate[i].setY(pointsArrTemp[i].getY());
+//				}
+//
+//				for (int i = 0; i < NUM_OF_POINTS; i++)
+//				{
+//					this->player1->currTetro.setNextMoveByIndex
+//					(this->player1->gameBoard.getChar(pointsToRotate[i].getX(),
+//						pointsToRotate[i].getY()), i);
+//				}
+//				this->player1->currTetro.isRotateLegal(pointsToRotate, this->player1->currTetro.getNextMove());
+//				break;
+//			}
+//			case 'w':
+//			case 'W':
+//			{
+//				//pointsArrTemp = this->player1->currTetro->rotateCounterClockwise();
+//				this->player1->currTetro.rotateCounterClockwise(pointsArrTemp);
+//				for (int i = 0; i < NUM_OF_POINTS; i++) {
+//					pointsToRotate[i].setX(pointsArrTemp[i].getX());
+//					pointsToRotate[i].setY(pointsArrTemp[i].getY());
+//				}
+//
+//				for (int i = 0; i < NUM_OF_POINTS; i++)
+//				{
+//					this->player1->currTetro.setNextMoveByIndex
+//					(this->player1->gameBoard.getChar(pointsToRotate[i].getX(),
+//						pointsToRotate[i].getY()), i);
+//				}
+//
+//				this->player1->currTetro.isRotateLegal(pointsToRotate, this->player1->currTetro.getNextMove());
+//				break;
+//			}
+//			case 'x':
+//			case 'X':
+//			{
+//				for (int i = 0; i < NUM_OF_POINTS; i++) {
+//					this->player1->currTetro.setNextMoveByIndex
+//					(this->player1->gameBoard.getChar(this->player1->currTetro.getTetroPoints()[i].getX(),
+//													this->player1->currTetro.getTetroPoints()[i].getY() + 1), i);
+//				}
+//				
+//				while (this->player1->currTetro.moveDown(this->player1->currTetro.getNextMove())) {
+//					this->player1->currTetro.setNewBorn(false);
+//					this->player1->currTetro.draw(this->player1->gap);
+//					Sleep(this->HARDDROP_SLEEPTIME);
+//					this->player1->currTetro.erase(this->player1->gap);
+//					for (int i = 0; i < NUM_OF_POINTS; i++) {
+//						this->player1->currTetro.setNextMoveByIndex
+//						(this->player1->gameBoard.getChar(this->player1->currTetro.getTetroPoints()[i].getX(),
+//														this->player1->currTetro.getTetroPoints()[i].getY() + 1), i);
+//					}			
+//				}
+//				break;
+//			}
+//			case this->ESC_KEYCODE:
+//				return true;
+//				break;
+//			default:
+//				break;
+//			}		
+//	}
+//	return false;
+//
+//}
 
 
 
 void Controller::entryScreen()
 {
 	bool isUserActive = true;
-	
+	this->player1 = new Computer();
+	this->player2 = new Human();
 	//cout << "]";
 
 	// Clear the console screen
@@ -625,8 +440,8 @@ void Controller::entryScreen()
 					break;
 				case '2':
 					system("cls");
-					this->player1.gameBoard.drawBoardInGame();
-					this->player2.gameBoard.drawBoardInGame(22);
+					this->player1->gameBoard.drawBoardInGame();
+					this->player2->gameBoard.drawBoardInGame(22);
 					this->printScoreBoard();
 					playGame(isColor);
 					break;
@@ -697,7 +512,7 @@ void Controller::printScoreBoard() {
 	gotoxy(3, 21);
 	cout << "Player #1";
 	gotoxy(3, 22);
-	cout << "Score: " << this->player1.score;
+	cout << "Score: " << this->player1->score;
 
 	for (int row = 20; row <= 23; row++) {
 		gotoxy(22, row);
@@ -715,7 +530,7 @@ void Controller::printScoreBoard() {
 	gotoxy(25, 21);
 	cout << "Player #2";
 	gotoxy(25, 22);
-	cout << "Score: " << this->player2.score;
+	cout << "Score: " << this->player2->score;
 }
 
 // Update the scoareBoard
@@ -735,11 +550,11 @@ void Controller::endGame()
 	cout << "\033[1;32m********************************\033[0m" << endl;  // Bold green text
 	if (this->winner == 0) {
 		//its a tie
-		if (this->player1.getScore() > this->player2.getScore()) {
+		if (this->player1->getScore() > this->player2->getScore()) {
 			//player 1 win
 			cout << "\033[1;32m*      The Winner is: " << this->PLAYER1 << "        *\033[0m" << endl;  // Bold green text
 		}
-		else if (this->player1.getScore() < this->player2.getScore()) {
+		else if (this->player1->getScore() < this->player2->getScore()) {
 			//player 2 win
 			this->winner = this->PLAYER2;
 			cout << "\033[1;32m*      The Winner is: " << this->PLAYER2 << "        *\033[0m" << endl;  // Bold green text
@@ -753,8 +568,8 @@ void Controller::endGame()
 
 	}
 	cout << "\033[1;32m********************************\033[0m" << endl << endl;  // Bold green text
-	cout << "Player 1 Score: " << this->player1.getScore() << endl;
-	cout << "Player 2 Score: " << this->player2.getScore() << endl;
+	cout << "Player 1 Score: " << this->player1->getScore() << endl;
+	cout << "Player 2 Score: " << this->player2->getScore() << endl;
 	cout << "Press any key to return to main menu. "<< endl;
 
 	cin.ignore();
