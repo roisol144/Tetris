@@ -45,6 +45,7 @@ public:
     void endGame(); 
     void resetColor();
     void computerMove(Player& player);
+    void setGameColor(bool* isColor);
 
     
  

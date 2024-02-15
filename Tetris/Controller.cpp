@@ -379,9 +379,10 @@ void Controller::moveTetriminoDown(Player& player)
 
 void Controller::entryScreen()
 {
+	bool isColor = false;
 	bool isUserActive = true;
-	this->player1 = new Computer();
-	this->player2 = new Human();
+	//this->player1 = new Computer();
+	//this->player2 = new Human();
 	//cout << "]";
 
 	// Clear the console screen
@@ -399,7 +400,7 @@ void Controller::entryScreen()
 
 		char choice;
 		while (isUserActive)
-		{	
+		{
 			resetColor();
 			system("cls");
 			// Display the Tetris headline
@@ -408,65 +409,102 @@ void Controller::entryScreen()
 			cout << "*********************" << endl << endl;
 
 			// Display the menu options
-			cout << "(1) Start a new game" << endl;
+			cout << "(1) Start a new game - Human vs Human" << endl;
+			cout << "(2) Start a new game - Human vs Computer" << endl;
+			cout << "(3) Start a new game - Computer vs Computer" << endl;
 			if (this->gameStatus) {
-				cout << "(2) Continue a paused game" << endl;
+				cout << "(4) Continue a paused game" << endl;
 			}
 			cout << "(8) Present instructions and keys" << endl;
 			cout << "(9) EXIT" << endl << endl;
 
 			//Message for the user to pick a choice
-			
-	
+
+
 			//cin >> choice;
 			choice = _getch();
-			bool isColor=false;
 			// Process user choice
-			switch (choice) 
+			switch (choice)
 			{
-				case '1':
-					system("cls");
-					cout << "****************************" << endl;
-					cout << "*   Choose Color Option    *" << endl;
-					cout << "****************************" << endl;
-					cout << "(1) With Color" << endl << "(0) No Color" << endl;	
-					
-					
-					//cin >> isColor;
-					isColor = _getch() - '0';
-					system("cls");
-					this->gameStatus = false;
-					playGame(isColor);
-					break;
-				case '2':
-					system("cls");
-					this->player1->gameBoard.drawBoardInGame();
-					this->player2->gameBoard.drawBoardInGame(22);
-					this->printScoreBoard();
-					playGame(isColor);
-					break;
-				case '8':
-					showInstructions();
-					break;
+			case '1':
+				this->player1 = new Human();
+				this->player2 = new Human();
+				this->setGameColor(&isColor);
+				//system("cls");
+				//cout << "****************************" << endl;
+				//cout << "*   Choose Color Option    *" << endl;
+				//cout << "****************************" << endl;
+				//cout << "(1) With Color" << endl << "(0) No Color" << endl;	
+				//
+				//
+				//isColor = _getch() - '0';
+				//system("cls");
+				//this->gameStatus = false;
+				//playGame(isColor);
+				break;
+			case '2':
+				this->player1 = new Human;
+				this->player2 = new Computer;
+				this->setGameColor(&isColor);
+				break;
+			case '3':
+				this->player1 = new Computer;
+				this->player2 = new Computer;
+				this->setGameColor(&isColor);
+				break;
 
-				case '9':
-					// Exit the program
-					this->gameStatus = false;
-					isUserActive = false;
-					cout << endl;
-					cout << "Exiting the Tetris game. Goodbye!" << endl;
-					break;
+			case '4':
+				system("cls");
+				this->player1->gameBoard.drawBoardInGame();
+				this->player2->gameBoard.drawBoardInGame(22);
+				this->printScoreBoard();
+				playGame(isColor);
+				break;
+			case '8':
+				showInstructions();
+				break;
 
-				default:
-					// Invalid choice
-					cout << "Invalid choice. Please try again." << endl;
-					cin.ignore();
-					cin.get();
-					break;
+			case '9':
+				// Exit the program
+				this->gameStatus = false;
+				isUserActive = false;
+				cout << endl;
+				cout << "Exiting the Tetris game. Goodbye!" << endl;
+				break;
+
+			default:
+				// Invalid choice
+				cout << "Invalid choice. Please try again." << endl;
+				cin.ignore();
+				cin.get();
+				break;
 			}
+
+			//system("cls");
+			//cout << "****************************" << endl;
+			//cout << "*   Choose Color Option    *" << endl;
+			//cout << "****************************" << endl;
+			//cout << "(1) With Color" << endl << "(0) No Color" << endl;	
+			////cin >> isColor;
+			//isColor = _getch() - '0';
+			//system("cls");
+			//this->gameStatus = false;
+			//playGame(isColor);
 		}
-	
 } 
+
+void Controller::setGameColor(bool* isColor)
+{
+	system("cls");
+	cout << "****************************" << endl;
+	cout << "*   Choose Color Option    *" << endl;
+	cout << "****************************" << endl;
+	cout << "(1) With Color" << endl << "(0) No Color" << endl;
+	*isColor = _getch() - '0';
+	system("cls");
+	this->gameStatus = false;
+	playGame(*isColor);
+}
 
 
 
