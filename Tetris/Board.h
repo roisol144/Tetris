@@ -10,18 +10,7 @@ public:
 	static constexpr int FIRST_BOARD_START = 0;
 	static constexpr int SECOND_BOARD_START = 22;
 	static const int NUM_OF_POINTS = 4;
-/*
-	Board()
-	{
-		for (int i = 0; i < GAME_HEIGHT; i++)
-		{
-			for (int j = 0; j < GAME_WIDTH; j++)
-			{
-				gameBoard[i][j] = ' '; // Initialize with some default value
-			}
-		}
-	}
-*/
+
 	void init();
 	void addToBoard(const Tetrimino shape);
 	char getChar(int row, int col) const;
@@ -37,9 +26,6 @@ public:
 	int calcBumpiness();
 	int calcHeight(int col);
 	int aggregateHeight();
-	//void explosion2(const Point& pnt, const int gap);
-	// void minimizeGapsInBoard();
-
 
 private:
 	int gameBoard[GAME_HEIGHT][GAME_WIDTH];

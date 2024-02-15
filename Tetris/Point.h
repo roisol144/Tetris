@@ -10,13 +10,6 @@ private:
 public:
 	
 	// Constructors
-	/*
-	Point(int _x=0, int _y=0)
-	{
-		x = _x;
-		y = _y;
-	}
-	*/
 	Point() {}
 
 	Point(int x, int y) :x(0),y(0) {

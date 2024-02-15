@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Board.h"
 #include <vector>
 
@@ -39,15 +39,10 @@ public:
     int getGap() const { return this->gap; }
     /* function will initilize the player name  */
     void setPlayerName(string name);
-    /* funtion will return the current tetrimino that is moving on the board. */
-    //Tetrimino* getCurrTetro() { return this->currTetro; }
-    //void setDestsPerRotation();
     void setNextMove(int x, int y);
-    virtual void handleUserInput(char keyPressed) {  }
-  
+    virtual void handleUserInput(char keyPressed) {}
+    virtual ~Player() {}
     
-    
-  
 
 protected:
     Board gameBoard;
@@ -55,7 +50,6 @@ protected:
     
 
 private:
-
     int score = 0;
     int gap = 0;
     string name;

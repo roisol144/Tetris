@@ -223,30 +223,6 @@ Point Tetrimino::calculatePivot()
 
 	return Point(averageX, averageY);
 }
-/*
-Point* Tetrimino::rotateClockwise()
-{
-	Point pivot = calculatePivot();
-	for (int i = 0; i < NUM_OF_POINTS; i++)
-	{
-		pivot.setX(pivot.getX() + m_points[i].getX());
-		pivot.setY(pivot.getY() + m_points[i].getY());
-	}
-	pivot.setX(pivot.getX() / NUM_OF_POINTS);
-	pivot.setY(pivot.getY() / NUM_OF_POINTS);
-
-	Point points_to_rotate[NUM_OF_POINTS];
-	
-	// Rotate clockwise around the pivot
-	for (int i = 0; i < NUM_OF_POINTS; i++)
-	{
-		points_to_rotate[i].setX(m_points[i].rotateClockwise(pivot).getX());
-		points_to_rotate[i].setY(m_points[i].rotateClockwise(pivot).getY());
-		
-	}
-	return points_to_rotate;
-}
-*/
 
 
 void Tetrimino::rotateClockwise(Point* pointsToRotate)
@@ -293,30 +269,7 @@ bool Tetrimino::isRotateLegal(const Point* pointsArr, const char* rotated)
 
 	return true;
 }
-/*
-Point* Tetrimino::rotateCounterClockwise()
-{
-	Point pivot = calculatePivot();
-	for (int i = 0; i < NUM_OF_POINTS; i++)
-	{
-		pivot.setX(pivot.getX() + m_points[i].getX());
-		pivot.setY(pivot.getY() + m_points[i].getY());
-	}
-	pivot.setX(pivot.getX() / NUM_OF_POINTS);
-	pivot.setY(pivot.getY() / NUM_OF_POINTS);
 
-	// Rotate counterclockwise around the pivot
-	Point points_to_rotate[NUM_OF_POINTS];
-
-	// Rotate clockwise around the pivot
-	for (int i = 0; i < NUM_OF_POINTS; i++)
-	{
-		points_to_rotate[i].setX(m_points[i].rotateCounterClockwise(pivot).getX());
-		points_to_rotate[i].setY(m_points[i].rotateCounterClockwise(pivot).getY());
-	}
-	return points_to_rotate;
-}
-*/
 
 void Tetrimino::rotateCounterClockwise(Point* pointToRotate)
 {
@@ -382,7 +335,3 @@ void Tetrimino::setXcoords(int* x) {
 		this->m_points[i].setX(x[i]);
 	}
 }
-
-
-
-

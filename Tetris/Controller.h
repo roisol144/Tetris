@@ -44,10 +44,13 @@ public:
     void updateScore(Player& p, int gap);
     void endGame(); 
     void resetColor();
-    void computerMove(Player& player);
     void setGameColor(bool* isColor);
 
-    
+    ~Controller()
+    {
+        delete this->player1;
+        delete this->player2;
+    }
  
 };
 #endif // __CONTROLLER_H
