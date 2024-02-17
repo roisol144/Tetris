@@ -43,7 +43,7 @@ void Computer::moveComputer(Point* dest) {
 			if (!this->currTetro.moveRight(this->currTetro.getNextMove()))
 				return;
 			this->currTetro.draw(this->getGap());
-			Sleep(150);
+			Sleep(100);
 		}
 	}
 	else { // go left!
@@ -53,7 +53,7 @@ void Computer::moveComputer(Point* dest) {
 			if (!this->currTetro.moveLeft(this->currTetro.getNextMove()))
 				return;
 			this->currTetro.draw(this->getGap());
-			Sleep(150);
+			Sleep(100);
 
 		}
 	}
@@ -65,6 +65,7 @@ void Computer::pickComputerMove() {
 	int counter = 0;
 	Point pointsToRotate[4];
 	Point pointsArrTemp[4];
+
 	//bool isRotateLegal = true;
 	int score;
 	int max = -100000;
@@ -89,7 +90,7 @@ void Computer::pickComputerMove() {
 			this->currTetro.setYcoordsByIndex(pointsToRotate[k].getY() + 3, k);
 			this->currTetro.setXcoordsByIndex(pointsToRotate[k].getX(), k);
 		}
-		
+
 	}
 
 
@@ -130,8 +131,25 @@ void Computer::pickComputerMove() {
 		this->currTetro.setXcoordsByIndex(this->currTetro.getTetroPoints()[2].getX() - 1, 2);
 		this->currTetro.setXcoordsByIndex(this->currTetro.getTetroPoints()[3].getX() - 1, 3);
 	}
-	this->moveComputer(movesToPickFrom[bestMoveIndex]);
+	if (this->computerLevel == 'a') // Best Computer - should calculate the exact best step for each move
+		this->moveComputer(movesToPickFrom[bestMoveIndex]);
 
+	else if (this->computerLevel == 'b') // Good Computershould miss occasionally (e.g. randomly once in ~40 moves)
+	{
+		if (movesCounter % 40 == 0) // every other 40 moves
+			this->moveComputer(movesToPickFrom[rand() % 3]);
+
+		else
+			this->moveComputer(movesToPickFrom[bestMoveIndex]);
+	}
+	else if (this->computerLevel == 'c') // every other 10 moves
+	{
+		if (movesCounter % 10 == 0)
+			this->moveComputer(movesToPickFrom[rand() % 3]);
+		else
+			this->moveComputer(movesToPickFrom[bestMoveIndex]);
+	}
+	this->increaseMovesCounter();
 }
 
 int Computer::bestMoveFromDestsIndex(int* score) {

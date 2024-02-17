@@ -151,19 +151,20 @@ void Controller::entryScreen()
 {
 	bool isColor = false;
 	bool isUserActive = true;
+	char computerLevel;
 
 	// Clear the console screen
 	
-		//gotoxy(50, 13);
-		////PlaySound(TEXT("bestTetris.wav"), NULL, SND_FILENAME | SND_ASYNC);
-		//cout << "Loading: [";
+		gotoxy(50, 13);
+		PlaySound(TEXT("bestTetris.wav"), NULL, SND_FILENAME | SND_ASYNC);
+		cout << "Loading: [";
 
-		//for (int i = 0; i < 5; ++i) {
-		//	cout << "=";
-		//	(i == 4) ? (cout << "]") : cout;
-		//	cout.flush();
-		//	this_thread::sleep_for(chrono::seconds(20 / 20));
-		//}
+		for (int i = 0; i < 5; ++i) {
+			cout << "=";
+			(i == 4) ? (cout << "]") : cout;
+			cout.flush();
+			this_thread::sleep_for(chrono::seconds(20 / 20));
+		}
 
 		char choice;
 		while (isUserActive)
@@ -201,11 +202,41 @@ void Controller::entryScreen()
 			case '2':
 				this->player1 = new Human;
 				this->player2 = new Computer;
+				system("cls");
+				cout << "Pick Level Of Computer: (a) BEST (b) GOOD and (c) NOVICE : ";
+				cin >> computerLevel;
+				while (computerLevel != 'a' && computerLevel != 'b' && computerLevel != 'c')
+				{
+					cout << "Invalid level, try again." << endl;
+					cin >> computerLevel;
+
+				}
+				dynamic_cast<Computer*>(this->player2)->setComputerLevel(computerLevel);
 				this->setGameColor(&isColor);
 				break;
 			case '3':
 				this->player1 = new Computer;
 				this->player2 = new Computer;
+				system("cls");
+				cout << "Pick Level Of Computer 1: (a) BEST (b) GOOD and (c) NOVICE : ";
+				cin >> computerLevel;
+				while (computerLevel != 'a' && computerLevel != 'b' && computerLevel != 'c')
+				{
+					cout << "Invalid level, try again." << endl;
+					cin >> computerLevel;
+				}
+
+				dynamic_cast<Computer*>(this->player1)->setComputerLevel(computerLevel);
+				system("cls");
+				cout << "Pick Level Of Computer 2: (a) BEST (b) GOOD and (c) NOVICE : ";
+				cin >> computerLevel;
+				while (computerLevel != 'a' && computerLevel != 'b' && computerLevel != 'c')
+				{
+					cout << "Invalid level, try again." << endl;
+					cin >> computerLevel;
+
+				}
+				dynamic_cast<Computer*>(this->player2)->setComputerLevel(computerLevel);
 				this->setGameColor(&isColor);
 				break;
 
