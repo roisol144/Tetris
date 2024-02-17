@@ -16,13 +16,13 @@ void Controller::playGame(const bool isColor)
 		this->player2->setGap(this->player2->PLAYER2_GAP); // Set gap for Player 2
 		this->printScoreBoard(); // Display the initial scoreboard
 		this->gameStatus = true; // Set game status to true to start the game
-		//this->player1->initBoard(); // Initialize the game board for Player 1
+	
 		this->player1->gameBoard.init();
-		//this->player2->initBoard(); // Initialize the game board for Player 2
+		
 		this->player2->gameBoard.init();
-		//this->player1->drawBoard(); // Draw the initial game board for Player 1
+		
 		this->player1->gameBoard.drawBoard();
-		//this->player2->drawBoard(this->player2->getGap()); // Draw the initial game board for Player 2 with gap
+		
 		this->player2->gameBoard.drawBoard(this->player2->gap);
 
 		this->player1->setPlayerName("Player 1"); // Set the name for Player 1
@@ -45,8 +45,7 @@ void Controller::playGame(const bool isColor)
 		{			
 			this->player2->createNextTetrimino(isColor); // Create a new tetromino for Player 2		
 		}
-		/*this->player1->pickComputerMove();
-		this->player2->pickComputerMove();*/
+		
 		
 		Sleep(300); // Pause for a short duration (milliseconds) for game update
 		if (scanKeys())// Handle user input during the game
@@ -76,7 +75,7 @@ bool Controller::scanKeys() {
 		if (keyPressed == 'i' || keyPressed == 'j' || keyPressed == 'k' || keyPressed == 'l' || keyPressed == 'm') {
 			player2->handleUserInput(keyPressed);
 		}
-		if (keyPressed == 27)
+		if (keyPressed == ESC_KEYCODE)
 			return true;
 	}
 	return false;
@@ -186,7 +185,7 @@ void Controller::entryScreen()
 			cout << "(8) Present instructions and keys" << endl;
 			cout << "(9) EXIT" << endl << endl;
 
-			//Message for the user to pick a choice
+		
 
 
 			//cin >> choice;
@@ -311,6 +310,7 @@ void Controller::showInstructions()
 void Controller::printScoreBoard() {
 	resetColor();
 
+	//all constant numbers are coordinates on the console
 	for (int row = 20; row <= 23; row++) {
 		gotoxy(0, row);
 		cout << '*';
@@ -385,12 +385,8 @@ void Controller::endGame()
 	cout << "\033[1;32m********************************\033[0m" << endl << endl;  // Bold green text
 	cout << "Player 1 Score: " << this->player1->getScore() << endl;
 	cout << "Player 2 Score: " << this->player2->getScore() << endl;
-	//cout << "Press any key to return to main menu. "<< endl;
 	delete this->player1;
 	delete this->player2;
-	//cin.ignore();
-	//cin >> x;
-	//while (!_kbhit()) {}
 	_getch();
 }
 

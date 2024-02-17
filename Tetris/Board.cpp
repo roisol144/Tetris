@@ -48,7 +48,6 @@ void Board::drawBoard(const int boardsGap) const
 
 void Board::drawBoardInGame(int boardsGap) const {
 	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	//SetConsoleTextAttribute(hStdOut, 15);
 	this->drawBoard(boardsGap);
 	for (int row = 0; row < this->GAME_HEIGHT; row++) {
 		for (int col = 0; col < this->GAME_WIDTH; col++) {

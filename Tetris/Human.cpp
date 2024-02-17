@@ -73,7 +73,7 @@ void Human::handleUserInput(char keyPressed) {
 				(this->gameBoard.getChar(pointsToRotate[i].getX(),
 					pointsToRotate[i].getY()), i);
 			}
-			//this->player2.setNextMove(0, 0);
+			
 			// Update the next move based on the character on the board after rotation
 			this->currTetro.isRotateLegal(pointsToRotate, this->currTetro.getNextMove());
 			break;

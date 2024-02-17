@@ -5,10 +5,10 @@ void Tetrimino::createTetromino(bool isColor) {
 	//reset the first point 
 	this->m_points[0].setX(4);
 	this->m_points[0].setY(0);
-	//srand(time(nullptr));
+	
 	int randShape = 1 + rand() % 7;
-	int randBomb = 1 + rand() % 200;
-	//int randShape = 3; // FOR TESTS
+	int randBomb = 1 + rand() % 20;
+	
 	if (randBomb == 1) {
 		this->isBomb = true;
 		for (int i = 1; i < NUM_OF_POINTS; i++) {
@@ -26,7 +26,7 @@ void Tetrimino::createTetromino(bool isColor) {
 				this->m_points[i].setX(this->m_points[i - 1].getX() + 1);
 				this->m_points[i].setY(0);
 			}
-			//this->colorAnsciCode = "\033[36m";
+			
 			if (isColor)
 				this->color = Colors::CYAN;
 			break;
@@ -40,7 +40,7 @@ void Tetrimino::createTetromino(bool isColor) {
 				this->m_points[i].setX(this->m_points[i - 2].getX());
 				this->m_points[i].setY(1);
 			}
-			//this->colorAnsciCode = "\033[33m";
+			
 			if (isColor)
 				this->color = Colors::YELLOW;
 
@@ -53,7 +53,7 @@ void Tetrimino::createTetromino(bool isColor) {
 			}
 			this->m_points[3].setX(5);
 			this->m_points[3].setY(1);
-			//this->colorAnsciCode = "\033[35m";
+			
 			if (isColor)
 				this->color = Colors::MAGENTA;
 
@@ -67,7 +67,7 @@ void Tetrimino::createTetromino(bool isColor) {
 			}
 			this->m_points[3].setX(4);
 			this->m_points[3].setY(2);
-			//this->colorAnsciCode = "\033[34m";
+			
 			if (isColor)
 				this->color = Colors::BLUE;
 
@@ -81,7 +81,7 @@ void Tetrimino::createTetromino(bool isColor) {
 			}
 			this->m_points[3].setX(5);
 			this->m_points[3].setY(2);
-			//this->colorAnsciCode = "\033[37m";
+			
 			if (isColor)
 				this->color = Colors::BROWN;
 
@@ -97,7 +97,7 @@ void Tetrimino::createTetromino(bool isColor) {
 			this->m_points[2].setY(0);
 			this->m_points[3].setX(6);
 			this->m_points[3].setY(0);
-			//this->colorAnsciCode = "\033[32m";
+			
 			if (isColor)
 				this->color = Colors::GREEN;
 
@@ -110,7 +110,7 @@ void Tetrimino::createTetromino(bool isColor) {
 			this->m_points[2].setY(1);
 			this->m_points[3].setX(6);
 			this->m_points[3].setY(1);
-			//this->colorAnsciCode = "\033[31m";
+			
 			if (isColor)
 				this->color = Colors::LIGHTRED;
 
@@ -236,7 +236,7 @@ void Tetrimino::rotateClockwise(Point* pointsToRotate)
 	pivot.setX(pivot.getX() / NUM_OF_POINTS);
 	pivot.setY(pivot.getY() / NUM_OF_POINTS);
 
-	//Point points_to_rotate[NUM_OF_POINTS];
+	
 
 	// Rotate clockwise around the pivot
 	for (int i = 0; i < NUM_OF_POINTS; i++)
@@ -283,7 +283,7 @@ void Tetrimino::rotateCounterClockwise(Point* pointToRotate)
 	pivot.setY(pivot.getY() / NUM_OF_POINTS);
 
 	// Rotate counterclockwise around the pivot
-	//Point points_to_rotate[NUM_OF_POINTS];
+	
 
 	// Rotate clockwise around the pivot
 	for (int i = 0; i < NUM_OF_POINTS; i++)

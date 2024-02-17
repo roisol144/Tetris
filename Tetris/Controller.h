@@ -36,7 +36,6 @@ public:
     static constexpr int SCORE_FRAME_END_COL = 12;
     void playGame(const bool isColor);
     void entryScreen();
-    //bool handleUserInput();
     bool scanKeys();
     void moveTetriminoDown(Player& player);
     void printScoreBoard();

@@ -12,7 +12,7 @@ void Computer::createNextTetrimino(const bool isColor) {
 bool Computer::isXSumEqual(Point* dest) {
 	int sumCurr = 0;
 	int sumDest = 0;
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		sumCurr += this->currTetro.getTetroPoints()[i].getX();
 		sumDest += dest[i].getX();
 	}
@@ -24,7 +24,7 @@ bool Computer::isXSumEqual(Point* dest) {
 //computer
 int Computer::sumOfXcoords(const Point* p) {
 	int sum = 0;
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		sum += p[i].getX();
 	}
 	return sum;
@@ -61,19 +61,18 @@ void Computer::moveComputer(Point* dest) {
 }
 
 void Computer::pickComputerMove() {
-	Point movesToPickFrom[4][4];
+	Point movesToPickFrom[NUM_OF_POINTS][NUM_OF_POINTS];
 	int counter = 0;
-	Point pointsToRotate[4];
-	Point pointsArrTemp[4];
+	Point pointsToRotate[NUM_OF_POINTS];
+	Point pointsArrTemp[NUM_OF_POINTS];
 
-	//bool isRotateLegal = true;
 	int score;
 	int max = -100000;
 	int bestMoveIndex;
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		this->setDestsPerRotation();
 
-		memcpy(movesToPickFrom[counter], dests[bestMoveFromDestsIndex(&score)], 4 * sizeof(Point));
+		memcpy(movesToPickFrom[counter], dests[bestMoveFromDestsIndex(&score)], NUM_OF_POINTS * sizeof(Point));
 		if (max < score) {
 			max = score;
 			bestMoveIndex = counter;
@@ -81,11 +80,11 @@ void Computer::pickComputerMove() {
 		counter++;
 		this->currTetro.rotateClockwise(pointsArrTemp);
 
-		for (int j = 0; j < 4; j++) {
+		for (int j = 0; j < NUM_OF_POINTS; j++) {
 			pointsToRotate[j].setX(pointsArrTemp[j].getX());
 			pointsToRotate[j].setY(pointsArrTemp[j].getY());
 		}
-		for (int k = 0; k < 4; k++) {
+		for (int k = 0; k < NUM_OF_POINTS; k++) {
 
 			this->currTetro.setYcoordsByIndex(pointsToRotate[k].getY() + 3, k);
 			this->currTetro.setXcoordsByIndex(pointsToRotate[k].getX(), k);
@@ -98,13 +97,13 @@ void Computer::pickComputerMove() {
 	//rotating the shape to the best move rotation:
 	for (int i = 0; i < bestMoveIndex; i++) {
 		this->currTetro.rotateClockwise(pointsArrTemp);
-		for (int j = 0; j < 4; j++) {
+		for (int j = 0; j < NUM_OF_POINTS; j++) {
 			pointsToRotate[j].setX(pointsArrTemp[j].getX());
 			pointsToRotate[j].setY(pointsArrTemp[j].getY() + 3);
 
 		}
 
-		for (int k = 0; k < 4; k++) {
+		for (int k = 0; k < NUM_OF_POINTS; k++) {
 
 			this->currTetro.setYcoordsByIndex(pointsToRotate[k].getY(), k);
 
@@ -112,7 +111,6 @@ void Computer::pickComputerMove() {
 		}
 
 	}
-	//this->currTetro.move();
 	while (this->currTetro.getTetroPoints()[0].getY() != 0 &&
 		this->currTetro.getTetroPoints()[1].getY() != 0 &&
 		this->currTetro.getTetroPoints()[2].getY() != 0 &&
@@ -122,10 +120,10 @@ void Computer::pickComputerMove() {
 		this->currTetro.setYcoordsByIndex(this->currTetro.getTetroPoints()[2].getY() - 1, 2);
 		this->currTetro.setYcoordsByIndex(this->currTetro.getTetroPoints()[3].getY() - 1, 3);
 	}
-	while (this->currTetro.getTetroPoints()[0].getX() != 4 &&
-		this->currTetro.getTetroPoints()[1].getX() != 4 &&
-		this->currTetro.getTetroPoints()[2].getX() != 4 &&
-		this->currTetro.getTetroPoints()[3].getX() != 4) {
+	while (this->currTetro.getTetroPoints()[0].getX() != NUM_OF_POINTS &&
+		this->currTetro.getTetroPoints()[1].getX() != NUM_OF_POINTS &&
+		this->currTetro.getTetroPoints()[2].getX() != NUM_OF_POINTS &&
+		this->currTetro.getTetroPoints()[3].getX() != NUM_OF_POINTS) {
 		this->currTetro.setXcoordsByIndex(this->currTetro.getTetroPoints()[0].getX() - 1, 0);
 		this->currTetro.setXcoordsByIndex(this->currTetro.getTetroPoints()[1].getX() - 1, 1);
 		this->currTetro.setXcoordsByIndex(this->currTetro.getTetroPoints()[2].getX() - 1, 2);
@@ -134,9 +132,9 @@ void Computer::pickComputerMove() {
 	if (this->computerLevel == 'a') // Best Computer - should calculate the exact best step for each move
 		this->moveComputer(movesToPickFrom[bestMoveIndex]);
 
-	else if (this->computerLevel == 'b') // Good Computershould miss occasionally (e.g. randomly once in ~40 moves)
+	else if (this->computerLevel == 'b') // Good Computershould miss occasionally (e.g. randomly once in ~NUM_OF_POINTS0 moves)
 	{
-		if (movesCounter % 40 == 0) // every other 40 moves
+		if (movesCounter % 40 == 0) // every other NUM_OF_POINTS0 moves
 			this->moveComputer(movesToPickFrom[rand() % 3]);
 
 		else
@@ -158,9 +156,10 @@ int Computer::bestMoveFromDestsIndex(int* score) {
 	int max = -1000000;
 	int counter = 0;
 	for (int i = 0; i < logSize; i++) {
-		for (int k = 0; k < 4; k++) {
+		for (int k = 0; k < NUM_OF_POINTS; k++) {
 			this->gameBoard.addTempPoint(dests[i][k]);
 		}
+		//parameters to calculate and pick the best move
 		movesScores[i] = -2.5 * this->gameBoard.aggregateHeight() +
 			0.760666 * this->gameBoard.countFullRows(dests[i]) +
 			-0.35663 * this->gameBoard.countHoles() +
@@ -170,7 +169,7 @@ int Computer::bestMoveFromDestsIndex(int* score) {
 			max = movesScores[i];
 			bestMoveIndex = i;
 		}
-		for (int k = 0; k < 4; k++) {
+		for (int k = 0; k < NUM_OF_POINTS; k++) {
 			this->gameBoard.removeTempPoint(dests[i][k]);
 		}
 
@@ -183,7 +182,7 @@ int Computer::bestMoveFromDestsIndex(int* score) {
 
 int Computer::sumOfYcoordsByIndex(int index) {
 	int sum = 0;
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		sum += dests[index][i].getY();
 	}
 	return sum;
@@ -191,7 +190,7 @@ int Computer::sumOfYcoordsByIndex(int index) {
 
 int Computer::sumOfYcoords(const Point* p) {
 	int sum = 0;
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		sum += p[i].getY();
 	}
 	return sum;
@@ -203,9 +202,9 @@ int Computer::sumOfYcoords(const Point* p) {
 void Computer::setDestsPerRotation() {
 	logSize = 0;
 	bool canMoveRight = true;
-	int originalY[4];
-	int originalX[4];
-	for (int i = 0; i < 4; i++) {
+	int originalY[NUM_OF_POINTS];
+	int originalX[NUM_OF_POINTS];
+	for (int i = 0; i < NUM_OF_POINTS; i++) {
 		originalX[i] = this->currTetro.getTetroPoints()[i].getX();
 	}
 	//loop to move the shape all the way to the left
@@ -216,7 +215,7 @@ void Computer::setDestsPerRotation() {
 	}
 
 	while (canMoveRight) {
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < NUM_OF_POINTS; i++) {
 			originalY[i] = this->currTetro.getTetroPoints()[i].getY();
 		}
 		//drop the shape till it collapse
@@ -225,7 +224,7 @@ void Computer::setDestsPerRotation() {
 			this->setNextMove(0, 1);
 		}
 
-		memcpy(dests[logSize], this->currTetro.getTetroPoints(), sizeof(Point) * 4);
+		memcpy(dests[logSize], this->currTetro.getTetroPoints(), sizeof(Point) * NUM_OF_POINTS);
 		logSize++;
 
 		this->currTetro.setYcoords(originalY);
