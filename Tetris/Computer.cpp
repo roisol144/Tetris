@@ -57,15 +57,7 @@ void Computer::moveComputer(Point* dest) {
 
 		}
 	}
-	/*while (this->sumOfYcoords(this->currTetro.getTetroPoints()) < this->sumOfYcoords(dest)) {
-		this->currTetro.erase(this->getGap());
-		this->setNextMove(0, 1);
-		if (!this->currTetro.moveDown(this->currTetro.getNextMove())) {
-			return;
-		}
-		this->currTetro.draw(this->getGap());
-		Sleep(5);
-	}*/
+	
 }
 
 void Computer::pickComputerMove() {
@@ -97,8 +89,7 @@ void Computer::pickComputerMove() {
 			this->currTetro.setYcoordsByIndex(pointsToRotate[k].getY() + 3, k);
 			this->currTetro.setXcoordsByIndex(pointsToRotate[k].getX(), k);
 		}
-		//this->setNextMove(0, 0);
-		//this->currTetro.isRotateLegal(pointsToRotate, this->currTetro.getNextMove());
+		
 	}
 
 

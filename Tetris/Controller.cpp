@@ -225,7 +225,8 @@ void Controller::entryScreen()
 				this->gameStatus = false;
 				isUserActive = false;
 				cout << endl;
-				cout << "Exiting the Tetris game. Goodbye!" << endl;
+				endGame();
+				cout << "Exiting the Tetris game. Goodbye!" << endl;			
 				break;
 
 			default:
@@ -353,10 +354,11 @@ void Controller::endGame()
 	cout << "\033[1;32m********************************\033[0m" << endl << endl;  // Bold green text
 	cout << "Player 1 Score: " << this->player1->getScore() << endl;
 	cout << "Player 2 Score: " << this->player2->getScore() << endl;
-	cout << "Press any key to return to main menu. "<< endl;
-
-	cin.ignore();
-	cin >> x;
+	//cout << "Press any key to return to main menu. "<< endl;
+	delete this->player1;
+	delete this->player2;
+	//cin.ignore();
+	//cin >> x;
 	//while (!_kbhit()) {}
 	_getch();
 }

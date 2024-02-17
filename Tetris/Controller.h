@@ -46,11 +46,6 @@ public:
     void resetColor();
     void setGameColor(bool* isColor);
 
-    ~Controller()
-    {
-        delete this->player1;
-        delete this->player2;
-    }
- 
+   
 };
 #endif // __CONTROLLER_H
